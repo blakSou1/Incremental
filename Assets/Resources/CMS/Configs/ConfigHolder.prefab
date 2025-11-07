@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8434781551397031942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4220520111138820016}
+  - component: {fileID: 968547337811698801}
+  m_Layer: 0
+  m_Name: ConfigHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4220520111138820016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434781551397031942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &968547337811698801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434781551397031942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1729a46f79086449a991b5512530e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idCMS: CMS/Configs/ConfigHolder
+  Components:
+  - rid: 4770333491693355076
+  - rid: 4770333508773347396
+  - rid: 4770333491693355077
+  - rid: 6341372987653488708
+  - rid: 6341373034737696837
+  references:
+    version: 2
+    RefIds:
+    - rid: 4770333491693355076
+      type: {class: ConfigMain, ns: , asm: Assembly-CSharp}
+      data:
+        showFading: 1
+        showLocOnStart: 1
+        RewriteLocWithRus: 0
+    - rid: 4770333491693355077
+      type: {class: ConfigLight, ns: , asm: Assembly-CSharp}
+      data:
+        timeToChangeIntensity: 0.4
+        timeToChangeColor: 0.4
+        LightValueOne: 1.2
+        LightValueTwo: 0.7
+        ColorValueOne: {r: 0.8553459, g: 0.5836794, b: 0.5836794, a: 1}
+        ColorValueTwo: {r: 0.51790977, g: 0.8113208, b: 0.44137886, a: 1}
+    - rid: 4770333508773347396
+      type: {class: ConfigGameStates, ns: , asm: Assembly-CSharp}
+      data:
+        overrideValues: 0
+        overridePoints: 6000
+    - rid: 6341372987653488708
+      type: {class: ConfigItemsInPipe, ns: , asm: Assembly-CSharp}
+      data:
+        baseAllShader: {fileID: 2100000, guid: e78e3cdeaaf43624f84e1ab63f03d8e9, type: 2}
+        boomVFX: {fileID: 1454148361079965310, guid: 1191b3c264bcdb244b6cfdfc8ff553ce, type: 3}
+        pipeItems:
+        - gameObject: {fileID: 5994929594300824860, guid: 755192d992502454ba1b57a68535cde5, type: 3}
+          weight: 500
+        - gameObject: {fileID: 5994929594300824860, guid: 67e2540193e5a3e4f9c113cd58a949df, type: 3}
+          weight: 250
+        - gameObject: {fileID: 5994929594300824860, guid: a0069cf31d786834e8b8b533143f2dc5, type: 3}
+          weight: 150
+        - gameObject: {fileID: 5994929594300824860, guid: 30d5d7b879f3d02459c98cc0b5458d98, type: 3}
+          weight: 50
+        - gameObject: {fileID: 5994929594300824860, guid: e452d0a580ae71946a98a862e3bb08d1, type: 3}
+          weight: 30
+        - gameObject: {fileID: 5994929594300824860, guid: e11fbf57bc9f5b34b9e0f9e994f16016, type: 3}
+          weight: 15
+        - gameObject: {fileID: 5994929594300824860, guid: 157e4120207dd174d802a0fa71880813, type: 3}
+          weight: 15
+    - rid: 6341373034737696837
+      type: {class: CasseteList, ns: , asm: Assembly-CSharp}
+      data:
+        CassetePrefabs:
+        - {fileID: 5994929594300824860, guid: 9b7129ce65691ee489bc49f27335a44b, type: 3}
+        - {fileID: 5994929594300824860, guid: 0fc0ae953c39951448a7ef2b61ee11f7, type: 3}
+        - {fileID: 5994929594300824860, guid: adc53f97eb5e0bd4d8dee870d72d7ad6, type: 3}
+        - {fileID: 5994929594300824860, guid: 035106d4c47c8a44188e406eda3fb82b, type: 3}
