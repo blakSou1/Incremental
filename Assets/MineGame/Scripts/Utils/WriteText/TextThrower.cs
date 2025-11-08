@@ -16,7 +16,6 @@ public class TextThrower : MonoBehaviour
         _textAnimator = GetComponent<TextAnimatorPlayer>();
     }
 
-
     public async UniTask ThrowText(LocString text, VoiceSO voice)
     {
         _token?.Cancel();

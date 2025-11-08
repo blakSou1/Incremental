@@ -6,6 +6,7 @@ public static class G
     public static SceneLoader SceneLoader;
     public static GameState GameState;
     public static LightController LightController;
+    public static PausePanel pausePanel;
 
     public static Inpyts inputs;
     

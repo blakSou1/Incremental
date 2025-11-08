@@ -49,6 +49,11 @@ public static partial class R
         public static AudioClip sharp_echo;
         public static AudioClip Upper01;
         public static AudioClip Wrong_Error;
+        public static AudioClip eat;
+        public static AudioClip NewMainMenu;
+        public static AudioClip scream;
+        public static AudioClip screams;
+        public static AudioClip Vuii;
     }
 
     public static void InitAudio()
@@ -97,5 +102,10 @@ public static partial class R
         Audio.sharp_echo = Resources.Load<AudioClip>("Audio/Bank/sharp_echo");
         Audio.Upper01 = Resources.Load<AudioClip>("Audio/Bank/Upper01");
         Audio.Wrong_Error = Resources.Load<AudioClip>("Audio/Bank/Wrong Error");
+        Audio.eat = Resources.Load<AudioClip>("Audio/My/eat");
+        Audio.NewMainMenu = Resources.Load<AudioClip>("Audio/My/NewMainMenu");
+        Audio.scream = Resources.Load<AudioClip>("Audio/My/scream");
+        Audio.screams = Resources.Load<AudioClip>("Audio/My/screams");
+        Audio.Vuii = Resources.Load<AudioClip>("Audio/My/Vuii");
     }
 }

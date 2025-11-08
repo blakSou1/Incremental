@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class PausePanel : MonoBehaviour, IService
 {
     public UIPanelScaler panel;
-    private string _notInMainMenu = "MainMenu";
 
     public bool inMenu = false;
     
@@ -29,11 +28,18 @@ public class PausePanel : MonoBehaviour, IService
         temp.SetActive(false);
         GameObject g = Instantiate(temp, can.transform);
         panel = g.GetComponent<UIPanelScaler>();
+
+        G.inputs.Player.Esc.performed += i => UpdatePanel();
     }
 
-    public void Update()
+    void OnDestroy()
     {
-        if (G.SceneLoader.currentSceneName != _notInMainMenu && G.inputs.Player.Esc.WasPressedThisFrame() && !panel.inAnim)
+        G.inputs.Player.Esc.performed -= i => UpdatePanel();
+    }
+
+    public void UpdatePanel()
+    {
+        if (!panel.inAnim)
         {
             
             if (panel.gameObject.activeSelf)
@@ -43,7 +49,7 @@ public class PausePanel : MonoBehaviour, IService
             }
             else
             {
-                panel.gameObject.SetActive(true);
+                panel.Open();
                 inMenu = true;
             }
         }

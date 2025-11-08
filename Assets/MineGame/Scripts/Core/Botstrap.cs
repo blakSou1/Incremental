@@ -16,6 +16,8 @@ public static class GameBootstrapper
 
     public static void Init()
     {
+        Application.targetFrameRate = 60;
+
         CMS.Init();
 
         R.InitAll();
@@ -31,6 +33,7 @@ public static class GameBootstrapper
         G.LocSystem = CreateSimpleService<LocSystem>();
         G.LightController = CreateSimpleService<LightController>();
         G.GameState = CreateSimpleService<GameState>();
+        G.pausePanel = CreateSimpleService<PausePanel>();
 
         G.SceneLoader.onLoadAction = (scene, sceneMode) =>
         {                

@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour, IService
     private AudioSource musicSource;
     private AudioSource soundsSource;
 
-    public float musicVolume { get; private set; } = 0.9f;
+    public float musicVolume { get; private set; } = 0.5f;
     public float soundVolume { get; private set; } = 0.5f;
     private Dictionary<int, ActiveSoundLoop> _activeLoops = new();
     private int _nextLoopId = 0;
@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour, IService
         SetMusicVolume(musicVolume);
         SetSoundVolume(soundVolume);
 
-        PlayMusic(R.Audio.MainMenu);
+        PlayMusic(R.Audio.NewMainMenu);
     }
 
     public void SetMusicVolume(float value)
