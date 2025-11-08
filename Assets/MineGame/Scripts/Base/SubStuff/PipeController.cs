@@ -1,65 +1,86 @@
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using System.Collections;
 
 public class PipeController : MonoBehaviour
 {
     private Tweener currentPunchTween;
     public Transform posToSpawn;
 
-    public async UniTask AutoSpawner()
+    private void Start()
     {
+        StartCoroutine(AutoSpawnerCoroutine());
+    }
+    public void AutoSpawner()
+    {
+        StartCoroutine(AutoSpawnerCoroutine());
+    }
+
+    private IEnumerator AutoSpawnerCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+
         while (!G.Main.isLockDown && gameObject != null)
         {
-            await UniTask.Delay(5500);
+            yield return new WaitForSeconds(5.5f);
             if (G.GameState.AutoSpawnLevels > 0)
             {
-                if (G.Main.isLockDown) return;
-                _ = CreateItem(false);
+                if (G.Main.isLockDown) yield break;
+                CreateItem(false);
             }
 
-            await UniTask.Delay(5500);
+            yield return new WaitForSeconds(5.5f);
             if (G.GameState.AutoSpawnLevels > 1)
             {
-                if (G.Main.isLockDown) return;
-                _ = CreateItem(false);
+                if (G.Main.isLockDown) yield break;
+                CreateItem(false);
             }
-            
-            await UniTask.Delay(5500);
+
+            yield return new WaitForSeconds(5.5f);
             if (G.GameState.AutoSpawnLevels > 2)
             {
-                if (G.Main.isLockDown) return;
-                _ = CreateItem(false);
+                if (G.Main.isLockDown) yield break;
+                CreateItem(false);
             }
         }
-        
     }
 
     public void CreateIt()
     {
-        _ = CreateItem(true);
+        CreateItem(true);
     }
 
-    public async UniTask CreateItem(bool fromLever)
+    private void CreateItem(bool fromLever)
     {
         if (G.Main.isLockDown) return;
+
         if (G.Main.CheckCanSpawnNewItem())
         {
-            if(fromLever) R.Audio.LevelDown.PlayAsSoundRandomPitch(0.1f);
-            await UniTask.Delay(450);
-            R.Audio.PipeOutNewObject.PlayAsSoundRandomPitch(0.2f);
-            if (currentPunchTween != null && currentPunchTween.IsActive())
-            {
-                currentPunchTween.Complete();
-                currentPunchTween.Kill();
-            }
-            currentPunchTween = transform.DOPunchScale(Vector3.one * -0.45f, 0.4f, elasticity: 0f, vibrato: 0);
-            await UniTask.Delay(200);
-            Instantiate(G.Main.RandomSelector.SpinRoulette(), posToSpawn.position + (Vector3.left * UnityEngine.Random.Range(-0.3f, 0.3f)), Quaternion.identity);
+            if (fromLever) R.Audio.LevelDown.PlayAsSoundRandomPitch(0.1f);
+            StartCoroutine(DelayedCreateItem());
         }
         else
         {
             R.Audio.Wrong_Error.PlayAsSoundRandomPitch(0.2f);
         }
+    }
+
+    private IEnumerator DelayedCreateItem()
+    {
+        yield return new WaitForSeconds(0.45f);
+        R.Audio.PipeOutNewObject.PlayAsSoundRandomPitch(0.2f);
+
+        if (currentPunchTween != null && currentPunchTween.IsActive())
+        {
+            currentPunchTween.Complete();
+            currentPunchTween.Kill();
+        }
+
+        currentPunchTween = transform.DOPunchScale(Vector3.one * -0.45f, 0.4f, elasticity: 0f, vibrato: 0);
+        yield return new WaitForSeconds(0.2f);
+
+        Instantiate(G.Main.RandomSelector.SpinRoulette(),
+                    posToSpawn.position + (Vector3.left * Random.Range(-0.3f, 0.3f)),
+                    Quaternion.identity);
     }
 }

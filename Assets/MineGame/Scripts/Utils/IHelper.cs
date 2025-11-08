@@ -22,12 +22,12 @@ public class IHelper : ScriptableObject
 
     public void LoadScene(string line)
     {
-        _ = G.SceneLoader.Load(line);
+        G.SceneLoader.Load(line);
     }
 
     public void ShowSettingPanel()
     {
-        //G.PausePanel.panel.gameObject.SetActive(true);
+        G.pausePanel.UpdatePanels();
     }
     public void Quit()
     {
@@ -45,7 +45,7 @@ public class IHelper : ScriptableObject
 
     public void Unload(string n)
     {
-        _ = G.SceneLoader.UnloadAdditive(n);    
+        G.SceneLoader.UnloadAdditive(n);    
     }
     public void OpenLink()
     {

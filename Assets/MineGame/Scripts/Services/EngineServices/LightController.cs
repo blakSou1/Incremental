@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using System.Collections;
 
 public class LightController : MonoBehaviour, IService
 {
@@ -21,33 +21,48 @@ public class LightController : MonoBehaviour, IService
             .FirstOrDefault(l => l.lightType == Light2D.LightType.Global);
     }
 
-    public async UniTask SetLight(float intensity)
+    public void SetLight(float intensity)
     {
-        await DOTween.To(
-            () => globalLight.intensity,
-            x => globalLight.intensity = x,
-            config.timeToChangeIntensity,
-            0.25f
-        ).AsyncWaitForCompletion().AsUniTask();
+        StartCoroutine(SetLightCoroutine(intensity));
     }
 
-    public async UniTask RestoreLight()
+    private IEnumerator SetLightCoroutine(float intensity)
     {
-        await DOTween.To(
+        yield return DOTween.To(
+            () => globalLight.intensity,
+            x => globalLight.intensity = x,
+            intensity,
+            config.timeToChangeIntensity
+        ).WaitForCompletion();
+    }
+
+    public void RestoreLight()
+    {
+        StartCoroutine(RestoreLightCoroutine());
+    }
+
+    private IEnumerator RestoreLightCoroutine()
+    {
+        yield return DOTween.To(
             () => globalLight.intensity,
             x => globalLight.intensity = x,
             config.timeToChangeIntensity,
             0.25f
-        ).AsyncWaitForCompletion().AsUniTask();
+        ).WaitForCompletion();
     }
-    
-    public async UniTask SetColor(Color color)
+
+    public void SetColor(Color color)
     {
-        await DOTween.To(
-            () => globalLight.color, 
+        StartCoroutine(SetColorCoroutine(color));
+    }
+
+    private IEnumerator SetColorCoroutine(Color color)
+    {
+        yield return DOTween.To(
+            () => globalLight.color,
             x => globalLight.color = x,
-            color,                                  
-            0.75f                                
-        ).AsyncWaitForCompletion().AsUniTask();
+            color,
+            0.75f
+        ).WaitForCompletion();
     }
 }

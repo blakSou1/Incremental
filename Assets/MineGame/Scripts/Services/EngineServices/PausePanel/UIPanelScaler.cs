@@ -1,39 +1,43 @@
 using UnityEngine;
 using DG.Tweening;
-using Cysharp.Threading.Tasks;
+using System.Collections;
 
 [RequireComponent(typeof(RectTransform))]
 public class UIPanelScaler : MonoBehaviour
 {
     public bool inAnim = false;
-    
+
     public void Close()
     {
-        CloseAnim();
-    }
-    public void Open()
-    {
-        CloseAnim(true);
+        StartCoroutine(CloseAnim());
     }
 
-    private async void CloseAnim(bool isOpen = false)
+    public void Open()
     {
-        if(isOpen)
+        StartCoroutine(CloseAnim(true));
+    }
+
+    private IEnumerator CloseAnim(bool isOpen = false)
+    {
+        if (isOpen)
             gameObject.SetActive(true);
 
         inAnim = true;
         Transform panel = GetComponent<RectTransform>().GetChild(0);
-        await panel.DOScale(Vector3.one * (isOpen? 1f: 0f), 0.5f)
+
+        // Анимация изменения масштаба
+        yield return panel.DOScale(Vector3.one * (isOpen ? 1f : 0f), 0.5f)
             .SetEase(Ease.InBack, 0.7f)
-            .AsyncWaitForCompletion();
-        await UniTask.Delay(75);
+            .WaitForCompletion();
+
+        yield return new WaitForSeconds(0.075f);
         inAnim = false;
 
         if (!isOpen)
             gameObject.SetActive(false);
     }
-    
-    public void OnDestroy()
+
+    private void OnDestroy()
     {
         DOTween.Kill(gameObject);
     }

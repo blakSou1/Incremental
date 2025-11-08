@@ -1,6 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -18,22 +18,22 @@ public class Machine : MonoBehaviour
         slots = GetComponentsInChildren<BatterySlot>().ToList();
     }
 
-    public async void TryRunMachine()
+    public void TryRunMachine()
     {
         if (CheckForOneBattery())
         {
             if (!isWorking)
-                MachineWork().Forget();
+                StartCoroutine(MachineWorkCoroutine());
             else
             {
-                await labelText.ThrowText(new LocString("Already working!!", "Уже работает!!"), R.normalVoice);
-                await UniTask.Delay(100);
-                _ = labelText.ThrowText(new LocString("<wave>Working!", "<wave>Работает!"), R.normalVoice);
+                labelText.ThrowText(new LocString("Already working!!", "Уже работает!!"), R.normalVoice);
+                StartCoroutine(DelayCoroutine(100, () =>
+                    labelText.ThrowText(new LocString("<wave>Working!", "<wave>Работает!"), R.normalVoice)));
             }
         }
         else
         {
-            _ = labelText.ThrowText(new LocString("Not enough batteries!", "Нехватает батареек!"), R.normalVoice);
+            labelText.ThrowText(new LocString("Not enough batteries!", "Нехватает батареек!"), R.normalVoice);
         }
     }
 
@@ -42,21 +42,21 @@ public class Machine : MonoBehaviour
         return slots.FirstOrDefault(x => !x.isClosed && x.HaveBattery()) != null;
     }
 
-    public async UniTask MachineWork()
+    private IEnumerator MachineWorkCoroutine()
     {
         isWorking = true;
-        await UniTask.Delay(500);
+        yield return new WaitForSeconds(0.5f);
         R.Audio.MachineStarted.PlayAsSound();
         G.Main.MainCamera.GetComponent<CameraShake>().Shake(1.5f);
         loopId = G.AudioManager.PlayLoop(R.Audio.factorybg, 2);
-        await UniTask.Delay(300);
-        
-        _ = labelText.ThrowText(new LocString("<wave>Working!", "<wave>Работает!"), R.normalVoice);
+        yield return new WaitForSeconds(0.3f);
+
+        labelText.ThrowText(new LocString("<wave>Working!", "<wave>Работает!"), R.normalVoice);
         ChangeBatteriesAnim(true);
 
         while (!stopWorkingTrigger && CheckForOneBattery())
         {
-            await UniTask.Delay(100);
+            yield return new WaitForSeconds(0.1f);
 
             List<BatterySlot> temp = slots.FindAll(x => !x.isClosed).ToList();
             for (int i = 0; i < temp.Count; i++)
@@ -65,30 +65,37 @@ public class Machine : MonoBehaviour
                 {
                     StopFunction();
                     _ = DestroyAllItems();
-                    return;
+                    yield break;
                 }
                 if (!slots[i].TryConsume())
                 {
                     StopFunction();
-                    return;
+                    yield break;
                 }
 
                 if (G.Main.isLockDown)
                 {
                     StopFunction();
-                    return;
+                    yield break;
                 }
-            } 
+            }
             float suma = CalculatePointSum();
-            pointPerSecond.text = (suma*10).ToString("F2") + "/s";
+            pointPerSecond.text = (suma * 10).ToString("F2") + "/s";
             G.GameState.Points += suma;
             G.Main.TV.AddPoints(suma);
         }
-        
+
         if (!CheckForOneBattery())
             StopFunction();
     }
-    private async void StopFunction()
+
+    private IEnumerator DelayCoroutine(float milliseconds, System.Action callback)
+    {
+        yield return new WaitForSeconds(milliseconds / 1000f);
+        callback?.Invoke();
+    }
+
+    private void StopFunction()
     {
         if (G.Main.isLockDown)
         {
@@ -105,11 +112,12 @@ public class Machine : MonoBehaviour
         isWorking = false;
         stopWorkingTrigger = false;
         G.AudioManager.RemoveLoop(loopId);
-        
-        if(labelText.gameObject.activeSelf) _ = labelText.ThrowText(new LocString("Need Reload!", "Нужна перезагрузка машины!"), R.normalVoice);
+
+        if (labelText.gameObject.activeSelf)
+            labelText.ThrowText(new LocString("Need Reload!", "Нужна перезагрузка машины!"), R.normalVoice);
     }
 
-    public async UniTask DestroyAllItems()
+    public IEnumerator DestroyAllItems()
     {
         List<BatterySlot> temp = slots.FindAll(x => !x.isClosed).ToList();
         DecrementalDelayTimer timer = new(350, 175, 0.75f);
@@ -126,7 +134,7 @@ public class Machine : MonoBehaviour
                 g.transform.localScale = Vector3.one * 2;
                 R.Audio.boom.PlayAsSoundRandomPitch(0.1f);
                 m.body.AddForce(new Vector2(1500, 3000));
-                await UniTask.Delay(timer.GetDelay());
+                yield return new WaitForSeconds(timer.GetDelay() / 1000f);
             }
         }
     }
@@ -138,16 +146,17 @@ public class Machine : MonoBehaviour
         {
             if (slots[i].currentBattery.Is(out Battery b))
             {
-                if(toStart) b.StartAnimation();
+                if (toStart) b.StartAnimation();
                 else b.StopAnimation();
             }
             if (slots[i].currentBattery.Is(out Artefact a))
             {
-                if(toStart) a.StartAnimation();
+                if (toStart) a.StartAnimation();
                 else a.StopAnimation();
             }
         }
     }
+
     public float CalculatePointSum()
     {
         float sum = 0;
@@ -165,6 +174,7 @@ public class Machine : MonoBehaviour
 
         return sum * multi;
     }
+
     public void StopMachine()
     {
         stopWorkingTrigger = true;

@@ -6,7 +6,7 @@ public class Botstrap : MonoBehaviour
     {
         GameBootstrapper.Init();
 
-        _ = G.SceneLoader.Load("MainMenu");
+        G.SceneLoader.Load("MainMenu");
     }
 }
 

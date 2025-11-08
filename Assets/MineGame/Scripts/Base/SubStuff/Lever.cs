@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Lever : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class Lever : MonoBehaviour
     {
         sliderRect = slider.GetComponent<RectTransform>();
         mainCamera = Camera.main;
-        HandleAutoReturn().Forget();
+        StartCoroutine(HandleAutoReturnCoroutine());
     }
 
     public void OnBeginDrag()
@@ -53,7 +53,7 @@ public class Lever : MonoBehaviour
     public void OnEndDrag()
     {
         CheckOutResult();
-        HandleAutoReturn().Forget();
+        StartCoroutine(HandleAutoReturnCoroutine());
     }
 
     private void CheckOutResult()
@@ -68,12 +68,12 @@ public class Lever : MonoBehaviour
         }
     }
 
-    private async UniTaskVoid HandleAutoReturn()
+    private IEnumerator HandleAutoReturnCoroutine()
     {
         while (!triggerCancelReturning)
         {
             slider.value = Mathf.MoveTowards(slider.value, 0, returnSpeed * Time.deltaTime);
-            await UniTask.Yield();
+            yield return null; // Ждем следующий кадр
         }
 
         triggerCancelReturning = false;

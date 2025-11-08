@@ -1,16 +1,16 @@
+using DG.Tweening;
 using System;
-using Cysharp.Threading.Tasks;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DG.Tweening;
-using System.Linq;
 
 public class SceneLoader : MonoBehaviour, IService
 {
     public string currentSceneName = null;
     public Action<Scene, LoadSceneMode> onLoadAction;
-    
+
     private GameObject _fadeCanvas;
 
     public void Init()
@@ -20,39 +20,55 @@ public class SceneLoader : MonoBehaviour, IService
 
         currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.sceneLoaded += (scene, sceneMode) => onLoadAction?.Invoke(scene, sceneMode);
-        _ = Unfade(0.5f);
+        StartCoroutine(Unfade(0.5f));
     }
 
-    public async UniTask Load(string n, float fadeSpeed = 0.5f)
+    public void Load(string sceneName, float fadeSpeed = 0.5f)
     {
-        await Fade(fadeSpeed);
-        LoadScene(n);
-        await Unfade(fadeSpeed);
-    }
-    
-    private void LoadScene(string n)
-    {
-        if(currentSceneName == null) return;
-        SceneManager.LoadScene(n);
-        currentSceneName = n;
+        StartCoroutine(LoadSceneCoroutine(sceneName, fadeSpeed));
     }
 
-    public async UniTask LoadAdditive(string n)
+    private IEnumerator LoadSceneCoroutine(string sceneName, float fadeSpeed)
     {
-        await Fade(0.7f);
+        yield return Fade(fadeSpeed);
+        LoadScene(sceneName);
+        yield return Unfade(fadeSpeed);
+    }
+
+    private void LoadScene(string sceneName)
+    {
+        if (currentSceneName == null) return;
+        SceneManager.LoadScene(sceneName);
+        currentSceneName = sceneName;
+    }
+
+    public void LoadAdditive(string sceneName)
+    {
+        StartCoroutine(LoadAdditiveCoroutine(sceneName));
+    }
+
+    private IEnumerator LoadAdditiveCoroutine(string sceneName)
+    {
+        yield return Fade(0.7f);
         G.Main.MainCamera.gameObject.SetActive(false);
         G.Main.MainCamera.GetComponentInParent<CameraController>().GoSuperLeft();
-        SceneManager.LoadScene(n, LoadSceneMode.Additive);
-        await Unfade(0.7f);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        yield return Unfade(0.7f);
     }
 
-    public async UniTask UnloadAdditive(string n)
+    public void UnloadAdditive(string sceneName)
+    {
+        StartCoroutine(UnloadAdditiveCoroutine(sceneName));
+    }
+
+    private IEnumerator UnloadAdditiveCoroutine(string sceneName)
     {
         G.Main.MainCamera.GetComponentInParent<CameraController>().MoveToUpgrades();
-        await Fade(0.7f);
-        _ = SceneManager.UnloadSceneAsync(n);
+        yield return Fade(0.7f);
+        AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneName);
+        yield return new WaitUntil(() => unloadOperation.isDone);
         G.Main.MainCamera.gameObject.SetActive(true);
-        await Unfade(0.7f);
+        yield return Unfade(0.7f);
     }
 
     private void CreateFadeCanvas()
@@ -64,37 +80,37 @@ public class SceneLoader : MonoBehaviour, IService
 
         _fadeCanvas.AddComponent<GraphicRaycaster>();
 
-        GameObject fadeImage = new("FadeImage");
+        GameObject fadeImage = new GameObject("FadeImage");
         fadeImage.transform.parent = _fadeCanvas.transform;
 
         fadeImage.AddComponent<Image>().color = Color.black;
 
         fadeImage.GetComponent<RectTransform>().sizeDelta = new Vector2(100000, 100000);
     }
-    
-    private async UniTask Fade(float duration)
+
+    private IEnumerator Fade(float duration)
     {
         if (_fadeCanvas == null)
         {
-            await UniTask.Yield();
-            return;
+            yield return null;
+            yield break;
         }
 
         _fadeCanvas.GetComponentInChildren<Image>().raycastTarget = true;
-        await _fadeCanvas.transform.GetChild(0).GetComponent<Image>().DOFade(1, duration)
-            .AsyncWaitForCompletion().AsUniTask();
+        yield return _fadeCanvas.transform.GetChild(0).GetComponent<Image>().DOFade(1, duration)
+            .WaitForCompletion();
     }
-    private async UniTask Unfade(float duration)
+
+    private IEnumerator Unfade(float duration)
     {
         if (_fadeCanvas == null)
         {
-            await UniTask.Yield();
-            return;
+            yield return null;
+            yield break;
         }
-        
-        await _fadeCanvas.transform.GetChild(0).GetComponent<Image>().DOFade(0, duration)
+
+        yield return _fadeCanvas.transform.GetChild(0).GetComponent<Image>().DOFade(0, duration)
             .OnComplete(() => _fadeCanvas.GetComponentInChildren<Image>().raycastTarget = false)
-            .AsyncWaitForCompletion().AsUniTask();
+            .WaitForCompletion();
     }
 }
-

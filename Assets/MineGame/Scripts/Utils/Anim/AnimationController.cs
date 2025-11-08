@@ -1,12 +1,11 @@
-using Cysharp.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
-using System.Threading;
 
 public class AnimationController : MonoBehaviour
 {
     private SpriteRenderer _targetRenderer;
     private AnimationDataSO _currentAnimation;
-    private CancellationTokenSource _cancellationTokenSource;
+    private Coroutine _animationCoroutine;
 
     private int frame = 0;
 
@@ -20,33 +19,35 @@ public class AnimationController : MonoBehaviour
         if (_currentAnimation != newAnimation)
         {
             StopAnimation();
-            
+
             _currentAnimation = newAnimation;
-            
-            _cancellationTokenSource = new CancellationTokenSource();
-            Anim(_currentAnimation, _cancellationTokenSource.Token).Forget();
+            _animationCoroutine = StartCoroutine(Anim(_currentAnimation));
         }
     }
 
     public void SetFlip(bool flip) => _targetRenderer.flipX = flip;
 
-    private async UniTask Anim(AnimationDataSO myAnimData, CancellationToken cancellationToken)
+    private IEnumerator Anim(AnimationDataSO myAnimData)
     {
         frame = 0;
-        while (_currentAnimation == myAnimData && !cancellationToken.IsCancellationRequested)
+        while (_currentAnimation == myAnimData)
         {
             _targetRenderer.sprite = myAnimData.frames[frame];
             frame = (frame + 1) % _currentAnimation.frames.Count;
-            await UniTask.Delay((int)(1000 / myAnimData.framerate), DelayType.Realtime, cancellationToken: cancellationToken);
+
+            // Ждем перед сменой кадра
+            yield return new WaitForSeconds(1f / myAnimData.framerate);
         }
     }
 
     private void StopAnimation()
     {
-        // Отменяем текущую задачу, если она существует
-        _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource?.Dispose();
-        _cancellationTokenSource = null;
+        // Останавливаем текущую корутину, если она существует
+        if (_animationCoroutine != null)
+        {
+            StopCoroutine(_animationCoroutine);
+            _animationCoroutine = null;
+        }
     }
 
     private void OnDestroy()

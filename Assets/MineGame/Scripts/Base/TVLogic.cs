@@ -54,7 +54,7 @@ public class TVLogic : MonoBehaviour
         {
             R.Audio.positive.PlayAsSound(0.3f);
             slot.currentBattery.Is(out Cassete cassete);
-            _ = G.SceneLoader.LoadAdditive(cassete.multName);
+            G.SceneLoader.LoadAdditive(cassete.multName);
         }
     }
 }

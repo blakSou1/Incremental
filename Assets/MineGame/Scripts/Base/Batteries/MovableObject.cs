@@ -1,6 +1,6 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -34,43 +34,45 @@ public class MovableObject : MonoBehaviour
 
     private void Update()
     {
-        HandleRightClickDrag().Forget();
+        HandleRightClickDrag();
     }
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        if (!isDragging && isMoving) _ = MoveTo(transform.position);
+        if (!isDragging && isMoving) MoveTo(transform.position);
     }
 
-    private async UniTaskVoid HandleRightClickDrag()
+    private void HandleRightClickDrag()
     {
         if (G.inputs.Player.Attack.WasPressedThisFrame())
         {
             RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero);
             RaycastHit2D hit = hits.FirstOrDefault(x => x.collider.transform.GetComponent<MovableObject>());
             if (hit.collider && hit.collider.gameObject == gameObject)
-            {
-                isDragging = true;
-                body.gravityScale = 0;
-                visual.sortingOrder = 100;
-                ChangeRB(true);
-                if(mySlot) mySlot.RemoveBattery();
-            }
+                StartDragging();
         }
-        
+
         if (G.inputs.Player.Attack.IsPressed() && isDragging)
         {
-            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); 
-            MoveTo(targetPosition, 0).Forget();
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            StartCoroutine(MoveTo(targetPosition));
         }
-        
+
         if (G.inputs.Player.Attack.WasReleasedThisFrame() && isDragging)
         {
             CheckAndPut();
             if (!isMoving) body.gravityScale = gravity;
-            
             isDragging = false;
         }
+    }
+
+    private void StartDragging()
+    {
+        isDragging = true;
+        body.gravityScale = 0;
+        visual.sortingOrder = 100;
+        ChangeRB(true);
+        if (mySlot) mySlot.RemoveBattery();
     }
 
     private void CheckAndPut()
@@ -85,34 +87,40 @@ public class MovableObject : MonoBehaviour
                 ChangeRB(false);
                 slot.SetBattery(this);
                 mySlot = slot;
-                _ = MoveTo(slot.GetMyPos());
+                StartCoroutine(MoveTo(slot.GetMyPos()));
                 return;
             }
         }
         visual.sortingOrder = 10;
     }
 
-    public async UniTask MoveTo(Vector3 target, float targetRotation = 0)
+    private IEnumerator MoveTo(Vector3 target, float targetRotation = 0)
     {
         _moveEngine.SetTarget(target, targetRotation);
         body.gravityScale = 0;
         body.linearVelocity = Vector2.zero;
+
         if (isMoving)
         {
-            while (isMoving) await UniTask.Yield();
-            return;
+            while (isMoving) yield return null;
+            yield break;
         }
+
         isMoving = true;
+
         while (_moveEngine.CheckDistant())
         {
             _moveEngine.SmoothFollow();
             _moveEngine.FollowRotation();
-            await UniTask.Yield();
+            yield return null; // ∆дем следующий кадр
         }
+
         _moveEngine.SetToTargetPos();
         isMoving = false;
-        if(!isDragging) body.gravityScale = gravity;
+
+        if (!isDragging) body.gravityScale = gravity;
     }
+
     public void ChangeRB(bool turnOn)
     {
         body.bodyType = turnOn ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic;
@@ -123,12 +131,12 @@ public class MovableObject : MonoBehaviour
     {
         private Transform _cardTransform;
         private Transform _visualTransform;
-        
+
         private Vector2 targetPosition;
         private float targetRotation;
-        private Vector2 velocity; 
-        private float smoothTime = 0.12f; 
-        private float maxVelocity = 8.5f; 
+        private Vector2 velocity;
+        private float smoothTime = 0.12f;
+        private float maxVelocity = 8.5f;
         private Vector2 currentVelocity;
         private Vector3 movementDelta;
         private Vector3 rotationDelta;
@@ -151,7 +159,7 @@ public class MovableObject : MonoBehaviour
             if (_cardTransform == null) return false;
             return Vector2.Distance(_cardTransform.position, targetPosition) > 0.01f || velocity.magnitude > 0.01f;
         }
-            
+
         public void SmoothFollow()
         {
             Vector2 newPosition = Vector2.SmoothDamp(_cardTransform.position, targetPosition, ref currentVelocity, smoothTime, maxVelocity, Time.deltaTime);
@@ -162,10 +170,10 @@ public class MovableObject : MonoBehaviour
                 velocity = velocity.normalized * maxVelocity;
             }
 
-            Vector2 newPos = newPosition + velocity * (Time.deltaTime);
+            Vector2 newPos = newPosition + velocity * Time.deltaTime;
             _cardTransform.GetComponent<Rigidbody2D>().MovePosition(new Vector3(newPos.x, newPos.y, _cardTransform.position.z));
-        } 
-        
+        }
+
         public void FollowRotation()
         {
             float rotationAmount = 20;
@@ -174,14 +182,14 @@ public class MovableObject : MonoBehaviour
             Vector3 movement = _cardTransform.position - (Vector3)targetPosition;
             movementDelta = Vector3.Lerp(movementDelta, movement, 25 * Time.deltaTime);
             Vector3 movementRotation = movement * rotationAmount;
-            rotationDelta = Vector3.Lerp(rotationDelta , movementRotation, rotationSpeed * Time.deltaTime);
+            rotationDelta = Vector3.Lerp(rotationDelta, movementRotation, rotationSpeed * Time.deltaTime);
             _visualTransform.eulerAngles = new Vector3(_visualTransform.eulerAngles.x, _visualTransform.eulerAngles.y, Mathf.Clamp(rotationDelta.x, -60, 60) + targetRotation);
         }
-        
+
         public void SetToTargetPos()
-        {   
+        {
             _cardTransform.position = new Vector3(targetPosition.x, targetPosition.y, _cardTransform.position.z);
-            _visualTransform.localEulerAngles = new Vector3(0, 0, this.targetRotation);
+            _visualTransform.localEulerAngles = new Vector3(0, 0, targetRotation);
             velocity = Vector2.zero;
         }
     }

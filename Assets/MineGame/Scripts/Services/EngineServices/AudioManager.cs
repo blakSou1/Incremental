@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
-using Cysharp.Threading.Tasks;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour, IService
 {
@@ -15,7 +14,7 @@ public class AudioManager : MonoBehaviour, IService
 
     private class ActiveSoundLoop
     {
-        public CancellationTokenSource Cts { get; set; }
+        public Coroutine Coroutine { get; set; }
     }
 
     public void Init()
@@ -57,8 +56,9 @@ public class AudioManager : MonoBehaviour, IService
     {
         musicSource.Stop();
     }
-    
-    public GameObject PlaySound(AudioClip clip, float addedPitch) {
+
+    public GameObject PlaySound(AudioClip clip, float addedPitch)
+    {
         if (clip == null) return null;
         GameObject tempAudioObject = new("TempAudio_" + clip.name);
         DontDestroyOnLoad(tempAudioObject);
@@ -68,7 +68,7 @@ public class AudioManager : MonoBehaviour, IService
         audioSource.volume = soundVolume;
         audioSource.pitch = 1f + addedPitch;
         audioSource.Play();
-        
+
         Destroy(tempAudioObject, (clip.length / audioSource.pitch) + 0.1f);
         return tempAudioObject;
     }
@@ -78,61 +78,50 @@ public class AudioManager : MonoBehaviour, IService
         if (clip == null) return -1;
 
         int id = _nextLoopId++;
-        var cts = new CancellationTokenSource();
-
         GameObject loopObject = new($"SoundLoop_{id}");
         loopObject.transform.parent = transform;
 
-        ActiveSoundLoop loop = new()
-        {
-            Cts = cts
-        };
+        ActiveSoundLoop loop = new();
+        loop.Coroutine = StartCoroutine(SoundLoopCoroutine(clip, intervalSeconds, id, loopObject, deltaRandomPitch));
         _activeLoops.Add(id, loop);
-        SoundLoopTask(clip, intervalSeconds, id, cts.Token, loopObject).Forget();
         return id;
     }
-    
-    private async UniTaskVoid SoundLoopTask(AudioClip clip, float interval, int id, CancellationToken ct, GameObject loopHolder, float deltarandomPitch = 0)
+
+    private IEnumerator SoundLoopCoroutine(AudioClip clip, float interval, int id, GameObject loopHolder, float deltaRandomPitch = 0)
     {
         GameObject soundHolder = null;
-        try
+
+        while (true)
         {
-            while (!ct.IsCancellationRequested)
-            {
-                soundHolder = clip.PlayAsSoundRandomPitch(deltarandomPitch);
-                
-                // Ждем интервал + длительность звука с возможностью отмены
-                await UniTask.Delay(
-                    (int)((interval + clip.length) * 1000), 
-                    DelayType.DeltaTime, 
-                    PlayerLoopTiming.Update, 
-                    ct);
-            }
-        }
-        catch
-        {
-            if (_activeLoops.TryGetValue(id, out var loop))
-            {
-                _activeLoops.Remove(id);
-                if(soundHolder != null) Destroy(soundHolder);
-            }
+            soundHolder = clip.PlayAsSoundRandomPitch(deltaRandomPitch);
+
+            // Ждем интервал + длительность звука
+            yield return new WaitForSeconds(interval + clip.length);
         }
     }
+
     public void RemoveLoop(int id)
     {
         if (_activeLoops.TryGetValue(id, out ActiveSoundLoop loop))
         {
-            loop.Cts?.Cancel();
-            loop.Cts?.Dispose();
+            if (loop.Coroutine != null)
+            {
+                StopCoroutine(loop.Coroutine);
+                loop.Coroutine = null;
+            }
+            _activeLoops.Remove(id);
         }
     }
-    
+
     public void RemoveAllLoops()
     {
         foreach (var loop in _activeLoops.Values)
         {
-            loop.Cts?.Cancel();
-            loop.Cts?.Dispose();
+            if (loop.Coroutine != null)
+            {
+                StopCoroutine(loop.Coroutine);
+                loop.Coroutine = null;
+            }
         }
         _activeLoops.Clear();
     }
@@ -153,12 +142,14 @@ public class DecrementalDelayTimer
     private int minDelay;
     private float delayMultiplier;
     private int currentDelay;
+
     public DecrementalDelayTimer(int initDelay, int min, float multi)
     {
         minDelay = min;
         delayMultiplier = multi;
         currentDelay = initDelay;
     }
+
     public int GetDelay()
     {
         int result = currentDelay;

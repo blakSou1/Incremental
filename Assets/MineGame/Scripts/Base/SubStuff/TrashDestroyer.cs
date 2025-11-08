@@ -1,11 +1,10 @@
-using System;
-using System.Security.Cryptography;
 using UnityEngine;
 using DG.Tweening;
 
 public class TrashDestroyer : MonoBehaviour
 {
     private Tweener currentPunchTween;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<MovableObject>() != null)

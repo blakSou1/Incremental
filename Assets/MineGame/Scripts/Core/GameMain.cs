@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using UnityEngine.Rendering.Universal;
 
 public class GameMain : MonoBehaviour
 {
-    //GamePos
+    // GamePos
     public readonly Vector3 MachinePos = Vector3.zero;
     public readonly Vector3 DoorPos = new(-19.5f, 0, 0);
     public readonly Vector3 UpgradePos = new(19.5f, 0, 0);
@@ -31,26 +31,26 @@ public class GameMain : MonoBehaviour
 
     public void Start()
     {
-        Init().Forget();
+        StartCoroutine(InitCoroutine());
     }
 
-    public async UniTask Init()
+    private IEnumerator InitCoroutine()
     {
         G.Main = this;
         G.AudioManager.PlayMusic(R.Audio.MainGameMusic);
         Machine = FindFirstObjectByType<Machine>();
         TV = FindFirstObjectByType<TVLogic>();
         PipeController = FindFirstObjectByType<PipeController>();
-        PipeController.AutoSpawner().Forget();
-        
+        PipeController.AutoSpawner();
+
         ConfigItemsInPipe configItems = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigItemsInPipe>())!.Get<ConfigItemsInPipe>().DeepCopy();
         RandomSelector = new WeightedRandomSelector();
         foreach (var it in configItems.pipeItems)
         {
             RandomSelector.AddObject(it.DeepCopy());
         }
-        
-        await UniTask.Delay(5000);
+
+        yield return new WaitForSeconds(5f);
         Machine.slots[0].OpenSlot();
     }
 
@@ -58,13 +58,13 @@ public class GameMain : MonoBehaviour
     {
         isLockDown = true;
         Light2D.intensity = 0.002f;
-        foreach (var VARIABLE in ObjectToLockDown)
+        foreach (var obj in ObjectToLockDown)
         {
-            VARIABLE.SetActive(false);
+            obj.SetActive(false);
         }
-        foreach (var VARIABLE in ObjectToTurnOn)
+        foreach (var obj in ObjectToTurnOn)
         {
-            VARIABLE.SetActive(true);
+            obj.SetActive(true);
         }
         ps.Play();
         Machine.StopMachine();
@@ -78,11 +78,11 @@ public class GameMain : MonoBehaviour
     public bool CheckCanSpawnNewItem()
     {
         int realCount = GameObject.FindObjectsByType<MovableObject>(FindObjectsSortMode.None).Count(x => x is not Cassete);
-        int requaredCount = G.Main.Machine.slots.FindAll(x => !x.isClosed).ToList().Count + 6;
-        return realCount <= requaredCount;
+        int requiredCount = G.Main.Machine.slots.FindAll(x => !x.isClosed).Count + 6;
+        return realCount <= requiredCount;
     }
-
 }
+
 [Serializable]
 public class ConfigItemsInPipe : EntityComponentDefinition
 {
@@ -90,16 +90,19 @@ public class ConfigItemsInPipe : EntityComponentDefinition
     public GameObject boomVFX;
     public List<WeightedGameObject> pipeItems;
 }
+
 [Serializable]
 public class WeightedGameObject
 {
     public GameObject gameObject;
     public int weight;
+
     public WeightedGameObject()
     {
         gameObject = null;
         weight = 0;
     }
+
     public WeightedGameObject(GameObject g, int w)
     {
         gameObject = g;
@@ -110,10 +113,12 @@ public class WeightedGameObject
 public class WeightedRandomSelector
 {
     public List<WeightedGameObject> weightedObjects = new();
+
     public void AddObject(WeightedGameObject obj)
     {
         weightedObjects.Add(obj);
     }
+
     public GameObject SpinRoulette()
     {
         if (weightedObjects.Count == 0)
@@ -123,11 +128,7 @@ public class WeightedRandomSelector
         }
 
         // Вычисляем общий вес
-        int totalWeight = 0;
-        foreach (var item in weightedObjects)
-        {
-            totalWeight += item.weight;
-        }
+        int totalWeight = weightedObjects.Sum(item => item.weight);
 
         // Генерируем случайное число в диапазоне общего веса
         int randomValue = UnityEngine.Random.Range(0, totalWeight);
@@ -153,11 +154,11 @@ public class WeightedRandomSelector
             {
                 weightedObjects[i].weight -= 30;
             }
-            else if(i == 1)
+            else if (i == 1)
             {
                 weightedObjects[i].weight -= 10;
             }
-            else if(i == 2)
+            else if (i == 2)
             {
                 weightedObjects[i].weight -= 3;
             }

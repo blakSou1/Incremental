@@ -14,21 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MineGame/Settings/Scenes/MainGame.unity
     guid: 2922625ec6b397d45b81e51c69f7192c
-  - enabled: 1
-    path: Assets/MineGame/Settings/Scenes/End.unity
-    guid: e73b400e0639dc34e813d13895c98b78
-  - enabled: 1
-    path: Assets/MineGame/Settings/Scenes/MultOne.unity
-    guid: 1dee46fc36044954fa2f79f2b5a2724e
-  - enabled: 1
-    path: Assets/MineGame/Settings/Scenes/MultTwo.unity
-    guid: aba26c7200f433f4392bdb753bc7dd5d
-  - enabled: 1
-    path: Assets/MineGame/Settings/Scenes/MultEnd.unity
-    guid: aa7ef3ea7d5af144b859374fe3a3b5db
-  - enabled: 1
-    path: Assets/MineGame/Settings/Scenes/MultThree.unity
-    guid: f5b75934664f8564696fabb87771970e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

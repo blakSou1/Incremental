@@ -37,21 +37,24 @@ public class PausePanel : MonoBehaviour, IService
         G.inputs.Player.Esc.performed -= i => UpdatePanel();
     }
 
-    public void UpdatePanel()
+    private void UpdatePanel()
     {
         if (!panel.inAnim)
         {
-            
-            if (panel.gameObject.activeSelf)
-            {
-                panel.Close();
-                inMenu = false;
-            }
-            else
-            {
-                panel.Open();
-                inMenu = true;
-            }
+            UpdatePanels();
+        }
+    }
+    public void UpdatePanels()
+    {
+        if (panel.gameObject.activeSelf)
+        {
+            panel.Close();
+            inMenu = false;
+        }
+        else
+        {
+            panel.Open();
+            inMenu = true;
         }
     }
 }
