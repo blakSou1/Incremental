@@ -1,5 +1,5 @@
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class TrashDestroyer : MonoBehaviour
 {
@@ -16,8 +16,7 @@ public class TrashDestroyer : MonoBehaviour
                 currentPunchTween.Complete();
                 currentPunchTween.Kill();
             }
-            currentPunchTween = transform.GetChild(0).DOPunchScale(Vector3.one * -0.12f, 0.3f, elasticity: 0f, vibrato: 0).OnComplete(() => currentPunchTween = null);;
+            currentPunchTween = transform.GetChild(0).DOPunchScale(Vector3.one * -0.12f, 0.3f, elasticity: 0f, vibrato: 0).OnComplete(() => currentPunchTween = null); ;
         }
     }
 }
-    

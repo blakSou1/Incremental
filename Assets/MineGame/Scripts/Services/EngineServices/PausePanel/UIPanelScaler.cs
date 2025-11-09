@@ -1,6 +1,6 @@
-using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
 public class UIPanelScaler : MonoBehaviour
@@ -9,12 +9,12 @@ public class UIPanelScaler : MonoBehaviour
 
     public void Close()
     {
-        StartCoroutine(CloseAnim());
+        G.GameState.StartCoroutine(CloseAnim());
     }
 
     public void Open()
     {
-        StartCoroutine(CloseAnim(true));
+        G.GameState.StartCoroutine(CloseAnim(true));
     }
 
     private IEnumerator CloseAnim(bool isOpen = false)

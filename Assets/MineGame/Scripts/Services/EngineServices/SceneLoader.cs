@@ -51,7 +51,7 @@ public class SceneLoader : MonoBehaviour, IService
     {
         yield return Fade(0.7f);
         G.Main.MainCamera.gameObject.SetActive(false);
-        G.Main.MainCamera.GetComponentInParent<CameraController>().GoSuperLeft();
+        G.Main.MainCamera.GetComponentInParent<CameraController>().MoveToIndex(0);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         yield return Unfade(0.7f);
     }
@@ -63,7 +63,7 @@ public class SceneLoader : MonoBehaviour, IService
 
     private IEnumerator UnloadAdditiveCoroutine(string sceneName)
     {
-        G.Main.MainCamera.GetComponentInParent<CameraController>().MoveToUpgrades();
+        //G.Main.MainCamera.GetComponentInParent<CameraController>().MoveToUpgrades();
         yield return Fade(0.7f);
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneName);
         yield return new WaitUntil(() => unloadOperation.isDone);

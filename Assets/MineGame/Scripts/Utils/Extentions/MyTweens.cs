@@ -1,6 +1,6 @@
-using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine;
 
 public static class MyTweens
 {

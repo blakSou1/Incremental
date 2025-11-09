@@ -1,5 +1,5 @@
 
-public static class G 
+public static class G
 {
     public static LocSystem LocSystem;
     public static AudioManager AudioManager;
@@ -9,7 +9,7 @@ public static class G
     public static PausePanel pausePanel;
 
     public static Inpyts inputs;
-    
+
     //Объекты в игре
     public static GameMain Main;
 }

@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using System.Linq;
 using DG.Tweening;
 using System.Collections;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class LightController : MonoBehaviour, IService
 {

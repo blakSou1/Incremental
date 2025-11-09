@@ -1,27 +1,21 @@
 using System;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Rendering.Universal;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameMain : MonoBehaviour
 {
     // GamePos
-    public readonly Vector3 MachinePos = Vector3.zero;
-    public readonly Vector3 DoorPos = new(-19.5f, 0, 0);
-    public readonly Vector3 UpgradePos = new(19.5f, 0, 0);
+    public List<Transform> cameraPositionRoom;
 
-    public Camera MainCamera;
-    public Machine Machine;
-    public TVLogic TV;
+    [HideInInspector] public Camera MainCamera;
     [HideInInspector] public PipeController PipeController;
-    public ParticleSystem ps;
     public WeightedRandomSelector RandomSelector;
-    public bool isLockDown;
-    public Light2D Light2D;
-    public List<GameObject> ObjectToLockDown;
-    public List<GameObject> ObjectToTurnOn;
+    [HideInInspector] public bool isLockDown;
+
+    MovableObject movableObject;
 
     private void Awake()
     {
@@ -32,54 +26,49 @@ public class GameMain : MonoBehaviour
     public void Start()
     {
         StartCoroutine(InitCoroutine());
+
+        G.inputs.Player.Attack.started += i => Raycast();
+        G.inputs.Player.Attack.performed += i => Movable();
+        G.inputs.Player.Attack.canceled += i => DisableDrag();
+    }
+
+    void Raycast()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero);
+        RaycastHit2D hit = hits.FirstOrDefault(x => x.collider.transform.GetComponent<MovableObject>());
+        if (hit.transform == null) return;
+
+        movableObject = hit.transform.GetComponent<MovableObject>();
+        movableObject.StartDragging();
+    }
+    void DisableDrag()
+    {
+        if (movableObject == null) return;
+
+        movableObject.CheckAndPut();
+        movableObject.body.gravityScale = movableObject.gravity;
+
+        movableObject = null;
+    }
+
+    void Movable()
+    {
+        if (movableObject != null && G.inputs.Player.Attack.IsPressed())
+            movableObject.StartCoroutine(movableObject.MoveTo());
     }
 
     private IEnumerator InitCoroutine()
     {
         G.Main = this;
         G.AudioManager.PlayMusic(R.Audio.MainGameMusic);
-        Machine = FindFirstObjectByType<Machine>();
-        TV = FindFirstObjectByType<TVLogic>();
         PipeController = FindFirstObjectByType<PipeController>();
-        PipeController.AutoSpawner();
 
         ConfigItemsInPipe configItems = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigItemsInPipe>())!.Get<ConfigItemsInPipe>().DeepCopy();
         RandomSelector = new WeightedRandomSelector();
         foreach (var it in configItems.pipeItems)
-        {
             RandomSelector.AddObject(it.DeepCopy());
-        }
 
-        yield return new WaitForSeconds(5f);
-        Machine.slots[0].OpenSlot();
-    }
-
-    public void LockDown()
-    {
-        isLockDown = true;
-        Light2D.intensity = 0.002f;
-        foreach (var obj in ObjectToLockDown)
-        {
-            obj.SetActive(false);
-        }
-        foreach (var obj in ObjectToTurnOn)
-        {
-            obj.SetActive(true);
-        }
-        ps.Play();
-        Machine.StopMachine();
-    }
-
-    public void OpenNewSlot()
-    {
-        Machine.slots.Find(x => x.isClosed)?.OpenSlot();
-    }
-
-    public bool CheckCanSpawnNewItem()
-    {
-        int realCount = GameObject.FindObjectsByType<MovableObject>(FindObjectsSortMode.None).Count(x => x is not Cassete);
-        int requiredCount = G.Main.Machine.slots.FindAll(x => !x.isClosed).Count + 6;
-        return realCount <= requiredCount;
+        yield return null;
     }
 }
 
@@ -139,9 +128,7 @@ public class WeightedRandomSelector
         {
             currentWeight += item.weight;
             if (randomValue < currentWeight)
-            {
                 return item.gameObject;
-            }
         }
         return weightedObjects[^1].gameObject;
     }
@@ -151,21 +138,13 @@ public class WeightedRandomSelector
         for (int i = 0; i < weightedObjects.Count; i++)
         {
             if (i == 0)
-            {
                 weightedObjects[i].weight -= 30;
-            }
             else if (i == 1)
-            {
                 weightedObjects[i].weight -= 10;
-            }
             else if (i == 2)
-            {
                 weightedObjects[i].weight -= 3;
-            }
             else
-            {
                 weightedObjects[i].weight += 1;
-            }
         }
     }
 }

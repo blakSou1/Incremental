@@ -1,8 +1,8 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using System.Collections;
+using UnityEngine.UI;
 
 public class Lever : MonoBehaviour
 {
@@ -59,13 +59,9 @@ public class Lever : MonoBehaviour
     private void CheckOutResult()
     {
         if (slider.value >= activationThreshold && !G.Main.isLockDown)
-        {
             onLeverActivated?.Invoke();
-        }
         else
-        {
             R.Audio.Wrong_Error.PlayAsSoundRandomPitch(0.2f);
-        }
     }
 
     private IEnumerator HandleAutoReturnCoroutine()

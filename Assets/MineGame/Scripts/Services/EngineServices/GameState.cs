@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class GameState : MonoBehaviour, IService
 {
@@ -9,12 +9,7 @@ public class GameState : MonoBehaviour, IService
     public readonly int EffLevelsMax = 6;
     public int RareLevels = 0;
     public readonly int RareLevelsMax = 10;
-    public int SlotsLevels = 0;
-    public readonly int SlotLevelsMax = 7;
-    public int AutoSpawnLevels = 0;
-    public readonly int AutoSpawnLevelsMax = 3;
-    public bool AutoRemoveBroken = false;
-    
+
     public void Init()
     {
         configGameStates =
@@ -28,7 +23,6 @@ public class GameState : MonoBehaviour, IService
     public void Reset()
     {
         Points = 0;
-        SlotsLevels = 0;
         EffLevels = 0;
         RareLevels = 0;
     }

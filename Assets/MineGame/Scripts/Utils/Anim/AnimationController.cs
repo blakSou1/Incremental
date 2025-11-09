@@ -4,10 +4,18 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
     private SpriteRenderer _targetRenderer;
-    private AnimationDataSO _currentAnimation;
+    [SerializeField] private AnimationDataSO _currentAnimation;//delete serializefield
     private Coroutine _animationCoroutine;
 
     private int frame = 0;
+
+    //
+    private void Start()
+    {
+        Init();
+        _animationCoroutine = StartCoroutine(Anim(_currentAnimation));
+    }
+    //
 
     public void Init()
     {

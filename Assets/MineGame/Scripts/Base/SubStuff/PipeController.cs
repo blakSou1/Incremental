@@ -1,49 +1,11 @@
-using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine;
 
 public class PipeController : MonoBehaviour
 {
     private Tweener currentPunchTween;
     public Transform posToSpawn;
-
-    private void Start()
-    {
-        StartCoroutine(AutoSpawnerCoroutine());
-    }
-    public void AutoSpawner()
-    {
-        StartCoroutine(AutoSpawnerCoroutine());
-    }
-
-    private IEnumerator AutoSpawnerCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
-
-        while (!G.Main.isLockDown && gameObject != null)
-        {
-            yield return new WaitForSeconds(5.5f);
-            if (G.GameState.AutoSpawnLevels > 0)
-            {
-                if (G.Main.isLockDown) yield break;
-                CreateItem(false);
-            }
-
-            yield return new WaitForSeconds(5.5f);
-            if (G.GameState.AutoSpawnLevels > 1)
-            {
-                if (G.Main.isLockDown) yield break;
-                CreateItem(false);
-            }
-
-            yield return new WaitForSeconds(5.5f);
-            if (G.GameState.AutoSpawnLevels > 2)
-            {
-                if (G.Main.isLockDown) yield break;
-                CreateItem(false);
-            }
-        }
-    }
 
     public void CreateIt()
     {
@@ -54,15 +16,8 @@ public class PipeController : MonoBehaviour
     {
         if (G.Main.isLockDown) return;
 
-        if (G.Main.CheckCanSpawnNewItem())
-        {
-            if (fromLever) R.Audio.LevelDown.PlayAsSoundRandomPitch(0.1f);
-            StartCoroutine(DelayedCreateItem());
-        }
-        else
-        {
-            R.Audio.Wrong_Error.PlayAsSoundRandomPitch(0.2f);
-        }
+        if (fromLever) R.Audio.LevelDown.PlayAsSoundRandomPitch(0.1f);
+        StartCoroutine(DelayedCreateItem());
     }
 
     private IEnumerator DelayedCreateItem()

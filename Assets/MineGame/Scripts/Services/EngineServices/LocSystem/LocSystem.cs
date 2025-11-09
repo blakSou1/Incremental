@@ -1,20 +1,20 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class LocSystem : MonoBehaviour, IService
 {
     public string language = LANG_EN;
-    
+
     public const string LANG_EN = "en";
     public const string LANG_RU = "ru";
 
     private GameObject _LocCanvas;
     private GameObject _languagePanel;
-    
+
     public static List<string> langs = new() { LANG_EN, LANG_RU };
 
     public void Init()
@@ -42,7 +42,7 @@ public class LocSystem : MonoBehaviour, IService
         if (CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigMain>())!.Get<ConfigMain>().showLocOnStart)
             _languagePanel = Instantiate(Resources.Load<GameObject>("Services/" + "LanguageSelector"), _LocCanvas.transform, false);
     }
-    
+
     public void UpdateTexts()
     {
         GameObject[] allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
@@ -74,7 +74,7 @@ public class LocString
     public string GetText()
     {
         field ??= new Dictionary<string, FieldInfo>();
-        
+
         if (!field.ContainsKey(G.LocSystem.language))
         {
             Type type = this.GetType();

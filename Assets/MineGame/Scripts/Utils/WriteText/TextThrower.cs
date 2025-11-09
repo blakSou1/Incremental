@@ -1,7 +1,7 @@
-using UnityEngine;
 using Febucci.UI;
-using TMPro;
 using System.Collections;
+using TMPro;
+using UnityEngine;
 
 [RequireComponent(typeof(TextAnimatorPlayer))]
 [RequireComponent(typeof(TMP_Text))]

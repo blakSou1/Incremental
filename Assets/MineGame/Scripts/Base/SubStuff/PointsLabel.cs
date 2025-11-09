@@ -5,7 +5,7 @@ using UnityEngine;
 public class PointsLabel : MonoBehaviour
 {
     private TMP_Text label;
-    
+
     void Awake()
     {
         label = GetComponent<TMP_Text>();

@@ -18,7 +18,7 @@ public class SliderSettings : MonoBehaviour
     {
         G.AudioManager.SetMusicVolume(slider.value);
     }
-    
+
     public void UpdateSoundVolume()
     {
         G.AudioManager.SetSoundVolume(slider.value);

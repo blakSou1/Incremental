@@ -36,13 +36,13 @@ public static class GameBootstrapper
         G.pausePanel = CreateSimpleService<PausePanel>();
 
         G.SceneLoader.onLoadAction = (scene, sceneMode) =>
-        {                
+        {
             G.LightController.SetupLight();
 
             G.Main = Object.FindFirstObjectByType<GameMain>();
         };
     }
-    
+
     private static T CreateSimpleService<T>() where T : Component, IService
     {
         GameObject g = new(typeof(T).ToString());

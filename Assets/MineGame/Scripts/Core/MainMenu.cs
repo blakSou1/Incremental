@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -9,8 +9,6 @@ public class MainMenu : MonoBehaviour
     private List<LocString> buttonsText = new()
     {
         new LocString("Play", "Играть"),
-        new LocString("Settings", "Настроечки"),
-        new LocString("Author", "Разработичк"),
         new LocString("Exit", "Выход"),
     };
 
@@ -23,10 +21,10 @@ public class MainMenu : MonoBehaviour
     {
         G.LocSystem.CreateLocalizationPanel();
     }
-    
+
     private void Init()
     {
-        buttons = FindObjectsByType<GeneralButton>(FindObjectsInactive.Include,FindObjectsSortMode.None)
+        buttons = FindObjectsByType<GeneralButton>(FindObjectsInactive.Include, FindObjectsSortMode.None)
         .Where(obj => obj.transform.parent.GetComponent<VerticalLayoutGroup>() != null)
         .OrderBy(b => b.transform.GetSiblingIndex())
         .ToList();
