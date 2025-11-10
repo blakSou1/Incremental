@@ -9,12 +9,12 @@ public class UIPanelScaler : MonoBehaviour
 
     public void Close()
     {
-        G.GameState.StartCoroutine(CloseAnim());
+        G.SceneLoader.StartCoroutine(CloseAnim());
     }
 
     public void Open()
     {
-        G.GameState.StartCoroutine(CloseAnim(true));
+        G.SceneLoader.StartCoroutine(CloseAnim(true));
     }
 
     private IEnumerator CloseAnim(bool isOpen = false)

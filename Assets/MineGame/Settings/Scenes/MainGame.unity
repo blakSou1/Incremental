@@ -672,6 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1148d9302fae04e9bed922bead0160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  label: {fileID: 0}
 --- !u!222 &55764129
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5121,7 +5122,6 @@ MonoBehaviour:
   - {fileID: 1531339450}
   - {fileID: 2040979595}
   MainCamera: {fileID: 0}
-  PipeController: {fileID: 0}
   isLockDown: 0
 --- !u!1001 &1570317991
 PrefabInstance:
@@ -5579,6 +5579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1148d9302fae04e9bed922bead0160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  label: {fileID: 0}
 --- !u!222 &1704565384
 CanvasRenderer:
   m_ObjectHideFlags: 0

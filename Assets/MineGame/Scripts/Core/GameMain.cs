@@ -11,7 +11,6 @@ public class GameMain : MonoBehaviour
     public List<Transform> cameraPositionRoom;
 
     [HideInInspector] public Camera MainCamera;
-    [HideInInspector] public PipeController PipeController;
     public WeightedRandomSelector RandomSelector;
     [HideInInspector] public bool isLockDown;
 
@@ -61,7 +60,6 @@ public class GameMain : MonoBehaviour
     {
         G.Main = this;
         G.AudioManager.PlayMusic(R.Audio.MainGameMusic);
-        PipeController = FindFirstObjectByType<PipeController>();
 
         ConfigItemsInPipe configItems = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigItemsInPipe>())!.Get<ConfigItemsInPipe>().DeepCopy();
         RandomSelector = new WeightedRandomSelector();

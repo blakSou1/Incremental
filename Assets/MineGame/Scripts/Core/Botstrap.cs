@@ -31,14 +31,10 @@ public static class GameBootstrapper
         G.AudioManager = CreateSimpleService<AudioManager>();
         G.SceneLoader = CreateSimpleService<SceneLoader>();
         G.LocSystem = CreateSimpleService<LocSystem>();
-        G.LightController = CreateSimpleService<LightController>();
-        G.GameState = CreateSimpleService<GameState>();
         G.pausePanel = CreateSimpleService<PausePanel>();
 
         G.SceneLoader.onLoadAction = (scene, sceneMode) =>
         {
-            G.LightController.SetupLight();
-
             G.Main = Object.FindFirstObjectByType<GameMain>();
         };
     }
