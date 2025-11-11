@@ -9,5 +9,7 @@ public static class G
     public static Inpyts inputs;
 
     //Объекты в игре
-    public static GameMain Main;
+    public static GameMode gameMode;
+    public static PlayerController PlayerController;
+    public static AI ai;
 }

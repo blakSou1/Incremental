@@ -43,13 +43,14 @@ public class IHelper : ScriptableObject
         clip.PlayAsSound();
     }
 
-    public void Unload(string n)
+    public void StartGame()
     {
-        G.SceneLoader.UnloadAdditive(n);
+        if(G.gameMode != null)
+            G.gameMode.StartGame();
     }
-
-    public void OpenLink()
+    public void RestartGame()
     {
-        Application.OpenURL("https://t.me/SoMeshBoy");
+        if (G.gameMode != null)
+            G.gameMode.RestartGame();
     }
 }

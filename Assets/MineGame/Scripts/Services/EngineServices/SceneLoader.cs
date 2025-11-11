@@ -42,35 +42,6 @@ public class SceneLoader : MonoBehaviour, IService
         currentSceneName = sceneName;
     }
 
-    public void LoadAdditive(string sceneName)
-    {
-        StartCoroutine(LoadAdditiveCoroutine(sceneName));
-    }
-
-    private IEnumerator LoadAdditiveCoroutine(string sceneName)
-    {
-        yield return Fade(0.7f);
-        G.Main.MainCamera.gameObject.SetActive(false);
-        G.Main.MainCamera.GetComponentInParent<CameraController>().MoveToIndex(0);
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        yield return Unfade(0.7f);
-    }
-
-    public void UnloadAdditive(string sceneName)
-    {
-        StartCoroutine(UnloadAdditiveCoroutine(sceneName));
-    }
-
-    private IEnumerator UnloadAdditiveCoroutine(string sceneName)
-    {
-        //G.Main.MainCamera.GetComponentInParent<CameraController>().MoveToUpgrades();
-        yield return Fade(0.7f);
-        AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneName);
-        yield return new WaitUntil(() => unloadOperation.isDone);
-        G.Main.MainCamera.gameObject.SetActive(true);
-        yield return Unfade(0.7f);
-    }
-
     private void CreateFadeCanvas()
     {
         _fadeCanvas = new GameObject("Canvas - FadeCanvas");

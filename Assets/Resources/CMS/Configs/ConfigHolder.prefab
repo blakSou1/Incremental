@@ -49,7 +49,6 @@ MonoBehaviour:
   - rid: 4770333491693355076
   - rid: 4770333508773347396
   - rid: 4770333491693355077
-  - rid: 6341372987653488708
   references:
     version: 2
     RefIds:
@@ -73,11 +72,3 @@ MonoBehaviour:
       data:
         overrideValues: 0
         overridePoints: 6000
-    - rid: 6341372987653488708
-      type: {class: ConfigItemsInPipe, ns: , asm: Assembly-CSharp}
-      data:
-        baseAllShader: {fileID: 2100000, guid: e78e3cdeaaf43624f84e1ab63f03d8e9, type: 2}
-        boomVFX: {fileID: 1454148361079965310, guid: 1191b3c264bcdb244b6cfdfc8ff553ce, type: 3}
-        pipeItems:
-        - gameObject: {fileID: 330464701615848155, guid: 0667644255d508045a6aea718e88ac0a, type: 3}
-          weight: 15

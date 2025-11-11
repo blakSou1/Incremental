@@ -33,9 +33,15 @@ public static class GameBootstrapper
         G.LocSystem = CreateSimpleService<LocSystem>();
         G.pausePanel = CreateSimpleService<PausePanel>();
 
+        G.gameMode = Object.FindFirstObjectByType<GameMode>();
+        G.ai = Object.FindFirstObjectByType<AI>();
+        G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
+
         G.SceneLoader.onLoadAction = (scene, sceneMode) =>
         {
-            G.Main = Object.FindFirstObjectByType<GameMain>();
+            G.gameMode = Object.FindFirstObjectByType<GameMode>();
+            G.ai = Object.FindFirstObjectByType<AI>();
+            G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
         };
     }
 
