@@ -1,12 +1,16 @@
-﻿using Index = System.Tuple<int, int>;
+﻿using TMPro;
+using UnityEngine;
+using Index = System.Tuple<int, int>;
 
-public class GridBox
+public class GridBox : MonoBehaviour
 {
     public enum Status { Black = -1, None = 0, White = 1 }
 
+    public TMP_Text indexT;
+
     private Index index = new(-1, -1);
     private Status stat = Status.None;
-    public Piece piece;
+    [HideInInspector] public Piece piece;
 
     public void Flip()
     {
@@ -31,6 +35,7 @@ public class GridBox
     public void SetIndex(int i, int j)
     {
         index = new Index(i, j);
+        indexT.text = $"{i}/{j}";
     }
 
     public void SetPiece(Piece piece)

@@ -34,7 +34,7 @@ public class AI : MonoBehaviour
 
     public void Execute(GridBox.Status comColor)
     {
-        var possibleLocs = G.gameMode.GetPossibleLocation(comColor);
+        var possibleLocs = G.gridFuncion.GetPossibleLocation(comColor);
 
         if (possibleLocs == null) return;
 
@@ -57,7 +57,7 @@ public class AI : MonoBehaviour
 
             var flipedSumVal = 0;
 
-            G.gameMode.CheckPieceValid(comColor, loc, out List<GridBox> flipedList, false);
+            G.gameLogic.CheckPieceValid(comColor, G.gridFuncion.GetMatrix().GetGrid(loc), out List<GridBox> flipedList, false);
 
             foreach (var fp in flipedList)
             {
@@ -76,6 +76,6 @@ public class AI : MonoBehaviour
             }
         }
 
-        G.gameMode.PlacePiece(comColor, selectedLoc);
+        G.gameLogic.PlacePiece(comColor, selectedLoc);
     }
 }

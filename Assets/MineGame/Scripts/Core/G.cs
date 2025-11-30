@@ -10,6 +10,8 @@ public static class G
 
     //Объекты в игре
     public static GameMode gameMode;
+    public static GridFuncion gridFuncion;
+    public static GameLogic gameLogic;
     public static PlayerController PlayerController;
     public static AI ai;
 }

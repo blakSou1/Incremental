@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7655773385590912272}
   - component: {fileID: 7918906466241739528}
   - component: {fileID: 553669412}
+  - component: {fileID: -9027304788492072133}
   m_Layer: 0
   m_Name: piece
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,15 +78,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 485830879886811217, guid: 2e2048ca751387b4daeb4b609940e9de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 2.58, y: 2.59}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &553669412
@@ -100,9 +101,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac003c41f171d143bc7d6fb6e869963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlackSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  WhiteSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  FlipSprites:
-  - {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  isAnimating: 0
+  SpawnBlackAnimDataSO: {fileID: 11400000, guid: f3c551b4005ce604bbb3514323870994, type: 2}
+  SpawnWhiteAnimDataSO: {fileID: 11400000, guid: 3c0d26e606f88eb42b45b7f21040466b, type: 2}
+  MoveBlackAnimDataSO: {fileID: 11400000, guid: 30ad50aaf6055944dba7ad8d7f8bb0d3, type: 2}
+  MoveWhiteAnimDataSO: {fileID: 11400000, guid: 0a79d0f3845f5e246bf57eb438926a84, type: 2}
+--- !u!114 &-9027304788492072133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111731403297543512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231f70b4d65a734419fa4a440a8cfcf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endAnimation:
+    m_PersistentCalls:
+      m_Calls: []

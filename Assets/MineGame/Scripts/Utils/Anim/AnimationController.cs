@@ -1,21 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnimationController : MonoBehaviour
 {
     private SpriteRenderer _targetRenderer;
-    [SerializeField] private AnimationDataSO _currentAnimation;//delete serializefield
+    private AnimationDataSO _currentAnimation;
     private Coroutine _animationCoroutine;
 
     private int frame = 0;
 
-    //
-    private void Start()
-    {
-        Init();
-        _animationCoroutine = StartCoroutine(Anim(_currentAnimation));
-    }
-    //
+    [HideInInspector] public UnityEvent endAnimation;
 
     public void Init()
     {
@@ -29,38 +24,43 @@ public class AnimationController : MonoBehaviour
             StopAnimation();
 
             _currentAnimation = newAnimation;
-            _animationCoroutine = StartCoroutine(Anim(_currentAnimation));
+            _animationCoroutine = StartCoroutine(Anim());
         }
     }
 
     public void SetFlip(bool flip) => _targetRenderer.flipX = flip;
 
-    private IEnumerator Anim(AnimationDataSO myAnimData)
+    private IEnumerator Anim()
     {
         frame = 0;
-        while (_currentAnimation == myAnimData)
-        {
-            _targetRenderer.sprite = myAnimData.frames[frame];
-            frame = (frame + 1) % _currentAnimation.frames.Count;
 
-            // Ждем перед сменой кадра
-            yield return new WaitForSeconds(1f / myAnimData.framerate);
+        while (frame != _currentAnimation.frames.Count)
+        {
+            _targetRenderer.sprite = _currentAnimation.frames[frame];
+            frame++;
+
+            if (_currentAnimation.isLoop)
+                frame = frame % _currentAnimation.frames.Count;
+
+            yield return new WaitForSeconds(1f / _currentAnimation.framerate);
         }
+        StopAnimation();
     }
 
     private void StopAnimation()
     {
-        // Останавливаем текущую корутину, если она существует
         if (_animationCoroutine != null)
         {
             StopCoroutine(_animationCoroutine);
             _animationCoroutine = null;
+
+            endAnimation?.Invoke();
+            endAnimation.RemoveAllListeners();
         }
     }
 
     private void OnDestroy()
     {
-        // Останавливаем анимацию при уничтожении объекта
         StopAnimation();
     }
 }
