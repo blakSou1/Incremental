@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
 
@@ -97,7 +98,7 @@ public class GridFuncion
             var end = Mathf.Max(i1.Item2, i2.Item2);
             for (var j = start + 1; j <= end - 1; j++)
             {
-                var grid = GetMatrix().GetGrid(new Index(i1.Item1, j));
+                var grid = matrix.GetGrid(new Index(i1.Item1, j));
                 if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                     list.Add(grid);
             }
@@ -111,7 +112,7 @@ public class GridFuncion
             var end = Mathf.Max(i1.Item1, i2.Item1);
             for (var i = start + 1; i <= end - 1; i++)
             {
-                var grid = GetMatrix().GetGrid(new Index(i, i1.Item2));
+                var grid = matrix.GetGrid(new Index(i, i1.Item2));
                 if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                     list.Add(grid);
             }
@@ -131,15 +132,13 @@ public class GridFuncion
 
                 for (var d = 1; d < l; d++)
                 {
-                    var grid = GetMatrix().GetGrid(new Index(
+                    var grid = matrix.GetGrid(new Index(
                         (b ? i1.Item1 : i2.Item1) + d,
                         (b ? i1.Item2 : i2.Item2) + d)
                     );
 
                     if (grid.GetStat() != GridBox.Status.None || !excludeNone)
-                    {
                         list.Add(grid);
-                    }
                 }
 
                 return list;
@@ -151,7 +150,7 @@ public class GridFuncion
 
                 for (var d = 1; d < l; d++)
                 {
-                    var grid = GetMatrix().GetGrid(new Index(
+                    var grid = matrix.GetGrid(new Index(
                         (b ? i1.Item1 : i2.Item1) + d,
                         (b ? i1.Item2 : i2.Item2) - d)
                     );
@@ -172,56 +171,56 @@ public class GridFuncion
         var list = new List<GridBox>();
         var (cx, cy) = index;
 
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < item1; i++)
         {
             if (i == cx) continue;
 
-            var grid = GetMatrix().GetGrid(new Index(i, index.Item2));
+            var grid = matrix.GetGrid(new Index(i, index.Item2));
             if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                 list.Add(grid);
         }
 
-        for (var j = 0; j < 8; j++)
+        for (var j = 0; j < item1; j++)
         {
             if (j == cy) continue;
 
-            var grid = GetMatrix().GetGrid(new Index(index.Item1, j));
+            var grid = matrix.GetGrid(new Index(index.Item1, j));
             if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                 list.Add(grid);
         }
 
-        for (var d = 1; d <= 7; d++)
+        for (var d = 1; d <= item1 - 1; d++)
         {
-            if (cx + d >= 8 || cy + d >= 8) continue;
+            if (cx + d >= item1 || cy + d >= item1) continue;
 
-            var grid = GetMatrix().GetGrid(new Index(cx + d, cy + d));
+            var grid = matrix.GetGrid(new Index(cx + d, cy + d));
             if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                 list.Add(grid);
         }
 
-        for (var d = 1; d <= 7; d++)
+        for (var d = 1; d <= item1 - 1; d++)
         {
             if (cx - d < 0 || cy - d < 0) continue;
 
-            var grid = GetMatrix().GetGrid(new Index(cx - d, cy - d));
+            var grid = matrix.GetGrid(new Index(cx - d, cy - d));
             if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                 list.Add(grid);
         }
 
-        for (var d = 1; d <= 7; d++)
+        for (var d = 1; d <= item1 - 1; d++)
         {
-            if (cx + d >= 8 || cy - d < 0) continue;
+            if (cx + d >= item1 || cy - d < 0) continue;
 
-            var grid = GetMatrix().GetGrid(new Index(cx + d, cy - d));
+            var grid = matrix.GetGrid(new Index(cx + d, cy - d));
             if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                 list.Add(grid);
         }
 
-        for (var d = 1; d <= 7; d++)
+        for (var d = 1; d <= item1 - 1; d++)
         {
-            if (cx - d < 0 || cy + d >= 8) continue;
+            if (cx - d < 0 || cy + d >= item1) continue;
 
-            var grid = GetMatrix().GetGrid(new Index(cx - d, cy + d));
+            var grid = matrix.GetGrid(new Index(cx - d, cy + d));
             if (grid.GetStat() != GridBox.Status.None || !excludeNone)
                 list.Add(grid);
         }
@@ -246,11 +245,11 @@ public class GridFuncion
     {
         ClearIndicObjs();
 
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < item1; i++)
         {
-            for (var j = 0; j < 8; j++)
+            for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.CheckPieceValid(color, GetMatrix().GetGrid(new Index(i, j)), out List<GridBox> dummy))
+                if (G.gameLogic.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> dummy))
                 {
                     var v = IndexToVector2(new Index(i, j));
                     var indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, -1), Quaternion.identity);
@@ -263,28 +262,28 @@ public class GridFuncion
 
         if (indicObjs.Count == 0)
         {
-            if (blackPieces.Count + whitePieces.Count == 8 * 8)
+            if (blackPieces.Count + whitePieces.Count == item1 * item1)
             {
                 if (blackPieces.Count < whitePieces.Count)
                     WhiteBlack();
                 else if (blackPieces.Count > whitePieces.Count)
                     WinBlack();
                 else
-                    G.gameMode.indicatorText.text = "Drew";
+                    G.gameMode.IndicatorText("Drew");
 
                 G.gameMode.isGameEnd = true;
 
                 return;
             }
 
-            G.gameMode.indicatorText.text = "Pass";
+            G.gameMode.IndicatorText("Pass");
             G.gameMode.disableInputForPass = true;
             G.gameMode.StartCoroutine(Next());
 
             IEnumerator Next()
             {
                 yield return new WaitForSeconds(2.0f);
-                G.gameMode.indicatorText.text = "";
+                G.gameMode.IndicatorText("");
                 G.gameMode.disableInputForPass = false;
             }
 
@@ -296,11 +295,11 @@ public class GridFuncion
     {
         var list = new List<Index>();
 
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < item1; i++)
         {
-            for (var j = 0; j < 8; j++)
+            for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.CheckPieceValid(color, G.gridFuncion.GetMatrix().GetGrid(new Index(i, j)), out List<GridBox> dummy))
+                if (G.gameLogic.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> dummy))
                     list.Add(new Index(i, j));
             }
         }
@@ -320,28 +319,28 @@ public class GridFuncion
                 return null;
             }
 
-            if (G.gridFuncion.blackPieces.Count + G.gridFuncion.whitePieces.Count == 8 * 8)
+            if (G.gridFuncion.blackPieces.Count + G.gridFuncion.whitePieces.Count == item1 * item1)
             {
                 if (G.gridFuncion.blackPieces.Count < G.gridFuncion.whitePieces.Count)
                     WhiteBlack();
                 else if (G.gridFuncion.blackPieces.Count > G.gridFuncion.whitePieces.Count)
                     WinBlack();
                 else
-                    G.gameMode.indicatorText.text = "Drew";
+                    G.gameMode.IndicatorText("Drew");
 
                 G.gameMode.isGameEnd = true;
 
                 return null;
             }
 
-            G.gameMode.indicatorText.text = "Pass";
+            G.gameMode.IndicatorText("Pass");
             G.gameMode.disableInputForPass = true;
             G.gameMode.StartCoroutine(Next());
 
             IEnumerator Next()
             {
                 yield return new WaitForSeconds(2.0f);
-                G.gameMode.indicatorText.text = "";
+                G.gameMode.IndicatorText("");
                 G.gameMode.disableInputForPass = false;
             }
 
@@ -354,13 +353,13 @@ public class GridFuncion
     {
         G.gameMode.motionText.ThrowText(new LocString("Black Win!", "Черные победили!"), R.normalVoice);
 
-        G.gameMode.indicatorText.text = "Black Win";
+        G.gameMode.IndicatorText("Black Win");
     }
     private void WhiteBlack()
     {
         G.gameMode.motionText.ThrowText(new LocString("White Win!", "Белые победили!"), R.normalVoice);
 
-        G.gameMode.indicatorText.text = "White Win";
+        G.gameMode.IndicatorText("White Win");
     }
 
     public bool IsAdjacent(Index i1, Index i2)

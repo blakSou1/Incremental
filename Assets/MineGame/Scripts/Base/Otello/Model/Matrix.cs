@@ -27,21 +27,47 @@ public class Matrix
         float offsetX = (index - 1) * G.gameMode.gridFuncion.indentGrid.x / 2;
         float offsetY = (index - 1) * G.gameMode.gridFuncion.indentGrid.y / 2;
 
+        System.Random random = new System.Random();
+        bool isAudi = false;
+
         for (int i = 0; i < index; i++)
         {
             for (int j = 0; j < index; j++)
             {
+                int randomIndex = random.Next(1, 4);
+
                 data[i, j] = GameObject.Instantiate(G.gameMode.gridFuncion.prefabGridBox, parent);
                 data[i, j].transform.position = new(G.gameMode.gridFuncion.indentGrid.x * i - offsetX, G.gameMode.gridFuncion.indentGrid.y * j - offsetY);
 
-                data[i, j].SetIndex(i+1, j+1);
+                data[i, j].SetIndex(i, j);
 
                 Vector3 scale = data[i, j].transform.localScale;
 
                 data[i, j].transform.localScale = Vector3.zero;
                 Tween tween = data[i, j].transform.DOScale(scale, 0.3f).SetEase(Ease.OutBounce);
 
-                yield return new WaitForSeconds(.01f);
+                yield return new WaitForSeconds(.03f);
+
+                if (isAudi)
+                {
+                    isAudi = false;
+                    continue;
+                }
+
+                switch (randomIndex)
+                {
+                    case 1:
+                        G.AudioManager.PlaySound(R.Audio.pop1, -.03f);
+                        break;
+                    case 2:
+                        G.AudioManager.PlaySound(R.Audio.pop2, -.05f);
+                        break;
+                    case 3:
+                        G.AudioManager.PlaySound(R.Audio.pop3, 0);
+                        break;
+                }
+
+                isAudi = true;
             }
         }
 
@@ -57,6 +83,6 @@ public class Matrix
     {
         if (data == null || index == null) return null;
 
-        return data[index.Item1 - 1, index.Item2 - 1];
+        return data[index.Item1, index.Item2];
     }
 }

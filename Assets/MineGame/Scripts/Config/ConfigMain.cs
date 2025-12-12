@@ -16,21 +16,3 @@ public class ConfigMain : EntityComponentDefinition
         [HideInInspector] public bool RewriteLocWithRus = false;
 #endif
 }
-
-[Serializable]
-public class ConfigGameStates : EntityComponentDefinition
-{
-    public bool overrideValues = false;
-    public int overridePoints;
-}
-
-[Serializable]
-public class ConfigLight : EntityComponentDefinition
-{
-    public float timeToChangeIntensity = 0.4f;
-    public float timeToChangeColor = 0.4f;
-    public float LightValueOne;
-    public float LightValueTwo;
-    public Color ColorValueOne;
-    public Color ColorValueTwo;
-}

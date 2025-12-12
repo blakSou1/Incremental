@@ -6,11 +6,11 @@ public class GridBox : MonoBehaviour
 {
     public enum Status { Black = -1, None = 0, White = 1 }
 
-    public TMP_Text indexT;
-
     private Index index = new(-1, -1);
     private Status stat = Status.None;
     [HideInInspector] public Piece piece;
+
+    public TMP_Text debugTextWeight;
 
     public void Flip()
     {
@@ -35,7 +35,6 @@ public class GridBox : MonoBehaviour
     public void SetIndex(int i, int j)
     {
         index = new Index(i, j);
-        indexT.text = $"{i}/{j}";
     }
 
     public void SetPiece(Piece piece)

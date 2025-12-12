@@ -8,6 +8,8 @@ public static class G
 
     public static Inpyts inputs;
 
+    public static ConfigGame configGame;
+
     //Объекты в игре
     public static GameMode gameMode;
     public static GridFuncion gridFuncion;

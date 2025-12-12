@@ -5,31 +5,85 @@ using UnityEngine;
 public class AI : MonoBehaviour
 {
     private List<List<int>> gridWeight = new();
+    bool isInitWeigth = false;
 
-    private void Start()
+    bool isDebug = false;
+
+    public void InitWeight()
     {
-        InitWeight();
+        gridWeight.Clear();
+        int size = G.gridFuncion.item1;
+
+        for (int i = 0; i < size; i++)
+        {
+            var row = new List<int>();
+            for (int j = 0; j < size; j++)
+            {
+                int value = CalculateWeightParabolic(i, j, size);
+                row.Add(value);
+            }
+            gridWeight.Add(row);
+        }
+        isInitWeigth = true;
     }
 
-    void InitWeight()
+    private int CalculateWeightParabolic(int x, int y, int size)
     {
-        var l0 = new List<int>() {50, -10, 15, 15, 15, 15, -10, 50};
-        var l1 = new List<int>() {-10, -20, -10, -10, -10, -10, -20, -10};
-        var l2 = new List<int>() {15, -10, 1, 1, 1, 1, -10, 15};
-        var l3 = new List<int>() {15, -10, 1, 1, 1, 1, -10, 15};
-        var l4 = new List<int>() {15, -10, 1, 1, 1, 1, -10, 15};
-        var l5 = new List<int>() {15, -10, 1, 1, 1, 1, -10, 15};
-        var l6 = new List<int>() {-10, -20, -10, -10, -10, -10, -20, -10};
-        var l7 = new List<int>() {50, -10, 15, 15, 15, 15, -10, 50};
-        
-        gridWeight.Add(l0);
-        gridWeight.Add(l1);
-        gridWeight.Add(l2);
-        gridWeight.Add(l3);
-        gridWeight.Add(l4);
-        gridWeight.Add(l5);
-        gridWeight.Add(l6);
-        gridWeight.Add(l7);
+        // Преобразуем координаты в диапазон [-1, 1]
+        float normalizedX = (2f * x / (size - 1)) - 1f;
+        float normalizedY = (2f * y / (size - 1)) - 1f;
+
+        // Параболическая функция - чем ближе к центру, тем выше значение
+        float distanceFromCenter = Mathf.Sqrt(normalizedX * normalizedX + normalizedY * normalizedY);
+        float parabolicValue = 1f - distanceFromCenter;
+
+        // Усиливаем углы
+        bool isCorner = Mathf.Abs(normalizedX) > 0.9f && Mathf.Abs(normalizedY) > 0.9f;
+        if (isCorner) parabolicValue += 1.2f;
+
+        //Усиливаем края
+        bool isEdge = Mathf.Abs(normalizedX) == 1f || Mathf.Abs(normalizedY) == 1f;
+        if (isEdge && !isCorner) parabolicValue += .7f;
+
+        // Ослабляем клетки рядом с углами
+        bool isNearCorner = (Mathf.Abs(normalizedX) > 0.7f && Mathf.Abs(normalizedY) > 0.7f) && !isCorner;
+        if (isNearCorner) parabolicValue -= 0.3f;
+
+        return Mathf.RoundToInt(parabolicValue * 30);
+    }
+
+    public void DebugMethod()
+    {
+        if (!isInitWeigth) return;
+
+        if (isDebug)
+        {
+            DeleteDebugMethod();
+            isDebug = !isDebug;
+            return;
+        }
+
+        isDebug = !isDebug;
+
+        int size = G.gridFuncion.item1;
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+                G.gridFuncion.GetMatrix().GetGrid(new(i,j)).debugTextWeight.text = $"{gridWeight[i][j]}";
+        }
+    }
+    private void DeleteDebugMethod()
+    {
+        int size = G.gridFuncion.item1;
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                G.gridFuncion.GetMatrix().GetGrid(new(i, j)).debugTextWeight.text = "";
+            }
+        }
     }
 
     public void Execute(GridBox.Status comColor)
@@ -67,7 +121,8 @@ public class AI : MonoBehaviour
                 flipedSumVal += fp_weight + 10;
             }
 
-            var score = placedVal + flipedSumVal;
+            int randomFactor = UnityEngine.Random.Range(-5, 6);
+            var score = placedVal + flipedSumVal + randomFactor;
 
             if (score > max)
             {

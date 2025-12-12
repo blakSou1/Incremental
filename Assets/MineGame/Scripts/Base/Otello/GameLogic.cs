@@ -34,7 +34,6 @@ public class GameLogic
 
         foreach (var i in centerCells)
         {
-            Debug.Log(i);
             PlacePiece(status, i, true);
             status = (GridBox.Status)((int)status * -1);
         }
@@ -56,6 +55,8 @@ public class GameLogic
         var grid = G.gridFuncion.GetMatrix().GetGrid(index);
 
         if (!CheckPieceValid(color, grid, out List<GridBox> dummy, true) && !isStatic) return;
+
+        G.gridFuncion.ClearIndicObjs();
 
         Vector3 pos = G.gridFuncion.IndexToVector2(index);
         pos.z = -1;
@@ -79,6 +80,8 @@ public class GameLogic
         UpdateCountUI();
         G.gameMode.motionText.ThrowText(new LocString("", ""), R.normalVoice);
 
+        G.AudioManager.PlaySound(R.Audio.Clic05, 0);
+
         if (isStatic) return;
 
         PassTurn();
@@ -86,6 +89,8 @@ public class GameLogic
     public void PlacePiece(GridBox.Status color, GridBox curentBox, bool isStatic = false)
     {
         if (!CheckPieceValid(color, curentBox, out List<GridBox> dummy, true) && !isStatic) return;
+
+        G.gridFuncion.ClearIndicObjs();
 
         var obj = GameObject.Instantiate(pieceObj, curentBox.transform.position, Quaternion.identity);
         obj.transform.parent = parentPiece;
@@ -137,7 +142,7 @@ public class GameLogic
 
             IEnumerator Next()
             {
-                yield return new WaitForSeconds(0.65f);
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.2f));
                 G.ai.Execute(GridBox.Status.White);
 
                 G.inputs.Player.Enable();
@@ -213,5 +218,4 @@ public class GameLogic
         coinTextPlayer.ThrowText(new LocString(bText, bText), R.normalVoice);
         coinTextEnemy.ThrowText(new LocString(wText, wText), R.normalVoice);
     }
-
 }

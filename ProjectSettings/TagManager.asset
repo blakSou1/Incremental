@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - FxTemporaire
+  - White_Select
+  - GameMode
+  - Black_Select
+  - Indicator
   layers:
   - Default
   - TransparentFX
@@ -39,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Baground
+    uniqueID: 2914213913
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

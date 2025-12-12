@@ -12,6 +12,8 @@ public class GameMode : MonoBehaviour
     public GridFuncion gridFuncion;
     public GameLogic gameLogic;
 
+    public SpriteRenderer enemySprite;
+
     [NonSerialized] public Text indicatorText = null;
 
     [HideInInspector] public bool disableInputForPass = false;
@@ -21,10 +23,15 @@ public class GameMode : MonoBehaviour
     private void Start()
     {
         InitComponents();
+        StartGame();
     }
 
     private void InitComponents()
     {
+        motionText.ThrowText(new LocString("", ""), R.normalVoice);
+
+        enemySprite.sprite = G.configGame.GetConfigLevel().enemySprite;
+
         indicatorText = GameObject.FindGameObjectWithTag("Indicator").GetComponent<Text>();
 
         G.gridFuncion = gridFuncion;
@@ -42,8 +49,16 @@ public class GameMode : MonoBehaviour
     {
         G.PlayerController.isStopped = false;
 
+        G.ai.InitWeight();
+
         gameLogic.InitStaticPieces();
         gridFuncion.ShowPossibleLocation(G.PlayerController.playerColor);
+    }
+
+    public  void IndicatorText(string text)
+    {
+        if(indicatorText != null)
+            indicatorText.text = text;
     }
 
     public void PlayerInputUpdate()

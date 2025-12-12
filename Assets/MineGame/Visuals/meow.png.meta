@@ -1,0 +1,470 @@
+fileFormatVersion: 2
+guid: d057460a142b8d4458eb86b4c2eac998
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1526860884898925678
+    second: meow_0
+  - first:
+      213: -601969850868544509
+    second: meow_1
+  - first:
+      213: 8158070175430018107
+    second: meow_2
+  - first:
+      213: -6413866516355088181
+    second: meow_3
+  - first:
+      213: 2459463208522432713
+    second: meow_4
+  - first:
+      213: 8118230367906958106
+    second: meow_5
+  - first:
+      213: 3674782163252951054
+    second: meow_6
+  - first:
+      213: -1172190068042804844
+    second: meow_7
+  - first:
+      213: 1486339806296078406
+    second: meow_8
+  - first:
+      213: 5046206052294829890
+    second: meow_9
+  - first:
+      213: 8236819237074403347
+    second: meow_10
+  - first:
+      213: -4050029164004283812
+    second: meow_11
+  - first:
+      213: -4016479515011405530
+    second: meow_12
+  - first:
+      213: -6679945891156741401
+    second: meow_13
+  - first:
+      213: 1437761192906953891
+    second: meow_14
+  - first:
+      213: -7202976132136063939
+    second: meow_15
+  - first:
+      213: 5299030564435765799
+    second: meow_16
+  - first:
+      213: -2390333111699667752
+    second: meow_17
+  - first:
+      213: -3702830074068724189
+    second: meow_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: meow_0
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 1268
+        width: 399
+        height: 425
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29339266d108fcae0800000000000000
+      internalID: -1526860884898925678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_1
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 1277
+        width: 435
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30c4c792c9f55a7f0800000000000000
+      internalID: -601969850868544509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_2
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 1273
+        width: 434
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b34073be999473170800000000000000
+      internalID: 8158070175430018107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 570
+        width: 556
+        height: 513
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc002efa26e5df6a0800000000000000
+      internalID: -6413866516355088181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_4
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 567
+        width: 557
+        height: 513
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c04f12e1c4c12220800000000000000
+      internalID: 2459463208522432713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_5
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 583
+        width: 515
+        height: 486
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1b02e3e18fb9a070800000000000000
+      internalID: 8118230367906958106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_6
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 558
+        height: 518
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0832ab58e27ff230800000000000000
+      internalID: 3674782163252951054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_7
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 70
+        width: 125
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4915119f75b8bbfe0800000000000000
+      internalID: -1172190068042804844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_8
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 54
+        width: 428
+        height: 382
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 648fcc9cd2a80a410800000000000000
+      internalID: 1486339806296078406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_9
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 344
+        width: 91
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 247a57a2ba9b70640800000000000000
+      internalID: 5046206052294829890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_10
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 324
+        width: 127
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3108ce0a47f0f4270800000000000000
+      internalID: 8236819237074403347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: meow_14
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 164
+        width: 127
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a49f07ff24f3f310800000000000000
+      internalID: 1437761192906953891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7c6d025d0c70a274fb8f2438efddfda7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      meow_0: -1526860884898925678
+      meow_1: -601969850868544509
+      meow_10: 8236819237074403347
+      meow_11: -4050029164004283812
+      meow_12: -4016479515011405530
+      meow_13: -6679945891156741401
+      meow_14: 1437761192906953891
+      meow_15: -7202976132136063939
+      meow_16: 5299030564435765799
+      meow_17: -2390333111699667752
+      meow_18: -3702830074068724189
+      meow_2: 8158070175430018107
+      meow_3: -6413866516355088181
+      meow_4: 2459463208522432713
+      meow_5: 8118230367906958106
+      meow_6: 3674782163252951054
+      meow_7: -1172190068042804844
+      meow_8: 1486339806296078406
+      meow_9: 5046206052294829890
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
