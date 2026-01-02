@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
@@ -7,10 +8,10 @@ public class Piece : MonoBehaviour
 
     public AnimationDataSO MoveBlackAnimDataSO;
     public AnimationDataSO MoveWhiteAnimDataSO;
-    
-    private AnimationController animationController;
 
-    void Start()
+    [HideInInspector] public AnimationController animationController;
+
+    public void Start()
     {
         animationController = GetComponent<AnimationController>();
         animationController.Init();
@@ -27,7 +28,6 @@ public class Piece : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-
     public void FlipAnim(GridBox.Status to)
     {
         if (to == GridBox.Status.Black)
@@ -38,5 +38,15 @@ public class Piece : MonoBehaviour
             return;
 
         animationController.endAnimation.AddListener(G.gameMode.PlayerInputUpdate);
+    }
+    
+    public virtual bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)
+    {
+        revColorPieces = null;
+        return false;
+    }
+
+    public virtual void FlipOfPiece(List<GridBox> sameColorPieces)
+    {
     }
 }

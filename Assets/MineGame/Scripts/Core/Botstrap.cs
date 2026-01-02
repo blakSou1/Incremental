@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Botstrap : MonoBehaviour
 {
@@ -37,8 +38,10 @@ public static class GameBootstrapper
         G.configGame = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigGame>())!.Get<ConfigGame>();
 
         G.gameMode = Object.FindFirstObjectByType<GameMode>();
+        G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
         G.ai = Object.FindFirstObjectByType<AI>();
         G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
+        G.volume = Object.FindFirstObjectByType<Volume>();
 
 #if UNITY_EDITOR
         CreateSimpleService<ProgrammerInputTestScript>();
@@ -47,8 +50,10 @@ public static class GameBootstrapper
         G.SceneLoader.onLoadAction = (scene, sceneMode) =>
         {
             G.gameMode = Object.FindFirstObjectByType<GameMode>();
+            G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
             G.ai = Object.FindFirstObjectByType<AI>();
             G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
+            G.volume = Object.FindFirstObjectByType<Volume>();
         };
     }
 

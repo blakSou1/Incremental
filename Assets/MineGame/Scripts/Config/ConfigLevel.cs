@@ -1,8 +1,17 @@
 ﻿using System;
-using UnityEngine;
+using System.Linq;
 
 [Serializable]
 public class ConfigLevel : EntityComponentDefinition
 {
-    public Sprite enemySprite;
+    public CMSEntityPfb enemyConfigPfb;
+    [NonSerialized] private ConfigEnemy enemyConfig;
+
+    public ConfigEnemy GetConfigEnemy()
+    {
+        if (enemyConfig == null)
+            enemyConfig = enemyConfigPfb.Components.OfType<ConfigEnemy>().FirstOrDefault();
+        return enemyConfig;
+    }
+
 }

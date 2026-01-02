@@ -90,18 +90,19 @@ public class AI : MonoBehaviour
     {
         var possibleLocs = G.gridFuncion.GetPossibleLocation(comColor);
 
-        if (possibleLocs == null) return;
+        if (possibleLocs == null || possibleLocs.Count == 0) return;
 
         var max = -100;
-        var selectedLoc = new Tuple<int, int>(-1, -1);
+        GridBox selectedLoc = null;
         
-        foreach (var loc in possibleLocs)
+        foreach (GridBox loc in possibleLocs)
         {
+            var locIndex = loc.GetIndex();
             int placedVal = 0;
             
             try
             {
-                placedVal = gridWeight[loc.Item1][loc.Item2];
+                placedVal = gridWeight[locIndex.Item1][locIndex.Item2];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -111,17 +112,19 @@ public class AI : MonoBehaviour
 
             var flipedSumVal = 0;
 
-            G.gameLogic.CheckPieceValid(comColor, G.gridFuncion.GetMatrix().GetGrid(loc), out List<GridBox> flipedList, false);
+            List<GridBox> dummy = loc.indic?.revColorPieces;
 
-            foreach (var fp in flipedList)
+            if (dummy != null)
             {
-                var fp_index = fp.GetIndex();
-                var fp_weight = gridWeight[fp_index.Item1][fp_index.Item2];
-
-                flipedSumVal += fp_weight + 10;
+                foreach (var fp in dummy)
+                {
+                    var fp_index = fp.GetIndex();
+                    var fp_weight = gridWeight[fp_index.Item1][fp_index.Item2];
+                    flipedSumVal += fp_weight + 10;
+                }
             }
 
-            int randomFactor = UnityEngine.Random.Range(-5, 6);
+            int randomFactor = UnityEngine.Random.Range(-10, 10);
             var score = placedVal + flipedSumVal + randomFactor;
 
             if (score > max)

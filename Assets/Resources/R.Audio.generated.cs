@@ -54,6 +54,7 @@ public static partial class R
         public static AudioClip animal_2;
         public static AudioClip animal_3;
         public static AudioClip animal_4;
+        public static AudioClip damage;
         public static AudioClip damage_magic;
         public static AudioClip eat;
         public static AudioClip f;
@@ -65,26 +66,27 @@ public static partial class R
         public static AudioClip j;
         public static AudioClip k;
         public static AudioClip kill;
+        public static AudioClip Louse;
         public static AudioClip menu_click;
+        public static AudioClip Meow;
         public static AudioClip NewMainMenu;
         public static AudioClip o;
         public static AudioClip pop1;
         public static AudioClip pop2;
         public static AudioClip pop3;
-        public static AudioClip q;
         public static AudioClip r;
         public static AudioClip roll;
         public static AudioClip s;
         public static AudioClip scream;
         public static AudioClip screams;
-        public static AudioClip sfx_impact;
         public static AudioClip sfx_woosh;
+        public static AudioClip SpawnPiece;
+        public static AudioClip tutorial;
         public static AudioClip TypingSound;
         public static AudioClip Vuii;
         public static AudioClip win_chime;
         public static AudioClip win_magic;
         public static AudioClip y;
-        public static AudioClip z;
     }
 
     public static void InitAudio()
@@ -138,6 +140,7 @@ public static partial class R
         Audio.animal_2 = Resources.Load<AudioClip>("Audio/My/animal_2");
         Audio.animal_3 = Resources.Load<AudioClip>("Audio/My/animal_3");
         Audio.animal_4 = Resources.Load<AudioClip>("Audio/My/animal_4");
+        Audio.damage = Resources.Load<AudioClip>("Audio/My/damage");
         Audio.damage_magic = Resources.Load<AudioClip>("Audio/My/damage_magic");
         Audio.eat = Resources.Load<AudioClip>("Audio/My/eat");
         Audio.f = Resources.Load<AudioClip>("Audio/My/f");
@@ -149,25 +152,26 @@ public static partial class R
         Audio.j = Resources.Load<AudioClip>("Audio/My/j");
         Audio.k = Resources.Load<AudioClip>("Audio/My/k");
         Audio.kill = Resources.Load<AudioClip>("Audio/My/kill");
+        Audio.Louse = Resources.Load<AudioClip>("Audio/My/Louse");
         Audio.menu_click = Resources.Load<AudioClip>("Audio/My/menu_click");
+        Audio.Meow = Resources.Load<AudioClip>("Audio/My/Meow");
         Audio.NewMainMenu = Resources.Load<AudioClip>("Audio/My/NewMainMenu");
         Audio.o = Resources.Load<AudioClip>("Audio/My/o");
         Audio.pop1 = Resources.Load<AudioClip>("Audio/My/pop1");
         Audio.pop2 = Resources.Load<AudioClip>("Audio/My/pop2");
         Audio.pop3 = Resources.Load<AudioClip>("Audio/My/pop3");
-        Audio.q = Resources.Load<AudioClip>("Audio/My/q");
         Audio.r = Resources.Load<AudioClip>("Audio/My/r");
         Audio.roll = Resources.Load<AudioClip>("Audio/My/roll");
         Audio.s = Resources.Load<AudioClip>("Audio/My/s");
         Audio.scream = Resources.Load<AudioClip>("Audio/My/scream");
         Audio.screams = Resources.Load<AudioClip>("Audio/My/screams");
-        Audio.sfx_impact = Resources.Load<AudioClip>("Audio/My/sfx_impact");
         Audio.sfx_woosh = Resources.Load<AudioClip>("Audio/My/sfx_woosh");
+        Audio.SpawnPiece = Resources.Load<AudioClip>("Audio/My/SpawnPiece");
+        Audio.tutorial = Resources.Load<AudioClip>("Audio/My/tutorial");
         Audio.TypingSound = Resources.Load<AudioClip>("Audio/My/TypingSound");
         Audio.Vuii = Resources.Load<AudioClip>("Audio/My/Vuii");
         Audio.win_chime = Resources.Load<AudioClip>("Audio/My/win_chime");
         Audio.win_magic = Resources.Load<AudioClip>("Audio/My/win_magic");
         Audio.y = Resources.Load<AudioClip>("Audio/My/y");
-        Audio.z = Resources.Load<AudioClip>("Audio/My/z");
     }
 }

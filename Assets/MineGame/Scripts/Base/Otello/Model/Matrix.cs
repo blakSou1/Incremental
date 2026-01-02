@@ -46,7 +46,7 @@ public class Matrix
                 data[i, j].transform.localScale = Vector3.zero;
                 Tween tween = data[i, j].transform.DOScale(scale, 0.3f).SetEase(Ease.OutBounce);
 
-                yield return new WaitForSeconds(.03f);
+                yield return new WaitForSeconds(.035f);
 
                 if (isAudi)
                 {
@@ -57,10 +57,10 @@ public class Matrix
                 switch (randomIndex)
                 {
                     case 1:
-                        G.AudioManager.PlaySound(R.Audio.pop1, -.03f);
+                        G.AudioManager.PlaySound(R.Audio.pop1, -.05f);
                         break;
                     case 2:
-                        G.AudioManager.PlaySound(R.Audio.pop2, -.05f);
+                        G.AudioManager.PlaySound(R.Audio.pop2, -.07f);
                         break;
                     case 3:
                         G.AudioManager.PlaySound(R.Audio.pop3, 0);

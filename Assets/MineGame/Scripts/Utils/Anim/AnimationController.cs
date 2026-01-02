@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,15 +37,29 @@ public class AnimationController : MonoBehaviour
 
         while (frame != _currentAnimation.frames.Count)
         {
-            _targetRenderer.sprite = _currentAnimation.frames[frame];
+            if(_currentAnimation.frames[frame] != null)
+                _targetRenderer.sprite = _currentAnimation.frames[frame];
+
+            Frame frameS = ContainsFrame(frame);
+            if (frameS != null)
+            {
+                frameS.Event?.Invoke();
+                yield return new WaitForSeconds((frameS.pause != 0) ? frameS.pause : 1f / _currentAnimation.framerate);
+            }
+            else
+                yield return new WaitForSeconds(1f / _currentAnimation.framerate);
+
             frame++;
 
             if (_currentAnimation.isLoop)
                 frame = frame % _currentAnimation.frames.Count;
-
-            yield return new WaitForSeconds(1f / _currentAnimation.framerate);
         }
         StopAnimation();
+    }
+
+    public Frame ContainsFrame(int indexFrame)
+    {
+        return _currentAnimation.framesSettings.FirstOrDefault(frame => frame.indexFrame == indexFrame);
     }
 
     private void StopAnimation()

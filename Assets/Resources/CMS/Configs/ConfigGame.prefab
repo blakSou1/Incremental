@@ -54,4 +54,7 @@ MonoBehaviour:
       type: {class: ConfigGame, ns: , asm: Assembly-CSharp}
       data:
         isTutorial: 0
-        configLevel: {fileID: 57408262869493365, guid: 674799d480151094e999931135196d7d, type: 3}
+        configLevelPfb: {fileID: 57408262869493365, guid: 674799d480151094e999931135196d7d, type: 3}
+        standertPiece: {fileID: 553669412, guid: 6a357eac51f2b0b4eb70a825d451ceab, type: 3}
+        pieces:
+        - {fileID: -163105670928925276, guid: 5905a51373bdc36498e416ddea12578f, type: 3}

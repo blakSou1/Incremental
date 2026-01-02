@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static GridBox;
 
 public class PlayerController : MonoBehaviour
 {
-    public GridBox.Status playerColor = GridBox.Status.Black;
+    [HideInInspector] public Status playerColor = Status.Black;
 
     public GameObject cursorPrefab;
     private GameObject cursor;
     private GridBox curentBox;
+
+    public Transform position1;
+    public Transform position2;
+
+    public float speed = .5f;
 
     private bool needDisableCursor = false;
 
@@ -18,7 +25,6 @@ public class PlayerController : MonoBehaviour
     {
         cursor = Instantiate(cursorPrefab, Vector3.zero, Quaternion.identity);
         cursor.SetActive(false);
-
     }
     void Update()
     {
@@ -28,6 +34,37 @@ public class PlayerController : MonoBehaviour
 
         if (G.inputs.Player.Attack.WasPressedThisFrame())
             G.gameLogic.PlacePiece(playerColor, curentBox);
+    }
+
+    private void UpdatePos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Plane plane = new(Vector3.forward, new Vector3(0, 0, G.gridFuncion.GetParentInd().transform.position.z));
+
+        plane.Raycast(ray, out float distance);
+        Vector3 worldPoint = ray.GetPoint(distance);
+        Vector2 origin = new(worldPoint.x, worldPoint.y);
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(origin, 0.06f);
+
+        curentBox = null;
+
+        foreach (var collider in hitColliders)
+        {
+            if (collider.TryGetComponent(out GridBox gridBoxs))
+            {
+                curentBox = gridBoxs;
+                break;
+            }
+        }
+
+        if (curentBox == null || curentBox.GetStat() != Status.None)
+            DisableCursor();
+        else
+        {
+            EnableCursor();
+            cursor.transform.position = curentBox.transform.position;
+        }
     }
 
     private void EnableCursor()
@@ -45,29 +82,21 @@ public class PlayerController : MonoBehaviour
             needDisableCursor = true;
     }
 
-    void UpdatePos()
+    public IEnumerator MoveAndRotate(Transform start, Transform end)
     {
-        Vector2 curPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        float startTime = Time.time;
 
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(curPos, 0.06f);
-
-        curentBox = null;
-
-        foreach (var collider in hitColliders)
+        while (Time.time - startTime < speed)
         {
-            if (collider.TryGetComponent(out GridBox gridBoxs))
-            {
-                curentBox = gridBoxs;
-                break;
-            }
+            float fractionOfJourney = Mathf.Clamp01((Time.time - startTime) / speed);
+
+            transform.position = Vector3.Lerp(start.position, end.position, fractionOfJourney);
+            transform.rotation = Quaternion.Slerp(start.rotation, end.rotation, fractionOfJourney);
+
+            yield return null;
         }
-        
-        if(curentBox == null)
-            DisableCursor();
-        else
-        {
-            EnableCursor();
-            cursor.transform.position = curentBox.transform.position;
-        }
+
+        transform.position = end.position;
+        transform.rotation = end.rotation;
     }
 }

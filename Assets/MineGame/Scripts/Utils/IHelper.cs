@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "IHelper", menuName = "IHelper")]
 public class IHelper : ScriptableObject
 {
+    float modifVolume = 0;
+
     public void SetRu()
     {
         G.LocSystem.language = LocSystem.LANG_RU;
@@ -38,9 +40,15 @@ public class IHelper : ScriptableObject
         G.AudioManager.PlayMusic(clip);
     }
 
+    public void SetModVolume(float volume)
+    {
+        modifVolume = volume;
+    }
+
     public void PlaySound(AudioClip clip)
     {
-        clip.PlayAsSound();
+        clip.PlayAsSound(modifVolume: modifVolume);
+        modifVolume = 0;
     }
 
     public void StartGame()
@@ -52,5 +60,21 @@ public class IHelper : ScriptableObject
     {
         if (G.gameMode != null)
             G.gameMode.RestartGame();
+    }
+
+    public void CameraMovePos2()
+    {
+        G.gameMode.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position1, G.PlayerController.position2));
+    }
+    public void CameraMovePos1()
+    {
+        G.gameMode.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position2, G.PlayerController.position1));
+    }
+    public void Louse()
+    {
+        if(G.louse != null)
+        {
+            G.louse.Louses();
+        }
     }
 }

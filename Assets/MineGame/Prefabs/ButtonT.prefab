@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 115.615, y: -44.66}
+  m_AnchoredPosition: {x: 115.615, y: -44.660004}
   m_SizeDelta: {x: 151.23, y: 59.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &932250144626218440
@@ -204,6 +204,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b56acaaac061b429be0fab3091de6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -212,7 +218,7 @@ MonoBehaviour:
         m_MethodName: PlaySound
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: ca2abaa0ffd1e424d9a8d67e66f50f44, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: d2755530c7fc6b84489c96b91deab8f2, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -247,8 +253,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1557013538026691241, guid: 16c27f00d18f9f844bc5367c3934bf3a, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0b8da974a6429b8489e21c2a5d8dd509, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

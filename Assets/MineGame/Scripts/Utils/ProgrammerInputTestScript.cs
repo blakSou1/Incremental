@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class ProgrammerInputTestScript : MonoBehaviour, IService
@@ -6,8 +7,6 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     private float originalFixedDeltaTime;
     private const float slowMotionFactor = 0.25f;
     private bool isSlowed = false;
-    private bool isPaused = false;
-    private float savedTimeScaleBeforePause = 1f;
 
     public void Init()
     {
@@ -25,11 +24,16 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
 
         G.inputs.Debug._4.started += i => RestartCurrentScene();
 
+        G.inputs.Debug._5.started += i => Win();
+        G.inputs.Debug._6.started += i => Louse();
+
         Debug.Log("Controls initialized:");
         Debug.Log("1 - Debug method");
         Debug.Log("Hold 2 - Slow motion (x0.25)");
         Debug.Log("Press 3 - Pause/Resume");
         Debug.Log("Press 4 - RestartScene");
+        Debug.Log("Press 5 - Win");
+        Debug.Log("Press 6 - Louse");
     }
 
     private void isDebug()
@@ -41,7 +45,7 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     // ЗАМЕДЛЕНИЕ ИГРЫ (Slow motion)
     private void StartSlowMotion()
     {
-        if (!isPaused && !isSlowed)
+        if (!isSlowed)
         {
             Time.timeScale = slowMotionFactor;
 
@@ -54,7 +58,7 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
 
     private void StopSlowMotion()
     {
-        if (isSlowed && !isPaused)
+        if (isSlowed)
         {
             Time.timeScale = originalTimeScale;
             Time.fixedDeltaTime = originalFixedDeltaTime;
@@ -67,37 +71,9 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     // ПАУЗА (полная остановка)
     private void TogglePause()
     {
-        isPaused = !isPaused;
+        EditorApplication.isPaused = true;
 
-        if (isPaused)
-        {
-            G.inputs.Player.Disable();
-
-            savedTimeScaleBeforePause = Time.timeScale;
-
-            Time.timeScale = 0f;
-
-            Time.fixedDeltaTime = 0f;
-
-            AudioListener.pause = true;
-
-            Debug.Log("Game PAUSED (TimeScale = 0)");
-        }
-        else
-        {
-            G.inputs.Player.Enable();
-
-            Time.timeScale = savedTimeScaleBeforePause;
-
-            if (isSlowed)
-                Time.fixedDeltaTime = originalFixedDeltaTime * slowMotionFactor;
-            else
-                Time.fixedDeltaTime = originalFixedDeltaTime;
-
-            AudioListener.pause = false;
-
-            Debug.Log($"Game RESUMED (TimeScale = {Time.timeScale})");
-        }
+        Debug.Log("Game PAUSED");
     }
 
     // Перезагружаем сцену
@@ -108,9 +84,19 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         G.SceneLoader.Load(currentScene.name);
     }
 
+    private void Win()
+    {
+        if(G.gameMode != null)
+            G.gameMode.StartCoroutine(G.winAndLouse.Win());
+    }
+    private void Louse()
+    {
+        if (G.gameMode != null)
+            G.gameMode.StartCoroutine(G.winAndLouse.Loss());
+    }
+
     public void RestoreToNormal()
     {
-        isPaused = false;
         isSlowed = false;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = originalFixedDeltaTime;

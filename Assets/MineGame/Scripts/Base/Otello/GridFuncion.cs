@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
 
@@ -12,7 +11,7 @@ public class GridFuncion
 
     public Vector2 indentGrid;
 
-    public GameObject indcObj;
+    public Indic indcObj;
 
     public int item1 = 8;
 
@@ -23,11 +22,13 @@ public class GridFuncion
     [HideInInspector] public List<Piece> blackPieces;
     [HideInInspector] public List<Piece> whitePieces;
 
-    [HideInInspector] public List<GameObject> indicObjs = new();
+    [HideInInspector] public List<Indic> indicObjs = new();
 
     public void Init()
     {
         parentIndc = new GameObject("IndcPool").transform;
+
+        G.winAndLouse = new();
     }
 
     public void InitIndexPos()
@@ -45,27 +46,10 @@ public class GridFuncion
         return matrix.GetGrid(index).transform.position;
     }
 
-    public Index Vector2ToIndex(Vector2 snapPos)
-    {
-        GridBox[] firstLevel = new GridBox[matrix.GetData().GetLength(0)];
-        for (int s = 0; s < matrix.GetData().GetLength(0); s++)
-            firstLevel[s] = matrix.GetData()[s, 0];
-
-        var i = Array.FindIndex(firstLevel, x => x.transform.position.x == snapPos.x);
-
-        firstLevel = new GridBox[matrix.GetData().GetLength(0)];
-        for (int s = 0; s < matrix.GetData().GetLength(0); s++)
-            firstLevel[s] = matrix.GetData()[0, s];
-
-        var j = Array.FindIndex(firstLevel, y => y.transform.position.y == snapPos.y);
-
-        return new Index(i, j);
-    }
-
     public void ClearIndicObjs()
     {
-        foreach (var obj in indicObjs)
-            GameObject.Destroy(obj);
+        foreach (Indic obj in indicObjs)
+            GameObject.Destroy(obj.gameObject);
 
         indicObjs.Clear();
     }
@@ -86,7 +70,7 @@ public class GridFuncion
         NewMatrix();
     }
 
-    public IEnumerable<GridBox> GetCrossPieces(Index i1, Index i2, bool excludeNone = true)
+    public List<GridBox> GetCrossPieces(Index i1, Index i2, bool excludeNone = true)
     {
         var list = new List<GridBox>();
 
@@ -166,7 +150,7 @@ public class GridFuncion
         return null;
     }
 
-    public IEnumerable<GridBox> GetCrossPieces(Index index, bool excludeNone = true)
+    public List<GridBox> GetCrossPieces(Index index, bool excludeNone = true)
     {
         var list = new List<GridBox>();
         var (cx, cy) = index;
@@ -241,6 +225,12 @@ public class GridFuncion
         return centerCells;
     }
 
+    public void EnableAndDisableIndc(bool enable)
+    {
+        foreach(Indic i in indicObjs)
+            i.gameObject.SetActive(enable);
+    }
+
     public void ShowPossibleLocation(GridBox.Status color)
     {
         ClearIndicObjs();
@@ -249,11 +239,14 @@ public class GridFuncion
         {
             for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> dummy))
+                if (G.gameLogic.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
                 {
-                    var v = IndexToVector2(new Index(i, j));
-                    var indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, -1), Quaternion.identity);
+                    Vector2 v = IndexToVector2(new Index(i, j));
+                    Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
+                    indc.revColorPieces = revColorPieces;
                     indc.transform.parent = parentIndc;
+
+                    matrix.GetGrid(new Index(i, j)).indic = indc;
 
                     indicObjs.Add(indc);
                 }
@@ -265,9 +258,9 @@ public class GridFuncion
             if (blackPieces.Count + whitePieces.Count == item1 * item1)
             {
                 if (blackPieces.Count < whitePieces.Count)
-                    WhiteBlack();
+                    WinEnemy();
                 else if (blackPieces.Count > whitePieces.Count)
-                    WinBlack();
+                    WinPlayer();
                 else
                     G.gameMode.IndicatorText("Drew");
 
@@ -291,16 +284,39 @@ public class GridFuncion
         }
     }
 
-    public List<Index> GetPossibleLocation(GridBox.Status color)
+    public void CreateIndisObject(GridBox.Status color)
     {
-        var list = new List<Index>();
+        ClearIndicObjs();
 
         for (var i = 0; i < item1; i++)
         {
             for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> dummy))
-                    list.Add(new Index(i, j));
+                if (G.gameLogic.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                {
+                    Vector2 v = IndexToVector2(new Index(i, j));
+                    Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
+                    indc.revColorPieces = revColorPieces;
+                    indc.transform.parent = parentIndc;
+
+                    matrix.GetGrid(new Index(i, j)).indic = indc;
+
+                    indicObjs.Add(indc);
+                }
+            }
+        }
+    }
+
+    public List<GridBox> GetPossibleLocation(GridBox.Status color)
+    {
+        var list = new List<GridBox>();
+
+        for (var i = 0; i < item1; i++)
+        {
+            for (var j = 0; j < item1; j++)
+            {
+                if (G.gameLogic.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                    list.Add(G.gridFuncion.GetMatrix().GetGrid(new Index(i, j)));
             }
         }
 
@@ -312,19 +328,19 @@ public class GridFuncion
             {
                 if (G.gridFuncion.blackPieces.Count == 0)
                 {
-                    WhiteBlack();
+                    WinEnemy();
                     return null;
                 }
-                WinBlack();
+                WinPlayer();
                 return null;
             }
 
             if (G.gridFuncion.blackPieces.Count + G.gridFuncion.whitePieces.Count == item1 * item1)
             {
                 if (G.gridFuncion.blackPieces.Count < G.gridFuncion.whitePieces.Count)
-                    WhiteBlack();
+                    WinEnemy();
                 else if (G.gridFuncion.blackPieces.Count > G.gridFuncion.whitePieces.Count)
-                    WinBlack();
+                    WinPlayer();
                 else
                     G.gameMode.IndicatorText("Drew");
 
@@ -349,17 +365,19 @@ public class GridFuncion
         }
     }
 
-    private void WinBlack()
+    private void WinPlayer()
     {
-        G.gameMode.motionText.ThrowText(new LocString("Black Win!", "Черные победили!"), R.normalVoice);
+        G.gameMode.motionText.ThrowText(new LocString("You Win!", "Победа!"), R.normalVoice);
+        G.gameMode.IndicatorText("Win");
 
-        G.gameMode.IndicatorText("Black Win");
+        G.gameMode.StartCoroutine(G.winAndLouse.Win());
     }
-    private void WhiteBlack()
+    private void WinEnemy()
     {
-        G.gameMode.motionText.ThrowText(new LocString("White Win!", "Белые победили!"), R.normalVoice);
+        G.gameMode.motionText.ThrowText(new LocString("Loss!", "Проиграл!"), R.normalVoice);
+        G.gameMode.IndicatorText("Loss");
 
-        G.gameMode.IndicatorText("White Win");
+        G.gameMode.StartCoroutine(G.winAndLouse.Loss());
     }
 
     public bool IsAdjacent(Index i1, Index i2)
@@ -373,6 +391,10 @@ public class GridFuncion
         return false;
     }
 
+    public Transform GetParentInd()
+    {
+        return parentIndc;
+    }
     public Matrix GetMatrix()
     {
         return matrix;

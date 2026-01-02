@@ -6,6 +6,8 @@ public class GridBox : MonoBehaviour
 {
     public enum Status { Black = -1, None = 0, White = 1 }
 
+    public Indic indic = null;
+
     private Index index = new(-1, -1);
     private Status stat = Status.None;
     [HideInInspector] public Piece piece;

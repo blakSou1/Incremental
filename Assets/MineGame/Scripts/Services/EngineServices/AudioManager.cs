@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour, IService
         musicSource.Stop();
     }
 
-    public GameObject PlaySound(AudioClip clip, float addedPitch)
+    public GameObject PlaySound(AudioClip clip, float addedPitch, float modifVolume = 0)
     {
         if (clip == null) return null;
         GameObject tempAudioObject = new("TempAudio_" + clip.name);
@@ -65,7 +65,7 @@ public class AudioManager : MonoBehaviour, IService
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
 
         audioSource.clip = clip;
-        audioSource.volume = soundVolume;
+        audioSource.volume = soundVolume + modifVolume;
         audioSource.pitch = 1f + addedPitch;
         audioSource.Play();
 
@@ -129,8 +129,8 @@ public class AudioManager : MonoBehaviour, IService
 
 public static class AudioExtensions
 {
-    public static void PlayAsSound(this AudioClip clip, float addedPitch = 0) =>
-        G.AudioManager.PlaySound(clip, addedPitch);
+    public static void PlayAsSound(this AudioClip clip, float addedPitch = 0, float modifVolume = 0) =>
+        G.AudioManager.PlaySound(clip, addedPitch, modifVolume);
     public static void PlayAsMusic(this AudioClip clip) =>
         G.AudioManager.PlayMusic(clip);
     public static GameObject PlayAsSoundRandomPitch(this AudioClip clip, float deltaPitch) =>

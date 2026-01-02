@@ -12,8 +12,6 @@ public class GameMode : MonoBehaviour
     public GridFuncion gridFuncion;
     public GameLogic gameLogic;
 
-    public SpriteRenderer enemySprite;
-
     [NonSerialized] public Text indicatorText = null;
 
     [HideInInspector] public bool disableInputForPass = false;
@@ -30,18 +28,23 @@ public class GameMode : MonoBehaviour
     {
         motionText.ThrowText(new LocString("", ""), R.normalVoice);
 
-        enemySprite.sprite = G.configGame.GetConfigLevel().enemySprite;
-
         indicatorText = GameObject.FindGameObjectWithTag("Indicator").GetComponent<Text>();
 
         G.gridFuncion = gridFuncion;
         G.gameLogic = gameLogic;
+        G.modifirePieces = new();
 
+        G.modifirePieces.Init();
         gameLogic.Init();
         gridFuncion.Init();
+
+        G.configGame.piece = G.configGame.pieces;
+        G.PlayerController.playerColor = (GridBox.Status)((int)G.gameMode.playerColor * -1);
     }
     public void StartGame()
     {
+        G.AudioManager.PlayMusic(R.Audio.tutorial);
+
         gridFuncion.InitIndexPos();
     }
 
@@ -51,8 +54,22 @@ public class GameMode : MonoBehaviour
 
         G.ai.InitWeight();
 
-        gameLogic.InitStaticPieces();
-        gridFuncion.ShowPossibleLocation(G.PlayerController.playerColor);
+        StartCoroutine(SpawnEnemy());
+    }
+
+    private IEnumerator SpawnEnemy()
+    {
+        yield return StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position1, G.PlayerController.position2));
+
+        G.enemySprite.UpdateSprite();
+
+        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position2, G.PlayerController.position1));
+
+        G.modifirePieces.SpawnPiece();
+
+        StartCoroutine(gameLogic.InitStaticPieces());
     }
 
     public  void IndicatorText(string text)
@@ -72,13 +89,12 @@ public class GameMode : MonoBehaviour
     public void RestartGame()
     {
         gridFuncion.ClearAllPieces();
-        G.PlayerController.playerColor = playerColor;
 
         StartCoroutine(Next());
         IEnumerator Next()
         {
             yield return new WaitForSeconds(0.5f);
-            gameLogic.InitStaticPieces();
+            StartCoroutine(gameLogic.InitStaticPieces());
         }
     }
 

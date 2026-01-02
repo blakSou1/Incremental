@@ -144,9 +144,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 640
-        width: 258
-        height: 259
+        y: 641
+        width: 257
+        height: 257
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,10 +165,10 @@ TextureImporter:
       name: "\u0411\u0435\u0437\u044B\u043C\u044F\u043D\u043D\u044B\u0439-1_1"
       rect:
         serializedVersion: 2
-        x: 274
-        y: 650
-        width: 259
-        height: 256
+        x: 266
+        y: 642
+        width: 257
+        height: 255
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,7 +192,7 @@ TextureImporter:
         width: 258
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,7 +214,7 @@ TextureImporter:
         width: 259
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -231,10 +231,10 @@ TextureImporter:
       name: "\u0411\u0435\u0437\u044B\u043C\u044F\u043D\u043D\u044B\u0439-1_4"
       rect:
         serializedVersion: 2
-        x: 544
+        x: 545
         y: 267
-        width: 259
-        height: 256
+        width: 257
+        height: 255
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -253,10 +253,10 @@ TextureImporter:
       name: "\u0411\u0435\u0437\u044B\u043C\u044F\u043D\u043D\u044B\u0439-1_5"
       rect:
         serializedVersion: 2
-        x: 817
-        y: 265
-        width: 258
-        height: 258
+        x: 545
+        y: 0
+        width: 257
+        height: 257
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,7 +280,7 @@ TextureImporter:
         width: 258
         height: 258
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -302,7 +302,7 @@ TextureImporter:
         width: 259
         height: 258
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -315,55 +315,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: "\u0411\u0435\u0437\u044B\u043C\u044F\u043D\u043D\u044B\u0439-1_8"
-      rect:
-        serializedVersion: 2
-        x: 544
-        y: 0
-        width: 259
-        height: 258
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0f0f5a201a1c0d330800000000000000
-      internalID: 3733696988368466160
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u0411\u0435\u0437\u044B\u043C\u044F\u043D\u043D\u044B\u0439-1_9"
-      rect:
-        serializedVersion: 2
-        x: 817
-        y: 0
-        width: 258
-        height: 258
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bdb6aec68985dabe0800000000000000
-      internalID: -1464416892139967525
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fd6749a9d2320194eb03f02c80813566
     internalID: 0
     vertices: []
     indices: 

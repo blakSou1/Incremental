@@ -174,7 +174,7 @@ TextureImporter:
         y: 1268
         width: 399
         height: 425
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -236,11 +236,11 @@ TextureImporter:
       name: meow_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 570
+        x: 3
+        y: 564
         width: 556
         height: 513
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -306,7 +306,7 @@ TextureImporter:
         y: 0
         width: 558
         height: 518
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -329,7 +329,7 @@ TextureImporter:
         width: 125
         height: 204
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
