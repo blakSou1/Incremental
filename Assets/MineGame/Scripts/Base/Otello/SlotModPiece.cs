@@ -16,9 +16,13 @@ public class SlotModPiece : MonoBehaviour
 
         G.modifirePieces.Restart();
         activ.SetActive(true);
-        G.gameLogic.piece = piece;
+        G.gameLogic.pieceObj = piece;
 
-        G.gridFuncion.CreateIndisObject(G.PlayerController.playerColor);
+        if(G.gameLogic.piece != null)
+        {
+            G.gameLogic.ActualPiece();
+            G.gridFuncion.CreateIndisObject(G.PlayerController.playerColor);
+        }
 
     }
 

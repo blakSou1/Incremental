@@ -88,7 +88,7 @@ public class AI : MonoBehaviour
 
     public void Execute(GridBox.Status comColor)
     {
-        var possibleLocs = G.gridFuncion.GetPossibleLocation(comColor);
+        List<GridBox> possibleLocs = G.gridFuncion.GetPossibleLocation(comColor);
 
         if (possibleLocs == null || possibleLocs.Count == 0) return;
 

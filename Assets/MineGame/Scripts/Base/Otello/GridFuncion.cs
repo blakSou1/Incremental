@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Index = System.Tuple<int, int>;
 
 [Serializable]
@@ -231,7 +232,7 @@ public class GridFuncion
             i.gameObject.SetActive(enable);
     }
 
-    public void ShowPossibleLocation(GridBox.Status color)
+    public bool ShowPossibleLocation(GridBox.Status color)//возможность хода для игрока
     {
         ClearIndicObjs();
 
@@ -257,36 +258,96 @@ public class GridFuncion
         {
             if (blackPieces.Count + whitePieces.Count == item1 * item1)
             {
-                if (blackPieces.Count < whitePieces.Count)
+                if (G.gridFuncion.blackPieces.Count < G.gridFuncion.whitePieces.Count)
                     WinEnemy();
-                else if (blackPieces.Count > whitePieces.Count)
+                else if (G.gridFuncion.blackPieces.Count > G.gridFuncion.whitePieces.Count)
                     WinPlayer();
                 else
-                    G.gameMode.IndicatorText("Drew");
-
-                G.gameMode.isGameEnd = true;
-
-                return;
+                    Drav();
+                return false;
             }
 
-            G.gameMode.IndicatorText("Pass");
-            G.gameMode.disableInputForPass = true;
-            G.gameMode.StartCoroutine(Next());
+            //else
+            //{
+            //    List<SlotModPiece> nonStandardSlots = G.modifirePieces.slots.Where(s => s is not SlotModPieceStandart).ToList();
 
-            IEnumerator Next()
-            {
-                yield return new WaitForSeconds(2.0f);
-                G.gameMode.IndicatorText("");
-                G.gameMode.disableInputForPass = false;
-            }
+            //    foreach (SlotModPiece slot in nonStandardSlots)
+            //    {
+            //        if (slot.piece == null) continue;
 
-            G.gameLogic.PassTurn();
+            //        for (var i = 0; i < item1; i++)
+            //        {
+            //            for (var j = 0; j < item1; j++)
+            //            {
+            //                if (slot.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+            //                {
+            //                    Vector2 v = IndexToVector2(new Index(i, j));
+            //                    Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
+            //                    indc.revColorPieces = revColorPieces;
+            //                    indc.transform.parent = parentIndc;
+
+            //                    matrix.GetGrid(new Index(i, j)).indic = indc;
+
+            //                    indicObjs.Add(indc);
+            //                }
+            //            }
+            //        }
+
+            //    }
+
+            //}
+
+            G.gameMode.StartCoroutine(Pass());
+
+            return false;
         }
+
+        return true;
+    }
+
+    private void Drav()
+    {
+        if (blackPieces.Count < whitePieces.Count)
+            WinEnemy();
+        else if (blackPieces.Count > whitePieces.Count)
+            WinPlayer();
+        else
+            G.gameMode.IndicatorText("Draw");
+
+        G.gameMode.motionText.ThrowText(new LocString("Draw!", "Ничья!"), R.normalVoice);
+
+        G.gameMode.isGameEnd = true;
+    }
+
+    private IEnumerator Pass()
+    {
+        G.gameMode.IndicatorText("Pass");
+
+        if(G.gameMode.playerColor == G.PlayerController.playerColor)
+            G.gameMode.motionText.ThrowText(new LocString("No move!", "Нет хода!"), R.normalVoice);
+        else
+            G.gameMode.motionText.ThrowText(new LocString("The enemy has no move!", "У противника нет хода!"), R.normalVoice);
+
+        yield return new WaitForSeconds(1.3f);
+
+        G.gameMode.disableInputForPass = true;
+        G.gameMode.StartCoroutine(Next());
+
+        IEnumerator Next()
+        {
+            yield return new WaitForSeconds(2.0f);
+            G.gameMode.IndicatorText("");
+            G.gameMode.disableInputForPass = false;
+        }
+
+        G.gameLogic.PassTurn();
     }
 
     public void CreateIndisObject(GridBox.Status color)
     {
         ClearIndicObjs();
+
+        //G.gameLogic.ActualPiece(color);
 
         for (var i = 0; i < item1; i++)
         {
@@ -307,9 +368,9 @@ public class GridFuncion
         }
     }
 
-    public List<GridBox> GetPossibleLocation(GridBox.Status color)
+    public List<GridBox> GetPossibleLocation(GridBox.Status color)//возможность хода для противника
     {
-        var list = new List<GridBox>();
+        List<GridBox> list = new List<GridBox>();
 
         for (var i = 0; i < item1; i++)
         {
@@ -333,34 +394,24 @@ public class GridFuncion
                 }
                 WinPlayer();
                 return null;
-            }
+            }//не осталось фишек на доске
 
             if (G.gridFuncion.blackPieces.Count + G.gridFuncion.whitePieces.Count == item1 * item1)
             {
+
                 if (G.gridFuncion.blackPieces.Count < G.gridFuncion.whitePieces.Count)
                     WinEnemy();
                 else if (G.gridFuncion.blackPieces.Count > G.gridFuncion.whitePieces.Count)
                     WinPlayer();
                 else
-                    G.gameMode.IndicatorText("Drew");
+                    Drav();
 
                 G.gameMode.isGameEnd = true;
 
                 return null;
-            }
+            }//заполнено поле
 
-            G.gameMode.IndicatorText("Pass");
-            G.gameMode.disableInputForPass = true;
-            G.gameMode.StartCoroutine(Next());
-
-            IEnumerator Next()
-            {
-                yield return new WaitForSeconds(2.0f);
-                G.gameMode.IndicatorText("");
-                G.gameMode.disableInputForPass = false;
-            }
-
-            G.gameLogic.PassTurn();
+            G.gameMode.StartCoroutine(Pass());
             return null;
         }
     }

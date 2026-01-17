@@ -18,22 +18,15 @@ public class Loss : MonoBehaviour
         G.louse = this;
 
         foreach(GameObject i in enableObject)
-        {
             i.SetActive(false);
-        }
         foreach (EnableAndMove i in enableAndMoveObject)
-        {
             i.objectMove.SetActive(false);
-        }
-
     }
 
     public void Louses()
     {
         foreach (GameObject i in enableObject)
-        {
             i.SetActive(true);
-        }
 
         foreach (EnableAndMove i in enableAndMoveObject)
         {

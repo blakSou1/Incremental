@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
 
@@ -10,7 +11,8 @@ public class GameLogic
     public TextThrower coinTextPlayer;
     public TextThrower coinTextEnemy;
 
-    public GameObject pieceObj;
+    public Piece pieceObj;
+    public Piece EnemyPieceObject;
 
     [HideInInspector] public Piece piece;
     
@@ -31,6 +33,8 @@ public class GameLogic
     {
         List<Index> centerCells = G.gridFuncion.GetCenterCells();
         GridBox.Status status = GridBox.Status.White;
+
+        piece = G.configGame.standertPiece;
 
         foreach (var i in centerCells)
         {
@@ -57,7 +61,8 @@ public class GameLogic
     {
         if ((grid == null || grid.indic == null) && !isStatic) return;
 
-        GameObject obj = GameObject.Instantiate(pieceObj, grid.transform.position, Quaternion.identity);
+        GameObject obj = GameObject.Instantiate(piece.gameObject, grid.transform.position, Quaternion.identity);
+
         obj.transform.parent = parentPiece;
 
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
@@ -81,6 +86,23 @@ public class GameLogic
 
         if (isStatic) return;
 
+        if (G.gameMode.playerColor == G.PlayerController.playerColor)
+        {
+            foreach(SlotModPiece i in G.modifirePieces.slots)
+            {
+                if(i.piece == piece && i.piece != G.configGame.standertPiece)
+                {
+                    G.configGame.piece.Remove(piece);
+                    GameObject.Destroy(i.GetComponentInChildren<Piece>().gameObject);
+                    i.piece = null;
+
+                    List<SlotModPiece> standardSlots = G.modifirePieces.slots.Where(s => s is SlotModPieceStandart).ToList();
+
+                    standardSlots[0].Click();
+                }
+            }
+        }
+
         G.AudioManager.PlaySound(R.Audio.SpawnPiece, 0, -.15f);
 
         PassTurn();
@@ -90,19 +112,24 @@ public class GameLogic
     {
         G.PlayerController.playerColor = (GridBox.Status)((int)G.PlayerController.playerColor * -1);
 
+        G.gameLogic.ActualPiece();
+
         if (G.PlayerController.playerColor == G.gameMode.playerColor)
         {
-            G.gridFuncion.ShowPossibleLocation(G.gameMode.playerColor);
+            if(!G.gridFuncion.ShowPossibleLocation(G.gameMode.playerColor))
+                return;
 
             G.gridFuncion.EnableAndDisableIndc(true);
-            playerSelect.SetActive(true);
             EnemySelect.SetActive(false);
+            playerSelect.SetActive(true);
 
             G.gameMode.motionText.ThrowText(new LocString("Your move!", "Ваш ход!"), R.normalVoice);
         }
         else
         {
-            G.gridFuncion.ShowPossibleLocation((GridBox.Status)((int)G.gameMode.playerColor * -1));
+            if(!G.gridFuncion.ShowPossibleLocation((GridBox.Status)((int)G.gameMode.playerColor * -1)))
+                return;
+
             G.gridFuncion.EnableAndDisableIndc(false);
 
             EnemySelect.SetActive(true);
@@ -112,15 +139,19 @@ public class GameLogic
 
             G.inputs.Player.Disable();
             G.gameMode.StartCoroutine(Next());
-
-            IEnumerator Next()
-            {
-                yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.2f));
-                G.ai.Execute((GridBox.Status)((int)G.gameMode.playerColor * -1));
-
-                G.inputs.Player.Enable();
-            }
         }
+    }
+    IEnumerator Next()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.2f));
+        G.ai.Execute(G.PlayerController.playerColor);
+
+        G.inputs.Player.Enable();
+    }
+
+    public void ActualPiece()
+    {
+        piece = (G.PlayerController.playerColor == G.gameMode.playerColor) ? G.gameLogic.pieceObj : G.gameLogic.EnemyPieceObject;
     }
 
     private void UpdateCountUI()

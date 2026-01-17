@@ -5617,7 +5617,8 @@ MonoBehaviour:
   gameLogic:
     coinTextPlayer: {fileID: 656178692}
     coinTextEnemy: {fileID: 1803597403}
-    pieceObj: {fileID: 9111731403297543512, guid: 6a357eac51f2b0b4eb70a825d451ceab, type: 3}
+    pieceObj: {fileID: 553669412, guid: 6a357eac51f2b0b4eb70a825d451ceab, type: 3}
+    EnemyPieceObject: {fileID: 553669412, guid: 6a357eac51f2b0b4eb70a825d451ceab, type: 3}
     piece: {fileID: 0}
     playerSelect: {fileID: 1053720787}
     EnemySelect: {fileID: 1188106980}
@@ -9405,6 +9406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: slot (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5058554130705889835, guid: 3b12ead50961fbf4f8ccfe2e5a9e24ce, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10926,6 +10931,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3673780742569839055, guid: 3b12ead50961fbf4f8ccfe2e5a9e24ce, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4084785115619744673, guid: 3b12ead50961fbf4f8ccfe2e5a9e24ce, type: 3}
       propertyPath: m_Name
       value: slot (2)
@@ -11289,9 +11298,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3643521321981094646, guid: 3b12ead50961fbf4f8ccfe2e5a9e24ce, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4084785115619744673, guid: 3b12ead50961fbf4f8ccfe2e5a9e24ce, type: 3}
       propertyPath: m_Name
       value: slot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5058554130705889835, guid: 3b12ead50961fbf4f8ccfe2e5a9e24ce, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11311,6 +11328,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 704093913}
     m_Modifications:
+    - target: {fileID: 1871665909497451968, guid: 9d2dcb5cf6e6bc846b47448ae1c4e797, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4016849368805303575, guid: 9d2dcb5cf6e6bc846b47448ae1c4e797, type: 3}
       propertyPath: m_Name
       value: slotStandart

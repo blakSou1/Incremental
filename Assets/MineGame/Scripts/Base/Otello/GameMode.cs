@@ -38,7 +38,7 @@ public class GameMode : MonoBehaviour
         gameLogic.Init();
         gridFuncion.Init();
 
-        G.configGame.piece = G.configGame.pieces;
+        G.configGame.piece = new(G.configGame.pieces);
         G.PlayerController.playerColor = (GridBox.Status)((int)G.gameMode.playerColor * -1);
     }
     public void StartGame()
