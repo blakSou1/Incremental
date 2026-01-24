@@ -11,11 +11,12 @@ public class GameLogic
     public TextThrower coinTextPlayer;
     public TextThrower coinTextEnemy;
 
-    public Piece pieceObj;
-    public Piece EnemyPieceObject;
+    [NonSerialized] public string pieceObj = ConfigGame.standertPiece;
+    [NonSerialized] public string EnemyPieceObject = ConfigGame.standertPiece;
 
-    [HideInInspector] public Piece piece;
-    
+    [HideInInspector] public string piece;
+    [HideInInspector] public InteractiveObject pieceModel;
+
     private Transform parentPiece;
 
     public GameObject playerSelect;
@@ -34,7 +35,7 @@ public class GameLogic
         List<Index> centerCells = G.gridFuncion.GetCenterCells();
         GridBox.Status status = GridBox.Status.White;
 
-        piece = G.configGame.standertPiece;
+        piece = ConfigGame.standertPiece;
 
         foreach (var i in centerCells)
         {
@@ -60,26 +61,27 @@ public class GameLogic
     public void PlacePiece(GridBox.Status color, GridBox grid, bool isStatic = false)
     {
         if ((grid == null || grid.indic == null) && !isStatic) return;
+        Debug.Log(piece);
 
-        GameObject obj = GameObject.Instantiate(piece.gameObject, grid.transform.position, Quaternion.identity);
+        pieceModel = G.chooice.AddPiece(piece);
+        GameObject obj = pieceModel.gameObject;
+        pieceModel.moveable.targetPosition = grid.transform.position;
 
         obj.transform.parent = parentPiece;
 
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
 
-        Piece piec = obj.GetComponent<Piece>();
-
         if (!isStatic)
-            piec.FlipOfPiece(grid.indic.revColorPieces);
+            pieceModel.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
 
         grid.SetStat(color);
-        grid.SetPiece(piec);
+        grid.SetPiece(pieceModel);
 
-        piec.SetColor(color);
+        pieceModel.SetColor(color);
 
         if (color == G.gameMode.playerColor)
-            G.gridFuncion.blackPieces.Add(piec);
-        else G.gridFuncion.whitePieces.Add(piec);
+            G.gridFuncion.blackPieces.Add(pieceModel);
+        else G.gridFuncion.whitePieces.Add(pieceModel);
 
         UpdateCountUI();
         G.gameMode.motionText.ThrowText(new LocString("", ""), R.normalVoice);
@@ -90,10 +92,13 @@ public class GameLogic
         {
             foreach(SlotModPiece i in G.modifirePieces.slots)
             {
-                if(i.piece == piece && i.piece != G.configGame.standertPiece)
+                if (i.piece == null || i.piece.state.model.id == ConfigGame.standertPiece) continue;
+
+                if(i.piece.state.model.id == piece)
                 {
-                    G.configGame.piece.Remove(piece);
-                    GameObject.Destroy(i.GetComponentInChildren<Piece>().gameObject);
+
+                    G.run.pieceStorage.Remove(pieceModel.state);
+                    GameObject.Destroy(i.GetComponentInChildren<InteractiveObject>().gameObject);
                     i.piece = null;
 
                     List<SlotModPiece> standardSlots = G.modifirePieces.slots.Where(s => s is SlotModPieceStandart).ToList();
@@ -151,7 +156,7 @@ public class GameLogic
 
     public void ActualPiece()
     {
-        piece = (G.PlayerController.playerColor == G.gameMode.playerColor) ? G.gameLogic.pieceObj : G.gameLogic.EnemyPieceObject;
+        piece = (G.PlayerController.playerColor == G.gameMode.playerColor) ? pieceObj : EnemyPieceObject;
     }
 
     private void UpdateCountUI()

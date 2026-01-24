@@ -1,8 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class PieceFullMove : Piece
+public class PieceFullMove : PieceBase
 {
+    public PieceFullMove()
+    {
+        Define<TagPrefab>().prefab = ("prefab/" + "PieceMoveFull").Load<InteractiveObject>();
+        Define<TagExcludeFromReward>();
+
+        id = "PieceMoveFull";
+    }
+
+
     public override bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)
     {
         revColorPieces = new List<GridBox>();

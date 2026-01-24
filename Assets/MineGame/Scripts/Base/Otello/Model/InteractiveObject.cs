@@ -1,8 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece : MonoBehaviour
+public class PieceState
+{
+    public CMSEntity model;
+    public int rollValue;
+    public InteractiveObject view;
+    public bool isPlayed;
+    public bool isDead;
+
+    public PieceBagState pieceBag;
+
+    public bool isClaimed;
+}
+
+public class InteractiveObject : MonoBehaviour
 {
     public SpriteRenderer iconPiece;
 
@@ -13,6 +25,13 @@ public class Piece : MonoBehaviour
     public AnimationDataSO MoveWhiteAnimDataSO;
 
     [HideInInspector] public AnimationController animationController;
+    
+    public PieceState state;
+
+    public MoveableBase moveable;
+
+    public PieceZone zone;
+    public int order;
 
     public void Start()
     {
@@ -20,6 +39,18 @@ public class Piece : MonoBehaviour
         animationController.Init();
 
         StartCoroutine(FadeCoroutine(true, .3f));
+    }
+
+    public PieceBase GetBaseModel()
+    {
+        return state.model as PieceBase;
+    }
+
+    public void SetState(PieceState diceState)
+    {
+        state = diceState;
+        state.view = this;
+
     }
 
     public void SetColor(GridBox.Status color)
@@ -67,12 +98,6 @@ public class Piece : MonoBehaviour
         StartCoroutine(FadeCoroutine(true, .3f));
     }
 
-    public virtual bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)
-    {
-        revColorPieces = null;
-        return false;
-    }
-
     protected IEnumerator FadeCoroutine(bool fadeIn, float fadeDuration)
     {
         if (iconPiece == null) yield break;
@@ -101,7 +126,7 @@ public class Piece : MonoBehaviour
         iconPiece.color = finalColor;
     }
 
-    public virtual void FlipOfPiece(List<GridBox> sameColorPieces)
-    {
-    }
+    public float Width = 1;
+
+
 }

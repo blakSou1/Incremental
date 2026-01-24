@@ -9,6 +9,8 @@ public class LocSystem : MonoBehaviour, IService
 {
     public string language = LANG_EN;
 
+    private bool isInitialize = false;
+
     public const string LANG_EN = "en";
     public const string LANG_RU = "ru";
 
@@ -27,6 +29,8 @@ public class LocSystem : MonoBehaviour, IService
 
     public void CreateLocalizationPanel()
     {
+        if (isInitialize) return;
+
         _LocCanvas = new GameObject("LanguageCanvas");
 
         _LocCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
@@ -49,14 +53,18 @@ public class LocSystem : MonoBehaviour, IService
 
         foreach (GameObject obj in allObjects)
         {
-            // Получаем компонент, который реализует интерфейс UITextSetter
             UITextSetter textSetter = obj.GetComponent<UITextSetter>();
 
-            // Если компонент найден, вызываем метод UpdateUI()
             if (textSetter != null)
                 textSetter.UpdateUI();
         }
     }
+    public void SetLaungie(string laung)
+    {
+        isInitialize = true;
+        language = laung;
+    }
+
     public void HidePanel()
     {
         _languagePanel.SetActive(false);

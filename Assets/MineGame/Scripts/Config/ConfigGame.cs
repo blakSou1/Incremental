@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 [Serializable]
@@ -10,10 +9,7 @@ public class ConfigGame : EntityComponentDefinition
     public CMSEntityPfb configLevelPfb;
     [NonSerialized] private ConfigLevel configLevelpr = null;
 
-    public Piece standertPiece;
-
-    [NonSerialized] public List<Piece> piece;
-    public List<Piece> pieces;
+    public static string standertPiece = "PieceStandart";
 
     public ConfigLevel GetConfigLevel()
     {

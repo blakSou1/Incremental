@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Index = System.Tuple<int, int>;
 
 [Serializable]
@@ -20,8 +20,8 @@ public class GridFuncion
 
     private Transform parentIndc;
 
-    [HideInInspector] public List<Piece> blackPieces;
-    [HideInInspector] public List<Piece> whitePieces;
+    [HideInInspector] public List<InteractiveObject> blackPieces;
+    [HideInInspector] public List<InteractiveObject> whitePieces;
 
     [HideInInspector] public List<Indic> indicObjs = new();
 
@@ -240,7 +240,7 @@ public class GridFuncion
         {
             for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                if (G.gameLogic.pieceModel.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
                 {
                     Vector2 v = IndexToVector2(new Index(i, j));
                     Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
@@ -266,36 +266,35 @@ public class GridFuncion
                     Drav();
                 return false;
             }
+            else
+            {
+                List<SlotModPiece> nonStandardSlots = G.modifirePieces.slots.Where(s => s is not SlotModPieceStandart).ToList();
 
-            //else
-            //{
-            //    List<SlotModPiece> nonStandardSlots = G.modifirePieces.slots.Where(s => s is not SlotModPieceStandart).ToList();
+                foreach (SlotModPiece slot in nonStandardSlots)
+                {
+                    if (slot.piece == null) continue;
 
-            //    foreach (SlotModPiece slot in nonStandardSlots)
-            //    {
-            //        if (slot.piece == null) continue;
+                    for (var i = 0; i < item1; i++)
+                    {
+                        for (var j = 0; j < item1; j++)
+                        {
+                            if (slot.piece.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                            {
+                                Vector2 v = IndexToVector2(new Index(i, j));
+                                Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
+                                indc.revColorPieces = revColorPieces;
+                                indc.transform.parent = parentIndc;
 
-            //        for (var i = 0; i < item1; i++)
-            //        {
-            //            for (var j = 0; j < item1; j++)
-            //            {
-            //                if (slot.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
-            //                {
-            //                    Vector2 v = IndexToVector2(new Index(i, j));
-            //                    Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
-            //                    indc.revColorPieces = revColorPieces;
-            //                    indc.transform.parent = parentIndc;
+                                matrix.GetGrid(new Index(i, j)).indic = indc;
 
-            //                    matrix.GetGrid(new Index(i, j)).indic = indc;
+                                indicObjs.Add(indc);
+                            }
+                        }
+                    }
 
-            //                    indicObjs.Add(indc);
-            //                }
-            //            }
-            //        }
+                }
 
-            //    }
-
-            //}
+            }
 
             G.gameMode.StartCoroutine(Pass());
 
@@ -347,13 +346,11 @@ public class GridFuncion
     {
         ClearIndicObjs();
 
-        //G.gameLogic.ActualPiece(color);
-
         for (var i = 0; i < item1; i++)
         {
             for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                if (G.gameLogic.pieceModel != null && G.gameLogic.pieceModel.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
                 {
                     Vector2 v = IndexToVector2(new Index(i, j));
                     Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
@@ -376,7 +373,7 @@ public class GridFuncion
         {
             for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.piece.CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                if (G.gameLogic.pieceModel.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
                     list.Add(G.gridFuncion.GetMatrix().GetGrid(new Index(i, j)));
             }
         }

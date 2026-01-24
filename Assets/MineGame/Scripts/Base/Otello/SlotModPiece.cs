@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SlotModPiece : MonoBehaviour
 {
-    [HideInInspector] public Piece piece;
+    [HideInInspector] public InteractiveObject piece;
     public GameObject activ;
 
     private  void Start()
@@ -16,7 +16,7 @@ public class SlotModPiece : MonoBehaviour
 
         G.modifirePieces.Restart();
         activ.SetActive(true);
-        G.gameLogic.pieceObj = piece;
+        G.gameLogic.pieceObj = piece.state.model.id;
 
         if(G.gameLogic.piece != null)
         {

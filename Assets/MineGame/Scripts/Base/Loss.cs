@@ -36,6 +36,7 @@ public class Loss : MonoBehaviour
 
         G.gameMode.IndicatorText("LOSS");
         G.gameMode.motionText.ThrowText(new LocString("", ""), R.normalVoice);
+        //G.configGame.pieces = null;
 
         G.AudioManager.StopMusic();
 
@@ -54,6 +55,12 @@ public class Loss : MonoBehaviour
         }
 
         volume.weight = 1;
+
+        yield return new WaitForSeconds(.3f);
+
+        yield return StartCoroutine(G.enemySprite.DisableSprite());
+
+        G.SceneLoader.Load("MainMenu");
     }
 }
 

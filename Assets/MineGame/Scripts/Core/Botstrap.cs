@@ -30,6 +30,9 @@ public static class GameBootstrapper
         G.inputs = new();
         G.inputs.Enable();
 
+        G.interactor = new();
+        G.interactor.Init();
+
         G.AudioManager = CreateSimpleService<AudioManager>();
         G.SceneLoader = CreateSimpleService<SceneLoader>();
         G.LocSystem = CreateSimpleService<LocSystem>();

@@ -1,8 +1,16 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
-public class PieceStandart : Piece
+public class BasicPiece : PieceBase
 {
+    public BasicPiece()
+    {
+        Define<TagPrefab>().prefab = ("prefab/" + ConfigGame.standertPiece).Load<InteractiveObject>();
+        Define<TagExcludeFromReward>();
+
+        id = ConfigGame.standertPiece;
+    }
+
     public override bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)
     {
         revColorPieces = new List<GridBox>();
@@ -50,4 +58,58 @@ public class PieceStandart : Piece
             }
         }
     }
+
+}
+
+public abstract class PieceBase : CMSEntity
+{
+    public PieceBase()
+    {
+        Define<TagPrefab>().prefab = "prefab/name".Load<InteractiveObject>();
+        //Define<TagDescription>().loc = $"Regular dice";
+        Define<TagRarity>().rarity = PieceRarity.COMMON;
+        Define<TagExcludeFromReward>();
+        id = "name";
+    }
+
+    public virtual bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)
+    {
+        revColorPieces = null;
+        return true;
+    }
+
+    public virtual void FlipOfPiece(List<GridBox> sameColorPieces)
+    {
+    }
+}
+
+public class PieceBagState
+{
+    public string id;
+
+    public PieceBagState(string cid)
+    {
+        id = cid;
+    }
+}
+
+public class TagExcludeFromReward : EntityComponentDefinition
+{
+}
+
+public enum PieceRarity
+{
+    COMMON,
+    UNCOMMON,
+    RARE
+}
+
+public class TagRarity : EntityComponentDefinition
+{
+    public PieceRarity rarity;
+}
+
+public class TagPrefab : EntityComponentDefinition
+{
+    public InteractiveObject prefab;
 }

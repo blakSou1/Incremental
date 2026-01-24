@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 public static class G
 {
+    public static bool IsPaused = false;
+
     public static LocSystem LocSystem;
     public static AudioManager AudioManager;
     public static SceneLoader SceneLoader;
@@ -10,6 +14,10 @@ public static class G
     public static Inpyts inputs;
 
     public static ConfigGame configGame;
+
+    public static RunState run;
+
+    public static Interactor interactor;
 
     //Объекты в игре
     public static GameMode gameMode;
@@ -22,5 +30,47 @@ public static class G
     public static Loss louse;
     public static Volume volume;
     public static ModifirePieces modifirePieces;
+    public static Chooice chooice;
 
+}
+
+public class ManagedBehaviour : MonoBehaviour
+{
+    void Update()
+    {
+        if (!G.IsPaused)
+            PausableUpdate();
+    }
+
+    protected virtual void PausableUpdate()
+    {
+    }
+
+    void FixedUpdate()
+    {
+        if (!G.IsPaused)
+            PausableFixedUpdate();
+    }
+
+    protected virtual void PausableFixedUpdate()
+    {
+    }
+}
+
+public class RunState
+{
+    public int level;
+    public List<PieceState> pieceStorage = new();
+    public List<PieceBagState> pieceBag = new();
+    public int drawSize = 3;
+    public int health = 10;
+    public int maxHealth = 10;
+
+    public bool HasDice(string mID)
+    {
+        foreach (var db in pieceBag)
+            if (db.id == mID)
+                return true;
+        return false;
+    }
 }

@@ -23,37 +23,35 @@ public class ModifirePieces
         List<SlotModPiece> standardSlots = slots.Where(s => s is SlotModPieceStandart).ToList();
 
         // 1. Спавним специальные фишки
-        for (int i = 0; i < nonStandardSlots.Count && i < G.configGame.piece.Count; i++)
+        for (int i = 0; i < nonStandardSlots.Count && i < G.run.pieceStorage.Count; i++)
         {
-            Piece p = GameObject.Instantiate(G.configGame.piece[i],
-                nonStandardSlots[i].transform.position,
-                nonStandardSlots[i].transform.rotation);
+            var p = G.chooice.AddPiece(G.run.pieceStorage[i].model.id);
+            p.moveable.targetPosition = nonStandardSlots[i].transform.position;
+            p.transform.rotation = nonStandardSlots[i].transform.rotation;
 
             p.transform.parent = nonStandardSlots[i].transform;
             p.Start();
             SetColorAnimPiece(p);
-            nonStandardSlots[i].piece = G.configGame.piece[i];
+            nonStandardSlots[i].piece = G.run.pieceStorage[i].view;
         }
 
         // 2. Спавним стандартные фишки
         foreach (SlotModPiece standardSlot in standardSlots)
         {
-            Piece p = GameObject.Instantiate(G.configGame.standertPiece,
-                standardSlot.transform.position,
-                standardSlot.transform.rotation);
+            var p = G.chooice.AddPiece(ConfigGame.standertPiece);
+            p.moveable.targetPosition = standardSlot.transform.position;
+            p.transform.rotation = standardSlot.transform.rotation;
 
             p.transform.parent = standardSlot.transform;
             p.Start();
             SetColorAnimPiece(p);
-            standardSlot.piece = G.configGame.standertPiece;
+            standardSlot.piece = p;
 
             standardSlot.Click();
         }
-
-
     }
 
-    private void SetColorAnimPiece(Piece p)
+    private void SetColorAnimPiece(InteractiveObject p)
     {
         if(G.gameMode.playerColor == GridBox.Status.White)
             p.animationController.SetAnimation(p.SpawnWhiteAnimDataSO);

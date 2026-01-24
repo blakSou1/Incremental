@@ -26,6 +26,8 @@ public class GameMode : MonoBehaviour
 
     private void InitComponents()
     {
+        G.run = new();
+
         motionText.ThrowText(new LocString("", ""), R.normalVoice);
 
         indicatorText = GameObject.FindGameObjectWithTag("Indicator").GetComponent<Text>();
@@ -38,7 +40,6 @@ public class GameMode : MonoBehaviour
         gameLogic.Init();
         gridFuncion.Init();
 
-        G.configGame.piece = new(G.configGame.pieces);
         G.PlayerController.playerColor = (GridBox.Status)((int)G.gameMode.playerColor * -1);
     }
     public void StartGame()

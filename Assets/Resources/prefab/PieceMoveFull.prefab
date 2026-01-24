@@ -98,7 +98,8 @@ GameObject:
   - component: {fileID: 7655773385590912272}
   - component: {fileID: 7918906466241739528}
   - component: {fileID: -9027304788492072133}
-  - component: {fileID: -163105670928925276}
+  - component: {fileID: -5757613870661248549}
+  - component: {fileID: 1664809416595111963}
   m_Layer: 0
   m_Name: PieceMoveFull
   m_TagString: Untagged
@@ -192,7 +193,7 @@ MonoBehaviour:
   endAnimation:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-163105670928925276
+--- !u!114 &-5757613870661248549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,7 +202,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9111731403297543512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a47e3b027ced1f42be5965fb5f852b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 67e4ca7d4a17dfd41a204f6d66041c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   iconPiece: {fileID: 2487093224424379609}
@@ -210,3 +211,20 @@ MonoBehaviour:
   MoveBlackAnimDataSO: {fileID: 11400000, guid: 30ad50aaf6055944dba7ad8d7f8bb0d3, type: 2}
   MoveWhiteAnimDataSO: {fileID: 11400000, guid: 0a79d0f3845f5e246bf57eb438926a84, type: 2}
   animationController: {fileID: 0}
+  moveable: {fileID: 1664809416595111963}
+  zone: {fileID: 0}
+  order: 0
+  Width: 1
+--- !u!114 &1664809416595111963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111731403297543512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d21dbd791c3c9c4cbe76b847eb40d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {x: 0, y: 0, z: 0}

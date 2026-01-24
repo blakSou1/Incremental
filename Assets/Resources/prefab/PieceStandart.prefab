@@ -97,8 +97,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7655773385590912272}
   - component: {fileID: 7918906466241739528}
-  - component: {fileID: 553669412}
   - component: {fileID: -9027304788492072133}
+  - component: {fileID: -3051923050989007080}
+  - component: {fileID: -8721325134548823517}
   m_Layer: 0
   m_Name: PieceStandart
   m_TagString: Untagged
@@ -177,24 +178,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &553669412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9111731403297543512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ac003c41f171d143bc7d6fb6e869963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconPiece: {fileID: 0}
-  SpawnBlackAnimDataSO: {fileID: 11400000, guid: f3c551b4005ce604bbb3514323870994, type: 2}
-  SpawnWhiteAnimDataSO: {fileID: 11400000, guid: 3c0d26e606f88eb42b45b7f21040466b, type: 2}
-  MoveBlackAnimDataSO: {fileID: 11400000, guid: 30ad50aaf6055944dba7ad8d7f8bb0d3, type: 2}
-  MoveWhiteAnimDataSO: {fileID: 11400000, guid: 0a79d0f3845f5e246bf57eb438926a84, type: 2}
-  animationController: {fileID: 0}
 --- !u!114 &-9027304788492072133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,3 +193,38 @@ MonoBehaviour:
   endAnimation:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-3051923050989007080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111731403297543512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e4ca7d4a17dfd41a204f6d66041c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconPiece: {fileID: 0}
+  SpawnBlackAnimDataSO: {fileID: 11400000, guid: f3c551b4005ce604bbb3514323870994, type: 2}
+  SpawnWhiteAnimDataSO: {fileID: 11400000, guid: 3c0d26e606f88eb42b45b7f21040466b, type: 2}
+  MoveBlackAnimDataSO: {fileID: 11400000, guid: 30ad50aaf6055944dba7ad8d7f8bb0d3, type: 2}
+  MoveWhiteAnimDataSO: {fileID: 11400000, guid: 0a79d0f3845f5e246bf57eb438926a84, type: 2}
+  animationController: {fileID: 0}
+  moveable: {fileID: -8721325134548823517}
+  zone: {fileID: 0}
+  order: 0
+  Width: 1
+--- !u!114 &-8721325134548823517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111731403297543512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d21dbd791c3c9c4cbe76b847eb40d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {x: 0, y: 0, z: 0}

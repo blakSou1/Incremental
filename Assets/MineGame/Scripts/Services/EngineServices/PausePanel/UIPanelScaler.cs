@@ -25,7 +25,6 @@ public class UIPanelScaler : MonoBehaviour
         inAnim = true;
         Transform panel = GetComponent<RectTransform>().GetChild(0);
 
-        // Анимация изменения масштаба
         yield return panel.DOScale(Vector3.one * (isOpen ? 1f : 0f), 0.5f)
             .SetEase(Ease.InBack, 0.7f)
             .WaitForCompletion();

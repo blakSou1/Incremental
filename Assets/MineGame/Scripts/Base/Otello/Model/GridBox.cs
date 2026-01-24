@@ -10,7 +10,7 @@ public class GridBox : MonoBehaviour
 
     private Index index = new(-1, -1);
     private Status stat = Status.None;
-    [HideInInspector] public Piece piece;
+    [HideInInspector] public InteractiveObject piece;
 
     public TMP_Text debugTextWeight;
 
@@ -39,7 +39,7 @@ public class GridBox : MonoBehaviour
         index = new Index(i, j);
     }
 
-    public void SetPiece(Piece piece)
+    public void SetPiece(InteractiveObject piece)
     {
         this.piece = piece;
     }

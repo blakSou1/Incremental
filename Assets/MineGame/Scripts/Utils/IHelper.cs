@@ -7,12 +7,12 @@ public class IHelper : ScriptableObject
 
     public void SetRu()
     {
-        G.LocSystem.language = LocSystem.LANG_RU;
+        G.LocSystem.SetLaungie(LocSystem.LANG_RU);
         UpdateLan();
     }
     public void SetEn()
     {
-        G.LocSystem.language = LocSystem.LANG_EN;
+        G.LocSystem.SetLaungie(LocSystem.LANG_EN);
         UpdateLan();
     }
     private void UpdateLan()
