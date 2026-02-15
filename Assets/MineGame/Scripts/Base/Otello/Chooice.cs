@@ -13,21 +13,23 @@ public class Chooice : MonoBehaviour
 
     public InteractiveObject CreatePiece(string t)
     {
-        var basicDice = CMS.Get<CMSEntity>(t);
+        var basicPiece = CMS.Get<CMSEntity>(t);
         var state = new PieceState
         {
-            model = basicDice
+            model = basicPiece
         };
 
-        var instance = Instantiate(basicDice.Get<TagPrefab>().prefab);
+        var instance = Instantiate(basicPiece.Get<TagPrefab>().prefab);
+
+        instance.moveable.targetPosition = new(50, 50, instance.transform.position.z);
+        instance.transform.position = new(50, 50, instance.transform.position.z);
+
         instance.SetState(state);
         return instance;
     }
 
     public InteractiveObject AddPiece(string id)
     {
-        var instance = CreatePiece(id);
-
-        return instance;
+        return CreatePiece(id);
     }
 }

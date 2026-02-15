@@ -11,7 +11,7 @@ public class GameLogic
     public TextThrower coinTextPlayer;
     public TextThrower coinTextEnemy;
 
-    [NonSerialized] public string pieceObj = ConfigGame.standertPiece;
+    [NonSerialized] public InteractiveObject pieceObj;
     [NonSerialized] public string EnemyPieceObject = ConfigGame.standertPiece;
 
     [HideInInspector] public string piece;
@@ -32,6 +32,8 @@ public class GameLogic
 
     public IEnumerator InitStaticPieces()
     {
+        pieceObj = G.chooice.AddPiece(ConfigGame.standertPiece);
+
         List<Index> centerCells = G.gridFuncion.GetCenterCells();
         GridBox.Status status = GridBox.Status.White;
 
@@ -54,6 +56,8 @@ public class GameLogic
             EnemySelect.SetActive(true);
             playerSelect.SetActive(false);
         }
+
+        yield return new WaitForSeconds(.5f);
 
         PassTurn();
     }
@@ -156,7 +160,7 @@ public class GameLogic
 
     public void ActualPiece()
     {
-        piece = (G.PlayerController.playerColor == G.gameMode.playerColor) ? pieceObj : EnemyPieceObject;
+        piece = (G.PlayerController.playerColor == G.gameMode.playerColor) ? pieceObj.state.model.id : EnemyPieceObject;
     }
 
     private void UpdateCountUI()

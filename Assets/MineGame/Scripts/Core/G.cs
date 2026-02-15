@@ -60,13 +60,13 @@ public class ManagedBehaviour : MonoBehaviour
 public class RunState
 {
     public int level;
-    public List<PieceState> pieceStorage = new();
-    public List<PieceBagState> pieceBag = new();
+    public List<PieceState> pieceStorage = new(); //не сыгранные 
+    public List<PieceBagState> pieceBag = new(); //в сумке игрока
     public int drawSize = 3;
     public int health = 10;
     public int maxHealth = 10;
 
-    public bool HasDice(string mID)
+    public bool HasPiece(string mID)
     {
         foreach (var db in pieceBag)
             if (db.id == mID)

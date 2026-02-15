@@ -22,6 +22,18 @@ public class GameMode : MonoBehaviour
     {
         InitComponents();
         StartGame();
+
+        PieceState st = G.chooice.AddPiece("PieceMoveFull").state;
+        G.run.pieceStorage.Add(st);
+        G.run.pieceBag.Add(st.pieceBag);
+
+        st = G.chooice.AddPiece("PieceMoveFull").state;
+        G.run.pieceStorage.Add(st);
+        G.run.pieceBag.Add(st.pieceBag);
+
+        st = G.chooice.AddPiece("PieceMoveFull").state;
+        G.run.pieceStorage.Add(st);
+        G.run.pieceBag.Add(st.pieceBag);
     }
 
     private void InitComponents()
@@ -68,9 +80,11 @@ public class GameMode : MonoBehaviour
 
         yield return StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position2, G.PlayerController.position1));
 
-        G.modifirePieces.SpawnPiece();
+        yield return StartCoroutine(gameLogic.InitStaticPieces());
 
-        StartCoroutine(gameLogic.InitStaticPieces());
+        yield return new WaitForSeconds(.3f);
+
+        G.modifirePieces.SpawnPiece();
     }
 
     public  void IndicatorText(string text)

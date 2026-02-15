@@ -38,7 +38,7 @@ public class ModifirePieces
         // 2. Спавним стандартные фишки
         foreach (SlotModPiece standardSlot in standardSlots)
         {
-            var p = G.chooice.AddPiece(ConfigGame.standertPiece);
+            var p = G.gameLogic.pieceObj;
             p.moveable.targetPosition = standardSlot.transform.position;
             p.transform.rotation = standardSlot.transform.rotation;
 

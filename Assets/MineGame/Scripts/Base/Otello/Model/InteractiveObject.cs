@@ -46,9 +46,9 @@ public class InteractiveObject : MonoBehaviour
         return state.model as PieceBase;
     }
 
-    public void SetState(PieceState diceState)
+    public void SetState(PieceState pieceState)
     {
-        state = diceState;
+        state = pieceState;
         state.view = this;
 
     }

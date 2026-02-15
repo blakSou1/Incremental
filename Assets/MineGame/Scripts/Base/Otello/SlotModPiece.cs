@@ -16,7 +16,7 @@ public class SlotModPiece : MonoBehaviour
 
         G.modifirePieces.Restart();
         activ.SetActive(true);
-        G.gameLogic.pieceObj = piece.state.model.id;
+        G.gameLogic.pieceObj = piece;
 
         if(G.gameLogic.piece != null)
         {

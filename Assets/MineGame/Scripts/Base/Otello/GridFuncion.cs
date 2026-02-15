@@ -350,7 +350,7 @@ public class GridFuncion
         {
             for (var j = 0; j < item1; j++)
             {
-                if (G.gameLogic.pieceModel != null && G.gameLogic.pieceModel.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                if (G.gameLogic.pieceObj != null && G.gameLogic.pieceObj.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
                 {
                     Vector2 v = IndexToVector2(new Index(i, j));
                     Indic indc = GameObject.Instantiate(indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
