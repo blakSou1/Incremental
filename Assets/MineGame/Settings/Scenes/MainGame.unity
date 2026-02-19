@@ -1194,6 +1194,7 @@ GameObject:
   - component: {fileID: 193383088}
   - component: {fileID: 193383087}
   - component: {fileID: 193383086}
+  - component: {fileID: 193383090}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1290,6 +1291,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &193383090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193383085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9224a409ef40ff84ea5ab24583c01c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinTextPlayer: {fileID: 656178692}
+  coinTextEnemy: {fileID: 1803597403}
+  playerSelect: {fileID: 1053720787}
+  EnemySelect: {fileID: 1188106980}
+  motionText: {fileID: 1385915687}
 --- !u!1 &214769007
 GameObject:
   m_ObjectHideFlags: 0
@@ -5489,6 +5507,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03dad0e967a945045b85d1995fead95e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objects: []
+  spacing: 1
+  capture:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!1 &1146183956
 GameObject:
   m_ObjectHideFlags: 0
@@ -5664,23 +5690,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerColor: -1
-  motionText: {fileID: 1385915687}
   gridFuncion:
     prefabGridBox: {fileID: 8838107636461451687, guid: 139817bc1d262b34882519d12788d39d, type: 3}
     indentGrid: {x: 0.5, y: 0.5}
     indcObj: {fileID: 8718409057373670328, guid: 1631794d8c4d13e42b2aa2a9194bb54d, type: 3}
     item1: 8
+    parentIndc: {fileID: 0}
     blackPieces: []
     whitePieces: []
     indicObjs: []
-  gameLogic:
-    coinTextPlayer: {fileID: 656178692}
-    coinTextEnemy: {fileID: 1803597403}
-    pieceObj: {fileID: 553669412, guid: 6a357eac51f2b0b4eb70a825d451ceab, type: 3}
-    EnemyPieceObject: {fileID: 553669412, guid: 6a357eac51f2b0b4eb70a825d451ceab, type: 3}
-    piece: {fileID: 0}
-    playerSelect: {fileID: 1053720787}
-    EnemySelect: {fileID: 1188106980}
   disableInputForPass: 0
   isGameEnd: 0
   disableInputForSelect: 0

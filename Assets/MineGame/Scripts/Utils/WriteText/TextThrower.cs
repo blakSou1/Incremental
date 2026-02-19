@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class TextThrower : MonoBehaviour
 {
-    private TextAnimatorPlayer _textAnimator;
+    [HideInInspector] public TextAnimatorPlayer _textAnimator;
     private Coroutine _typingSoundCoroutine;
 
     private void Awake()

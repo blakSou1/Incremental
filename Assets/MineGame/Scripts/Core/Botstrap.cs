@@ -33,13 +33,20 @@ public static class GameBootstrapper
         G.interactor = new();
         G.interactor.Init();
 
+        G.gameLogic = new();
+        G.gameLogic.Init();
+
         G.AudioManager = CreateSimpleService<AudioManager>();
         G.SceneLoader = CreateSimpleService<SceneLoader>();
         G.LocSystem = CreateSimpleService<LocSystem>();
         G.pausePanel = CreateSimpleService<PausePanel>();
 
+        G.winAndLouse = new();
+        G.run = new();
+
         G.configGame = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigGame>())!.Get<ConfigGame>();
 
+        //
         G.gameMode = Object.FindFirstObjectByType<GameMode>();
         G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
         G.ai = Object.FindFirstObjectByType<AI>();

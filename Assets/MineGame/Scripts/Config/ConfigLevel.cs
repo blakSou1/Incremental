@@ -4,6 +4,8 @@ using System.Linq;
 [Serializable]
 public class ConfigLevel : EntityComponentDefinition
 {
+    public float indexLvl = 0;
+
     public CMSEntityPfb enemyConfigPfb;
     [NonSerialized] private ConfigEnemy enemyConfig;
 

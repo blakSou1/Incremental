@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveableBalatro : MoveableBase
@@ -31,6 +33,13 @@ public class MoveableBalatro : MoveableBase
 
         // Обновляем позицию
         transform.position += 100f * dt * (Vector3)velocity;
+
+        if(events.Count != 0 && Vector2.Distance(transform.position, targetPosition) < .2)
+        {
+            foreach(var i in events)
+                i?.Invoke();
+            events.Clear();
+        }
     }
 }
 
@@ -76,6 +85,7 @@ public class MoveableBalatro : MoveableBase
 public class MoveableBase : ManagedBehaviour
 {
     public Vector3 targetPosition;
+    [NonSerialized] public List<Action> events = new();
 
     void OnDrawGizmos()
     {

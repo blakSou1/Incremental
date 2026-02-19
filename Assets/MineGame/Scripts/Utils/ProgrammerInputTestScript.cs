@@ -87,12 +87,12 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     private void Win()
     {
         if(G.gameMode != null)
-            G.gameMode.StartCoroutine(G.winAndLouse.Win());
+            G.winAndLouse.WinPlayer();
     }
     private void Louse()
     {
         if (G.gameMode != null)
-            G.gameMode.StartCoroutine(G.winAndLouse.Loss());
+            G.winAndLouse.WinEnemy();
     }
 
     public void RestoreToNormal()

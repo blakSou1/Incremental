@@ -6,18 +6,9 @@ public static class G
 {
     public static bool IsPaused = false;
 
-    public static LocSystem LocSystem;
-    public static AudioManager AudioManager;
-    public static SceneLoader SceneLoader;
-    public static PausePanel pausePanel;
-
-    public static Inpyts inputs;
-
     public static ConfigGame configGame;
 
     public static RunState run;
-
-    public static Interactor interactor;
 
     //Объекты в игре
     public static GameMode gameMode;
@@ -26,11 +17,22 @@ public static class G
     public static GameLogic gameLogic;
     public static PlayerController PlayerController;
     public static AI ai;
-    public static WinAndLouse winAndLouse;
     public static Loss louse;
     public static Volume volume;
     public static ModifirePieces modifirePieces;
     public static Chooice chooice;
+    public static UIController UIController;
+
+    //обьекты не монобех контроллеры
+    public static Inpyts inputs;
+    public static Interactor interactor;
+
+    public static LocSystem LocSystem;
+    public static AudioManager AudioManager;
+    public static SceneLoader SceneLoader;
+    public static PausePanel pausePanel;
+
+    public static WinAndLouse winAndLouse;
 
 }
 
@@ -60,8 +62,8 @@ public class ManagedBehaviour : MonoBehaviour
 public class RunState
 {
     public int level;
-    public List<PieceState> pieceStorage = new(); //не сыгранные 
-    public List<PieceBagState> pieceBag = new(); //в сумке игрока
+    public List<string> pieceStorage = new(); //не сыгранные 
+    public List<string> pieceBag = new(); //в сумке игрока
     public int drawSize = 3;
     public int health = 10;
     public int maxHealth = 10;
@@ -69,7 +71,7 @@ public class RunState
     public bool HasPiece(string mID)
     {
         foreach (var db in pieceBag)
-            if (db.id == mID)
+            if (db == mID)
                 return true;
         return false;
     }

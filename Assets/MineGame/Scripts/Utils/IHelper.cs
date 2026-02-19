@@ -59,7 +59,7 @@ public class IHelper : ScriptableObject
     public void RestartGame()
     {
         if (G.gameMode != null)
-            G.gameMode.RestartGame();
+            G.gameMode.StartCoroutine(G.gameMode.RestartGame());
     }
 
     public void CameraMovePos2()

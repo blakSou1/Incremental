@@ -947,24 +947,48 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 0b8da974a6429b8489e21c2a5d8dd509, type: 3}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: da82a32db8463184a8fca20318ebadfc, type: 2}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 11400000, guid: da82a32db8463184a8fca20318ebadfc, type: 2}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Quit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlaySound
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: IHelper, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -975,9 +999,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: d2755530c7fc6b84489c96b91deab8f2, type: 3}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8300000, guid: d2755530c7fc6b84489c96b91deab8f2, type: 3}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.AudioClip, UnityEngine
