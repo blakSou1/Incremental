@@ -13,6 +13,7 @@ public static class G
     //Объекты в игре
     public static GameMode gameMode;
     public static EnemySprite enemySprite;
+    public static EnemyHp enemyHp;
     public static GridFuncion gridFuncion;
     public static GameLogic gameLogic;
     public static PlayerController PlayerController;

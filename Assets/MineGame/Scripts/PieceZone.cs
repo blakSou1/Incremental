@@ -35,11 +35,8 @@ public class PieceZone : MonoBehaviour
         for (var index = 0; index < objects.Count; index++)
         {
             var o = objects[index];
-            // var isKindaBack = Vector2.Distance(objects[index].transform.position, GetTargetPos(index, objects)) < 0.5f;
-            //if (!o.draggable.isDragging /* || isKindaBack*/)
-            //{
-                alignedSet.Add(o);
-            //}
+
+            alignedSet.Add(o);
         }
 
         for (var i = 0; i < alignedSet.Count; i++)

@@ -1,15 +1,11 @@
-using System.Collections;
 using UnityEngine;
 
 public class PieceState
 {
     public CMSEntity model;
-    public int rollValue;
     public InteractiveObject view;
     public bool isPlayed;
     public bool isDead;
-
-    public bool isClaimed;
 }
 
 public class InteractiveObject : MonoBehaviour
@@ -23,20 +19,22 @@ public class InteractiveObject : MonoBehaviour
     public AnimationDataSO MoveWhiteAnimDataSO;
 
     [HideInInspector] public AnimationController animationController;
+    [HideInInspector] public MoveableBase moveable;
     
     public PieceState state;
 
-    public MoveableBase moveable;
-
-    public PieceZone zone;
-    public int order;
+    //Zone
+    [HideInInspector] public PieceZone zone;
+    [HideInInspector] public int order;
+    public float Width = 1;
 
     public void Start()
     {
+        moveable = GetComponent<MoveableBase>();
         animationController = GetComponent<AnimationController>();
         animationController.Init();
 
-        StartCoroutine(FadeCoroutine(true, .3f));
+        StartCoroutine(animationController.FadeCoroutine(true, .3f, iconPiece));
     }
 
     public PieceBase GetBaseModel()
@@ -48,7 +46,6 @@ public class InteractiveObject : MonoBehaviour
     {
         state = pieceState;
         state.view = this;
-
     }
 
     public void SetColor(GridBox.Status color)
@@ -77,7 +74,7 @@ public class InteractiveObject : MonoBehaviour
 
     public void FlipAnim(GridBox.Status color)
     {
-        StartCoroutine(FadeCoroutine(false, .1f));
+        StartCoroutine(animationController.FadeCoroutine(false, .1f, iconPiece));
         SetColorIcon(color);
 
         if (color == GridBox.Status.Black)
@@ -94,38 +91,6 @@ public class InteractiveObject : MonoBehaviour
     private void EndAnimFlipToFabe()
     {
         if(gameObject.activeInHierarchy)
-            StartCoroutine(FadeCoroutine(true, .3f));
+            StartCoroutine(animationController.FadeCoroutine(true, .3f, iconPiece));
     }
-
-    protected IEnumerator FadeCoroutine(bool fadeIn, float fadeDuration)
-    {
-        if (iconPiece == null) yield break;
-
-        float startAlpha = iconPiece.color.a;
-        float targetAlpha = fadeIn ? 1f : 0f;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / fadeDuration);
-
-            float currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-
-            Color color = iconPiece.color;
-            color.a = currentAlpha;
-            iconPiece.color = color;
-
-            yield return null;
-        }
-
-        Color finalColor = iconPiece.color;
-        finalColor.a = targetAlpha;
-        iconPiece.color = finalColor;
-    }
-
-    public float Width = 1;
-
-
 }

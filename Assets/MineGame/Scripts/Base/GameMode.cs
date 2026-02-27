@@ -67,6 +67,15 @@ public class GameMode : MonoBehaviour
         yield return new WaitForSeconds(.3f);
 
         G.modifirePieces.SpawnPiece();
+
+        yield return new WaitForSeconds(.3f);
+
+        SpawnModifireGridBox();
+    }
+
+    private void SpawnModifireGridBox()
+    {
+        G.gridFuncion.matrix.GetGrid(new(1, 1)).SetModifire("Mod");
     }
 
     public void PlayerInputUpdate()

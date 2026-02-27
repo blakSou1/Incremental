@@ -6,7 +6,7 @@ public class GridBox : MonoBehaviour
 {
     public enum Status { Black = -1, None = 0, White = 1 }
 
-    public Indic indic = null;
+    [HideInInspector] public Indic indic = null;
 
     private Index index = new(-1, -1);
     private Status stat = Status.None;
@@ -14,11 +14,27 @@ public class GridBox : MonoBehaviour
 
     public TMP_Text debugTextWeight;
 
+    [Space]
+    [HideInInspector] public GridBoxMode boxMode;
+    public GameObject hook;
+
     public void Flip()
     {
         var newC = (Status) ((int) stat * -1);
         piece.FlipAnim(newC);
         SetStat(newC);
+    }
+
+    public void SetModifire(string id)
+    {
+        var instance = G.chooice.AddModifire(id);
+
+        instance.state.gridBox = this;
+
+        instance.transform.SetParent(hook.transform);
+        instance.transform.position = hook.transform.position;
+
+        boxMode = instance;
     }
 
     public Status GetStat()
@@ -42,5 +58,8 @@ public class GridBox : MonoBehaviour
     public void SetPiece(InteractiveObject piece)
     {
         this.piece = piece;
-    }
+
+        if(boxMode != null && stat == G.gameMode.playerColor)
+            boxMode.ActivationScill();
+    }//TODO
 }

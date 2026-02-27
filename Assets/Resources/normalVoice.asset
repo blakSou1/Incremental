@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca23ff0a70ce7544c9466714b4b53ab8, type: 3}
   m_Name: normalVoice
   m_EditorClassIdentifier: 
-  voice: {fileID: 8300000, guid: 981ca7b697fa5a94e8405a485295b9f1, type: 3}
+  voice: {fileID: 8300000, guid: 64611405a0a9a7a4eb85e8d549e59f24, type: 3}
   textMaterial: {fileID: -5288937159738047073, guid: 47dff36dd678bf04c97d82666514b905, type: 2}
   font: {fileID: 11400000, guid: a55cf071e4cf33a43ad0163875c486c7, type: 2}
   deltaSound: 80

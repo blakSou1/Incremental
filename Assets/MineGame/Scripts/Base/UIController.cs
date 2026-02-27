@@ -14,6 +14,10 @@ public class UIController : MonoBehaviour
 
     [NonSerialized] public Text indicatorText = null;
 
+    [Space]
+    public Image enemyHp;
+    public float intervalScaleXInOneHp = 100;
+
     public void Awake()
     {
         G.UIController = this;
@@ -66,5 +70,11 @@ public class UIController : MonoBehaviour
             EnemySelect.SetActive(true);
             playerSelect.SetActive(false);
         }
+    }
+
+    public void UpdateHpEnemy(int hp)
+    {
+        float Widht = intervalScaleXInOneHp * hp;
+        enemyHp.rectTransform.sizeDelta = new(Widht, enemyHp.rectTransform.sizeDelta.y);
     }
 }

@@ -5,10 +5,10 @@ public class BasicPiece : PieceBase
 {
     public BasicPiece()
     {
-        Define<TagPrefab>().prefab = ("prefab/" + ConfigGame.standertPiece).Load<InteractiveObject>();
-        Define<TagExcludeFromReward>();
-
         id = ConfigGame.standertPiece;
+
+        Define<TagPrefab>().prefab = ("prefab/Piece/" + $"{id}").Load<InteractiveObject>();
+        Define<TagExcludeFromReward>();
     }
 
     public override bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)
@@ -65,8 +65,7 @@ public abstract class PieceBase : CMSEntity
 {
     public PieceBase()
     {
-        Define<TagPrefab>().prefab = "prefab/name".Load<InteractiveObject>();
-        //Define<TagDescription>().loc = $"Regular dice";
+        Define<TagPrefab>().prefab = "prefab/Piece/name".Load<InteractiveObject>();
         Define<TagRarity>().rarity = PieceRarity.COMMON;
         Define<TagExcludeFromReward>();
         id = "name";

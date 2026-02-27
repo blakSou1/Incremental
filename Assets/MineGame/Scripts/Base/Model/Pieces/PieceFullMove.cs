@@ -7,7 +7,7 @@ public class PieceFullMove : PieceBase
     {
         id = "PieceMoveFull";
 
-        Define<TagPrefab>().prefab = ("prefab/" + $"{id}").Load<InteractiveObject>();
+        Define<TagPrefab>().prefab = ("prefab/Piece/" + $"{id}").Load<InteractiveObject>();
         Define<TagExcludeFromReward>();
     }
 

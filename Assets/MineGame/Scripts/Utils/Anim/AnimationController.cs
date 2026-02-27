@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.Events;
 
 public class AnimationController : MonoBehaviour
 {
-    private SpriteRenderer _targetRenderer;
+    [NonSerialized] public SpriteRenderer _targetRenderer;
     private AnimationDataSO _currentAnimation;
     private Coroutine _animationCoroutine;
 
@@ -72,6 +73,34 @@ public class AnimationController : MonoBehaviour
             endAnimation?.Invoke();
             endAnimation.RemoveAllListeners();
         }
+    }
+
+    public IEnumerator FadeCoroutine(bool fadeIn, float fadeDuration, SpriteRenderer sprite)
+    {
+        if (sprite == null) yield break;
+
+        float startAlpha = sprite.color.a;
+        float targetAlpha = fadeIn ? 1f : 0f;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / fadeDuration);
+
+            float currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+
+            Color color = sprite.color;
+            color.a = currentAlpha;
+            sprite.color = color;
+
+            yield return null;
+        }
+
+        Color finalColor = sprite.color;
+        finalColor.a = targetAlpha;
+        sprite.color = finalColor;
     }
 
     private void OnDestroy()

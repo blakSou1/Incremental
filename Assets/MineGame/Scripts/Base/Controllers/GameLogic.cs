@@ -48,8 +48,6 @@ public class GameLogic
     {
         if ((grid == null || grid.indic == null) && !isStatic) yield break;
 
-        bool isMod = false;
-
         if (!isStatic && G.gameMode.playerColor == G.PlayerController.playerColor)
         {
             foreach (SlotModPiece i in G.modifirePieces.slots)
@@ -58,24 +56,22 @@ public class GameLogic
 
                 if (i.activ.activeInHierarchy)
                 {
-                    spawnPieceModel = i.GetComponentInChildren<InteractiveObject>();
-                    G.run.pieceStorage.Remove(spawnPieceModel.GetBaseModel().id);
+                    InteractiveObject inter = i.GetComponentInChildren<InteractiveObject>();
+                    actualPiece = inter.state.model.id;
+
+                    G.run.pieceStorage.Remove(inter.GetBaseModel().id);
+                    GameObject.Destroy(inter.gameObject);
+
                     i.piece = null;
-
-                    List<SlotModPiece> standardSlots = G.modifirePieces.slots.Where(s => s is SlotModPieceStandart).ToList();
-
-                    standardSlots[0].Click();
-
-                    isMod = true;
                 }
             }
         }
 
-        if(!isMod)
-            spawnPieceModel = G.chooice.AddPiece(actualPiece);
+        spawnPieceModel = G.chooice.AddPiece(actualPiece);
 
         GameObject obj = spawnPieceModel.gameObject;
         spawnPieceModel.moveable.targetPosition = grid.transform.position;
+        spawnPieceModel.transform.position = grid.transform.position;
 
         obj.transform.parent = parentPiece;
 
@@ -88,8 +84,15 @@ public class GameLogic
 
         if (!isStatic)
         {
+            if(pieceObj.state.model.id != ConfigGame.standertPiece && G.gameMode.playerColor == G.PlayerController.playerColor)
+            {
+                List<SlotModPiece> standardSlots = G.modifirePieces.slots.Where(s => s is SlotModPieceStandart).ToList();
+
+                standardSlots[0].Click();
+            }
+
             bool isNext = false;
-            spawnPieceModel.moveable.events.Add(() => isNext = true);
+            spawnPieceModel.animationController.endAnimation.AddListener(() => isNext = true);
 
             while (!isNext)
                 yield return new WaitForEndOfFrame();

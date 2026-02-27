@@ -71,8 +71,9 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     // ПАУЗА (полная остановка)
     private void TogglePause()
     {
+#if UNITY_EDITOR
         EditorApplication.isPaused = true;
-
+#endif
         Debug.Log("Game PAUSED");
     }
 
