@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
 
@@ -55,11 +56,11 @@ public class GridBox : MonoBehaviour
         index = new Index(i, j);
     }
 
-    public void SetPiece(InteractiveObject piece)
+    public IEnumerator SetPiece(InteractiveObject piece)
     {
         this.piece = piece;
 
         if(boxMode != null && stat == G.gameMode.playerColor)
-            boxMode.ActivationScill();
+            yield return StartCoroutine(boxMode.ActivationScill());
     }//TODO
 }

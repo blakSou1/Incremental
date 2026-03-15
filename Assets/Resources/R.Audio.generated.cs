@@ -7,8 +7,6 @@ public static partial class R
     {
         public static AudioClip cin;
         public static AudioClip Clic05;
-        public static AudioClip click_2;
-        public static AudioClip damage;
         public static AudioClip damage_magic;
         public static AudioClip DuckSound;
         public static AudioClip f;
@@ -42,6 +40,8 @@ public static partial class R
         public static AudioClip Wrong_Error;
         public static AudioClip y;
         public static AudioClip click;
+        public static AudioClip click_2;
+        public static AudioClip damage;
         public static AudioClip Louse;
         public static AudioClip Meow;
         public static AudioClip NewMainMenu;
@@ -57,8 +57,6 @@ public static partial class R
     {
         Audio.cin = Resources.Load<AudioClip>("Audio/Bank/cin");
         Audio.Clic05 = Resources.Load<AudioClip>("Audio/Bank/Clic05");
-        Audio.click_2 = Resources.Load<AudioClip>("Audio/Bank/click_2");
-        Audio.damage = Resources.Load<AudioClip>("Audio/Bank/damage");
         Audio.damage_magic = Resources.Load<AudioClip>("Audio/Bank/damage_magic");
         Audio.DuckSound = Resources.Load<AudioClip>("Audio/Bank/DuckSound");
         Audio.f = Resources.Load<AudioClip>("Audio/Bank/f");
@@ -92,6 +90,8 @@ public static partial class R
         Audio.Wrong_Error = Resources.Load<AudioClip>("Audio/Bank/Wrong Error");
         Audio.y = Resources.Load<AudioClip>("Audio/Bank/y");
         Audio.click = Resources.Load<AudioClip>("Audio/Use/click");
+        Audio.click_2 = Resources.Load<AudioClip>("Audio/Use/click_2");
+        Audio.damage = Resources.Load<AudioClip>("Audio/Use/damage");
         Audio.Louse = Resources.Load<AudioClip>("Audio/Use/Louse");
         Audio.Meow = Resources.Load<AudioClip>("Audio/Use/Meow");
         Audio.NewMainMenu = Resources.Load<AudioClip>("Audio/Use/NewMainMenu");

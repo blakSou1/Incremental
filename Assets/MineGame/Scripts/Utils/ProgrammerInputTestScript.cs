@@ -26,6 +26,7 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
 
         G.inputs.Debug._5.started += i => Win();
         G.inputs.Debug._6.started += i => Louse();
+        G.inputs.Debug._7.started += i => Damage();
 
         Debug.Log("Controls initialized:");
         Debug.Log("1 - Debug method");
@@ -34,12 +35,17 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         Debug.Log("Press 4 - RestartScene");
         Debug.Log("Press 5 - Win");
         Debug.Log("Press 6 - Louse");
+        Debug.Log("Press 7 - Damage Player");
     }
 
     private void isDebug()
     {
         if (G.ai != null)
             G.ai.DebugMethod();
+    }
+    private void Damage()
+    {
+        StartCoroutine(G.enemyHp.DamagePlayer(1));
     }
 
     // «¿Ã≈ƒÀ≈Õ»≈ »√–€ (Slow motion)

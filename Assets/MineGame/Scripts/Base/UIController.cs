@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +17,13 @@ public class UIController : MonoBehaviour
     [NonSerialized] public Text indicatorText = null;
 
     [Space]
-    public Image enemyHp;
-    public float intervalScaleXInOneHp = 100;
+    public TextMeshProUGUI PlayerHpText;
+    public Image PlayerHpImage;
+
+    [Space]
+    public Image dropEffect;
+    public float dropSpeed = 0.5f;
+    private float dropEffectPercentage = 1;
 
     public void Awake()
     {
@@ -31,6 +38,8 @@ public class UIController : MonoBehaviour
 
         playerSelect.SetActive(false);
         EnemySelect.SetActive(false);
+
+        UpdatePlayerHp();
     }
 
     public void IndicatorText(string text)
@@ -72,9 +81,27 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void UpdateHpEnemy(int hp)
+    public void UpdatePlayerHp()
     {
-        float Widht = intervalScaleXInOneHp * hp;
-        enemyHp.rectTransform.sizeDelta = new(Widht, enemyHp.rectTransform.sizeDelta.y);
+        StartCoroutine(UpdateHp());
+    }
+
+    private IEnumerator UpdateHp()
+    {
+        PlayerHpText.text = $"{G.run.health}";
+
+        float healthPercentage = Mathf.Min(Mathf.Max(0, G.run.health / G.run.maxHealth), 1);
+
+        PlayerHpImage.fillAmount = healthPercentage;
+
+        while(dropEffectPercentage > healthPercentage)
+        {
+            dropEffectPercentage -= Time.deltaTime * dropSpeed;
+            dropEffect.fillAmount = dropEffectPercentage;
+
+            yield return null;
+        }
+
+        dropEffectPercentage = healthPercentage;
     }
 }

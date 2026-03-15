@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class modeState
@@ -25,7 +26,7 @@ public class GridBoxMode : MonoBehaviour
         StartCoroutine(animationController.FadeCoroutine(true, .3f, animationController._targetRenderer));
     }
 
-    public void ActivationScill()
+    public IEnumerator ActivationScill()
     {
         animationController.SetAnimation(ActivationGridAnimDataSO);
 
@@ -33,7 +34,8 @@ public class GridBoxMode : MonoBehaviour
         animationController.endAnimation.AddListener(EndAnimActivScill);
 
         GridModifireBase model = state.model as GridModifireBase;
-        model.ActivationScill();
+
+        yield return StartCoroutine(model.ActivationScill());
     }
     private void EndAnimActivScill()
     {

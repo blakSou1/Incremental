@@ -10,4 +10,5 @@ public class ConfigEnemy : EntityComponentDefinition
 
     public Vector2 Scale = new(1, 1);
 
+    public int hp = 0;
 }

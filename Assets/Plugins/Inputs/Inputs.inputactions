@@ -1028,6 +1028,15 @@
             "id": "8b70e899-f8b9-4111-899b-60222ab08c4b",
             "actions": [
                 {
+                    "name": "7",
+                    "type": "Button",
+                    "id": "57cd2ecb-2190-48a7-9d12-7b012c4abc69",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "6",
                     "type": "Button",
                     "id": "81c18a3a-49bb-4f29-b4a0-556adb77146f",
@@ -1102,6 +1111,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dcfd620a-3d02-4cb9-b352-57ab5de7d3ef",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "7",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

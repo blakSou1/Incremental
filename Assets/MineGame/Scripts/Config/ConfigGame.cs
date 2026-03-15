@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class ConfigGame : EntityComponentDefinition
@@ -11,8 +10,6 @@ public class ConfigGame : EntityComponentDefinition
 
     public static string standertPiece = "PieceStandart";
 
-    public float indexLvl = 0;
-
     [NonSerialized] private List<(CMSEntity e, ConfigLevel tag)> list;
 
     public void UpdateActualLvl()
@@ -22,7 +19,7 @@ public class ConfigGame : EntityComponentDefinition
 
         foreach (var i in list)
         {
-            if (i.tag.indexLvl == indexLvl)
+            if (i.tag.indexLvl == G.run.indexLvl)
             {
                 configLevel = i.tag;
 
@@ -33,7 +30,7 @@ public class ConfigGame : EntityComponentDefinition
 
     public ConfigLevel GetConfigLevel()
     {
-        if (configLevel == null)
+        if (configLevel == null || configLevel.indexLvl != G.run.indexLvl)
             UpdateActualLvl();
         return configLevel;
     }

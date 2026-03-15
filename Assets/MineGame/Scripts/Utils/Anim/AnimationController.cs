@@ -7,14 +7,14 @@ using UnityEngine.Events;
 public class AnimationController : MonoBehaviour
 {
     [NonSerialized] public SpriteRenderer _targetRenderer;
-    private AnimationDataSO _currentAnimation;
-    private Coroutine _animationCoroutine;
+    protected AnimationDataSO _currentAnimation;
+    protected Coroutine _animationCoroutine;
 
-    private int frame = 0;
+    protected int frame = 0;
 
     [HideInInspector] public UnityEvent endAnimation;
 
-    public void Init()
+    public virtual void Init()
     {
         _targetRenderer = GetComponent<SpriteRenderer>();
     }
@@ -30,9 +30,9 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    public void SetFlip(bool flip) => _targetRenderer.flipX = flip;
+    public virtual void SetFlip(bool flip) => _targetRenderer.flipX = flip;
 
-    private IEnumerator Anim()
+    protected virtual IEnumerator Anim()
     {
         frame = 0;
 
@@ -63,7 +63,7 @@ public class AnimationController : MonoBehaviour
         return _currentAnimation.framesSettings.FirstOrDefault(frame => frame.indexFrame == indexFrame);
     }
 
-    private void StopAnimation()
+    protected void StopAnimation()
     {
         if (_animationCoroutine != null)
         {
@@ -103,7 +103,7 @@ public class AnimationController : MonoBehaviour
         sprite.color = finalColor;
     }
 
-    private void OnDestroy()
+    protected void OnDestroy()
     {
         StopAnimation();
     }

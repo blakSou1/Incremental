@@ -40,6 +40,7 @@ public static class GameBootstrapper
         G.SceneLoader = CreateSimpleService<SceneLoader>();
         G.LocSystem = CreateSimpleService<LocSystem>();
         G.pausePanel = CreateSimpleService<PausePanel>();
+        G.faqPanel = CreateSimpleService<FAQ>();
 
         G.winAndLouse = new();
         G.run = new();

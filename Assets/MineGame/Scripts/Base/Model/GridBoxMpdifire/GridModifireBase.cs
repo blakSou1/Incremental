@@ -1,3 +1,4 @@
+using System.Collections;
 
 public class GridModifireDamageEnemy : GridModifireBase
 {
@@ -9,9 +10,9 @@ public class GridModifireDamageEnemy : GridModifireBase
 
         Define<TagPrefabGridBoxMode>().prefab = ("prefab/GridBoxMod/" + $"{id}").Load<GridBoxMode>();
     }
-    public override void ActivationScill()
+    public override IEnumerator ActivationScill()
     {
-        G.enemyHp.Damage(damage);
+        yield return G.enemyHp.StartCoroutine(G.enemyHp.Damage(damage));
     }
 
 }
@@ -24,9 +25,9 @@ public abstract class GridModifireBase : CMSEntity
         id = "name";
     }
 
-    public virtual void ActivationScill()
+    public virtual IEnumerator ActivationScill()
     {
-
+        yield return null;
     }
 }
 

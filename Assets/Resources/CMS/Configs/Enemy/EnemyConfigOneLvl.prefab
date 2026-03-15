@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4223233497506694888}
   - component: {fileID: 57408262869493365}
   m_Layer: 0
-  m_Name: EnemyConfigTutorial
+  m_Name: EnemyConfigOneLvl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1729a46f79086449a991b5512530e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idCMS: CMS/Configs/Enemy/EnemyConfigTutorial
+  idCMS: CMS/Configs/Enemy/EnemyConfigOneLvl
   Components:
   - rid: 5303922628337074233
   references:
@@ -57,4 +57,4 @@ MonoBehaviour:
         enemyWinAnim: {fileID: 11400000, guid: cfe7ac1d6b464734da7dbb40223ca1e2, type: 2}
         enemyLouseAnim: {fileID: 11400000, guid: 4abc8d8ff8995ff438b59d4994819b9e, type: 2}
         Scale: {x: 0.6, y: 0.6}
-        hp: 2
+        hp: 3

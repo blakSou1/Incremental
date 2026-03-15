@@ -1114,6 +1114,15 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
             ""id"": ""8b70e899-f8b9-4111-899b-60222ab08c4b"",
             ""actions"": [
                 {
+                    ""name"": ""7"",
+                    ""type"": ""Button"",
+                    ""id"": ""57cd2ecb-2190-48a7-9d12-7b012c4abc69"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""6"",
                     ""type"": ""Button"",
                     ""id"": ""81c18a3a-49bb-4f29-b4a0-556adb77146f"",
@@ -1188,6 +1197,17 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcfd620a-3d02-4cb9-b352-57ab5de7d3ef"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""7"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1327,6 +1347,7 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug__7 = m_Debug.FindAction("7", throwIfNotFound: true);
         m_Debug__6 = m_Debug.FindAction("6", throwIfNotFound: true);
         m_Debug__5 = m_Debug.FindAction("5", throwIfNotFound: true);
         m_Debug__4 = m_Debug.FindAction("4", throwIfNotFound: true);
@@ -1805,6 +1826,7 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
     // Debug
     private readonly InputActionMap m_Debug;
     private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug__7;
     private readonly InputAction m_Debug__6;
     private readonly InputAction m_Debug__5;
     private readonly InputAction m_Debug__4;
@@ -1822,6 +1844,10 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
         public DebugActions(@Inpyts wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Debug/_7".
+        /// </summary>
+        public InputAction @_7 => m_Wrapper.m_Debug__7;
         /// <summary>
         /// Provides access to the underlying input action "Debug/_6".
         /// </summary>
@@ -1872,6 +1898,9 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @_7.started += instance.On_7;
+            @_7.performed += instance.On_7;
+            @_7.canceled += instance.On_7;
             @_6.started += instance.On_6;
             @_6.performed += instance.On_6;
             @_6.canceled += instance.On_6;
@@ -1901,6 +1930,9 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
         /// <seealso cref="DebugActions" />
         private void UnregisterCallbacks(IDebugActions instance)
         {
+            @_7.started -= instance.On_7;
+            @_7.performed -= instance.On_7;
+            @_7.canceled -= instance.On_7;
             @_6.started -= instance.On_6;
             @_6.performed -= instance.On_6;
             @_6.canceled -= instance.On_6;
@@ -2180,6 +2212,13 @@ public partial class @Inpyts: IInputActionCollection2, IDisposable
     /// <seealso cref="DebugActions.RemoveCallbacks(IDebugActions)" />
     public interface IDebugActions
     {
+        /// <summary>
+        /// Method invoked when associated input action "7" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On_7(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "6" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

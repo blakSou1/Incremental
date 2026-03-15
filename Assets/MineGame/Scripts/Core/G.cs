@@ -32,6 +32,7 @@ public static class G
     public static AudioManager AudioManager;
     public static SceneLoader SceneLoader;
     public static PausePanel pausePanel;
+    public static FAQ faqPanel;
 
     public static WinAndLouse winAndLouse;
 
@@ -62,12 +63,11 @@ public class ManagedBehaviour : MonoBehaviour
 
 public class RunState
 {
-    public int level;
+    public float indexLvl = 0;
     public List<string> pieceStorage = new(); //не сыгранные 
     public List<string> pieceBag = new(); //в сумке игрока
-    public int drawSize = 3;
-    public int health = 10;
-    public int maxHealth = 10;
+    public float health = 10;
+    public float maxHealth = 10;
 
     public bool HasPiece(string mID)
     {

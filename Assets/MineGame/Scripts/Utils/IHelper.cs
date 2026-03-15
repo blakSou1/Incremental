@@ -25,6 +25,11 @@ public class IHelper : ScriptableObject
         G.SceneLoader.Load(line);
     }
 
+    public void UpdatePanelFAQ()
+    {
+        G.faqPanel.UpdatePanelFAQ();
+    }
+
     public void ShowSettingPanel()
     {
         G.pausePanel.UpdatePanels();
@@ -73,8 +78,12 @@ public class IHelper : ScriptableObject
     public void Louse()
     {
         if(G.louse != null)
-        {
-            G.louse.Louses();
-        }
+            G.louse.StartCoroutine(G.louse.Louses());
     }
+    public void Win()
+    {
+        if (G.louse != null)
+            G.louse.StartCoroutine(G.louse.Win());
+    }
+
 }

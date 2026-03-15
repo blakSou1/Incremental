@@ -21,9 +21,27 @@ public class Loss : MonoBehaviour
             i.SetActive(false);
         foreach (EnableAndMove i in enableAndMoveObject)
             i.objectMove.SetActive(false);
+
     }
 
-    public void Louses()
+    public IEnumerator Win()
+    {
+        G.run.indexLvl++;
+
+        var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+
+        G.UIController.IndicatorText("WIN");
+        G.UIController.motionText._textAnimator.ShowText("");
+
+        G.AudioManager.StopMusic();
+
+        yield return null;
+
+        G.SceneLoader.Load(currentScene.name);
+    }
+
+
+    public IEnumerator Louses()
     {
         foreach (GameObject i in enableObject)
             i.SetActive(true);
@@ -35,11 +53,13 @@ public class Loss : MonoBehaviour
         }
 
         G.UIController.IndicatorText("LOSS");
-        G.UIController.motionText.ThrowText(new LocString("", ""), R.normalVoice);
+        G.UIController.motionText._textAnimator.ShowText("");
 
         G.AudioManager.StopMusic();
 
-        StartCoroutine(ChangeVolumeWeight());
+        yield return StartCoroutine(ChangeVolumeWeight());
+
+        G.SceneLoader.Load("MainMenu");
     }
     private IEnumerator ChangeVolumeWeight()
     {
@@ -58,8 +78,6 @@ public class Loss : MonoBehaviour
         yield return new WaitForSeconds(.3f);
 
         yield return StartCoroutine(G.enemySprite.DisableSprite());
-
-        G.SceneLoader.Load("MainMenu");
     }
 }
 

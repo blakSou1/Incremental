@@ -78,7 +78,7 @@ public class GameLogic
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
 
         grid.SetStat(color);
-        grid.SetPiece(spawnPieceModel);
+        Coroutine myCoroutine = G.gameMode.StartCoroutine(grid.SetPiece(spawnPieceModel));
 
         spawnPieceModel.SetColor(color);
 
@@ -110,7 +110,10 @@ public class GameLogic
         G.UIController.motionText._textAnimator.ShowText("");
 
         G.AudioManager.PlaySound(R.Audio.SpawnPiece, 0, -.15f);
-            
+
+        while (myCoroutine != null)
+            yield return new WaitForSeconds(.2f);
+
         PassTurn();
     }
 
