@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     [NonSerialized] public bool isStopped = true;
 
+    private Transform currentPosition;
+
     void Start()
     {
         cursor = Instantiate(cursorPrefab, Vector3.zero, Quaternion.identity);
@@ -33,13 +35,13 @@ public class PlayerController : MonoBehaviour
         UpdatePos();
 
         if (G.inputs.Player.Attack.WasPressedThisFrame())
-            G.gameMode.StartCoroutine(G.gameLogic.PlacePiece(playerColor, curentBox));
+            G.mainEnterPoint.StartCoroutine(G.gameLogic.PlacePiece(playerColor, curentBox));
     }
 
     private void UpdatePos()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Plane plane = new(Vector3.forward, new Vector3(0, 0, G.gridFuncion.parentIndc.transform.position.z));
+        Plane plane = new(Vector3.forward, new Vector3(0, 0, G.gridController.parentIndc.transform.position.z));
 
         plane.Raycast(ray, out float distance);
         Vector3 worldPoint = ray.GetPoint(distance);
@@ -84,19 +86,24 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator MoveAndRotate(Transform start, Transform end)
     {
-        float startTime = Time.time;
-
-        while (Time.time - startTime < speed)
+        if (currentPosition != end)
         {
-            float fractionOfJourney = Mathf.Clamp01((Time.time - startTime) / speed);
+            currentPosition = end;
 
-            transform.position = Vector3.Lerp(start.position, end.position, fractionOfJourney);
-            transform.rotation = Quaternion.Slerp(start.rotation, end.rotation, fractionOfJourney);
+            float startTime = Time.time;
 
-            yield return null;
+            while (Time.time - startTime < speed)
+            {
+                float fractionOfJourney = Mathf.Clamp01((Time.time - startTime) / speed);
+
+                transform.position = Vector3.Lerp(start.position, end.position, fractionOfJourney);
+                transform.rotation = Quaternion.Slerp(start.rotation, end.rotation, fractionOfJourney);
+
+                yield return null;
+            }
+
+            transform.position = end.position;
+            transform.rotation = end.rotation;
         }
-
-        transform.position = end.position;
-        transform.rotation = end.rotation;
     }
 }

@@ -12,7 +12,7 @@ public class AI : MonoBehaviour
     public void InitWeight()
     {
         gridWeight.Clear();
-        int size = G.gridFuncion.item1;
+        int size = G.configGridFunction.item1;
 
         for (int i = 0; i < size; i++)
         {
@@ -65,28 +65,28 @@ public class AI : MonoBehaviour
 
         isDebug = !isDebug;
 
-        int size = G.gridFuncion.item1;
+        int size = G.configGridFunction.item1;
 
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
-                G.gridFuncion.matrix.GetGrid(new(i,j)).debugTextWeight.text = $"{gridWeight[i][j]}";
+                G.gridController.matrix.GetGrid(new(i,j)).debugTextWeight.text = $"{gridWeight[i][j]}";
         }
     }
     private void DeleteDebugMethod()
     {
-        int size = G.gridFuncion.item1;
+        int size = G.configGridFunction.item1;
 
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
-                G.gridFuncion.matrix.GetGrid(new(i, j)).debugTextWeight.text = "";
+                G.gridController.matrix.GetGrid(new(i, j)).debugTextWeight.text = "";
     }
 
     public void Execute(GridBox.Status comColor)
     {
-        List<GridBox> possibleLocs = G.gridFuncion.GetPossibleLocation(comColor);
+        List<GridBox> possibleLocs = G.conditionsOfVictoryAndDefeat.GetPossibleLocation(comColor);
 
-        if (possibleLocs == null || possibleLocs.Count == 0) return;
+        if (possibleLocs == null || possibleLocs.Count == 0) StartCoroutine(G.conditionsOfVictoryAndDefeat.Pass());
 
         var max = -100;
         GridBox selectedLoc = null;
@@ -130,6 +130,6 @@ public class AI : MonoBehaviour
             }
         }
 
-        G.gameMode.StartCoroutine(G.gameLogic.PlacePiece(comColor, selectedLoc));
+        G.mainEnterPoint.StartCoroutine(G.gameLogic.PlacePiece(comColor, selectedLoc));
     }
 }

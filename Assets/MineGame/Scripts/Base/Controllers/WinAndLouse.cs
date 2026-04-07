@@ -3,9 +3,9 @@ using System.Collections;
 public class WinAndLouse
 {
     public void WinPlayer() =>
-        G.gameMode.StartCoroutine(Win());
+        G.mainEnterPoint.StartCoroutine(Win());
     public void WinEnemy() =>
-        G.gameMode.StartCoroutine(Loss());
+        G.mainEnterPoint.StartCoroutine(Loss());
 
     private IEnumerator Win()
     {

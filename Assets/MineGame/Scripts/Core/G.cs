@@ -9,12 +9,12 @@ public static class G
     public static ConfigGame configGame;
 
     public static RunState run;
+    public static ConfigGridFunction configGridFunction;
 
     //Объекты в игре
-    public static GameMode gameMode;
+    public static MainEnterPoint mainEnterPoint;
     public static EnemySprite enemySprite;
     public static EnemyHp enemyHp;
-    public static GridFuncion gridFuncion;
     public static GameLogic gameLogic;
     public static PlayerController PlayerController;
     public static AI ai;
@@ -23,10 +23,10 @@ public static class G
     public static ModifirePieces modifirePieces;
     public static Chooice chooice;
     public static UIController UIController;
+    public static DamageEnemyScenario DamageEnemyScenario;
 
     //обьекты не монобех контроллеры
     public static Inpyts inputs;
-    public static Interactor interactor;
 
     public static LocSystem LocSystem;
     public static AudioManager AudioManager;
@@ -35,6 +35,9 @@ public static class G
     public static FAQ faqPanel;
 
     public static WinAndLouse winAndLouse;
+    public static PieceController pieceController;
+    public static GridController gridController;
+    public static ConditionsOfVictoryAndDefeat conditionsOfVictoryAndDefeat;
 
 }
 

@@ -19,14 +19,14 @@ public class PieceFullMove : PieceBase
         if (curentBox?.GetStat() != GridBox.Status.None)
             return false;
 
-        List<GridBox> pieceList = G.gridFuncion.GetCrossPieces(curentBox.GetIndex());
+        List<GridBox> pieceList = G.gridController.GetCrossPieces(curentBox.GetIndex());
         List<GridBox> sameColorPieces = pieceList.Where(piece => piece.GetStat() == color).ToList();
 
         foreach (var piece in sameColorPieces)
         {
-            if (G.gridFuncion.IsAdjacent(curentBox.GetIndex(), piece.GetIndex())) continue;
+            if (G.gridController.IsAdjacent(curentBox.GetIndex(), piece.GetIndex())) continue;
 
-            List<GridBox> crossList = G.gridFuncion.GetCrossPieces(curentBox.GetIndex(), piece.GetIndex(), false);
+            List<GridBox> crossList = G.gridController.GetCrossPieces(curentBox.GetIndex(), piece.GetIndex(), false);
             var enemyPiecesInLine = crossList.Where(p => p.GetStat() == (GridBox.Status)((int)color * -1)).ToList();
             bool lineIsBlocked = crossList.Any(p => p.GetStat() == GridBox.Status.None || p.GetStat() == color);
 
@@ -45,13 +45,13 @@ public class PieceFullMove : PieceBase
             revColorPiece.Flip();
             if (revColorPiece.GetStat() == GridBox.Status.Black)
             {
-                G.gridFuncion.blackPieces.Add(revColorPiece.piece);
-                G.gridFuncion.whitePieces.Remove(revColorPiece.piece);
+                G.gridController.blackPieces.Add(revColorPiece.piece);
+                G.gridController.whitePieces.Remove(revColorPiece.piece);
             }
             else
             {
-                G.gridFuncion.whitePieces.Add(revColorPiece.piece);
-                G.gridFuncion.blackPieces.Remove(revColorPiece.piece);
+                G.gridController.whitePieces.Add(revColorPiece.piece);
+                G.gridController.blackPieces.Remove(revColorPiece.piece);
             }
         }
     }

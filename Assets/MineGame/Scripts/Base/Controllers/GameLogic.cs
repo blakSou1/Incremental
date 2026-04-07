@@ -12,7 +12,7 @@ public class GameLogic
     [NonSerialized] public string EnemyPieceObject = ConfigGame.standertPiece;
 
     [HideInInspector] public string actualPiece;
-    [HideInInspector] public InteractiveObject spawnPieceModel;
+    [HideInInspector] public InteractiveObject actualPieceInsanting;
 
     private Transform parentPiece;
 
@@ -25,14 +25,14 @@ public class GameLogic
     {
         pieceObj = G.chooice.AddPiece(ConfigGame.standertPiece);
 
-        List<Index> centerCells = G.gridFuncion.GetCenterCells();
+        List<Index> centerCells = G.gridController.GetCenterCells();
         GridBox.Status status = GridBox.Status.White;
 
         actualPiece = ConfigGame.standertPiece;
 
         foreach (var i in centerCells)
         {
-            G.gameMode.StartCoroutine(PlacePiece(status, G.gridFuncion.matrix.GetGrid(i), true));
+            G.mainEnterPoint.StartCoroutine(PlacePiece(status, G.gridController.matrix.GetGrid(i), true));
             status = (GridBox.Status)((int)status * -1);
             yield return new WaitForEndOfFrame();
         }
@@ -41,16 +41,17 @@ public class GameLogic
 
         yield return new WaitForSeconds(.5f);
 
-        PassTurn();
+        G.conditionsOfVictoryAndDefeat.PassTurn();
     }
 
+    Coroutine myCoroutineSkillGridBox;
     public IEnumerator PlacePiece(GridBox.Status color, GridBox grid, bool isStatic = false)
     {
         if ((grid == null || grid.indic == null) && !isStatic) yield break;
 
-        if (!isStatic && G.gameMode.playerColor == G.PlayerController.playerColor)
+        if (!isStatic && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
         {
-            foreach (SlotModPiece i in G.modifirePieces.slots)
+            foreach (SlotModPiece i in G.modifirePieces.modSlots)
             {
                 if (i.piece == null || i.piece.state.model.id == ConfigGame.standertPiece) continue;
 
@@ -67,42 +68,43 @@ public class GameLogic
             }
         }
 
-        spawnPieceModel = G.chooice.AddPiece(actualPiece);
+        G.gameLogic.ActualPiece();
+        actualPieceInsanting = G.chooice.AddPiece(actualPiece);
 
-        GameObject obj = spawnPieceModel.gameObject;
-        spawnPieceModel.moveable.targetPosition = grid.transform.position;
-        spawnPieceModel.transform.position = grid.transform.position;
+        GameObject obj = actualPieceInsanting.gameObject;
+        actualPieceInsanting.moveable.targetPosition = grid.transform.position;
+        actualPieceInsanting.transform.position = grid.transform.position;
 
         obj.transform.parent = parentPiece;
 
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
 
         grid.SetStat(color);
-        Coroutine myCoroutine = G.gameMode.StartCoroutine(grid.SetPiece(spawnPieceModel));
+        myCoroutineSkillGridBox = G.mainEnterPoint.StartCoroutine(grid.SetPiece(actualPieceInsanting));
 
-        spawnPieceModel.SetColor(color);
+        actualPieceInsanting.SetColor(color);
 
         if (!isStatic)
         {
-            if(pieceObj.state.model.id != ConfigGame.standertPiece && G.gameMode.playerColor == G.PlayerController.playerColor)
+            if(pieceObj.state.model.id != ConfigGame.standertPiece && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
             {
-                List<SlotModPiece> standardSlots = G.modifirePieces.slots.Where(s => s is SlotModPieceStandart).ToList();
+                List<SlotModPiece> standardSlots = G.modifirePieces.modSlots.Where(s => s is SlotModPieceStandart).ToList();
 
                 standardSlots[0].Click();
             }
 
             bool isNext = false;
-            spawnPieceModel.animationController.endAnimation.AddListener(() => isNext = true);
+            actualPieceInsanting.animationController.endAnimation.AddListener(() => isNext = true);
 
             while (!isNext)
                 yield return new WaitForEndOfFrame();
 
-            spawnPieceModel.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
+            actualPieceInsanting.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
         }
 
-        if (color == G.gameMode.playerColor)
-            G.gridFuncion.blackPieces.Add(spawnPieceModel);
-        else G.gridFuncion.whitePieces.Add(spawnPieceModel);
+        if (color == G.mainEnterPoint.playerColor)
+            G.gridController.blackPieces.Add(actualPieceInsanting);
+        else G.gridController.whitePieces.Add(actualPieceInsanting);
 
         if (isStatic) yield break;
 
@@ -111,52 +113,18 @@ public class GameLogic
 
         G.AudioManager.PlaySound(R.Audio.SpawnPiece, 0, -.15f);
 
-        while (myCoroutine != null)
+        while (myCoroutineSkillGridBox != null)
             yield return new WaitForSeconds(.2f);
 
-        PassTurn();
+        G.conditionsOfVictoryAndDefeat.PassTurn();
     }
-
-    public void PassTurn()
+    public void DestroyMyCoroutineSkillGridBox()
     {
-        G.PlayerController.playerColor = (GridBox.Status)((int)G.PlayerController.playerColor * -1);
-
-        G.gameLogic.ActualPiece();
-
-        if (G.PlayerController.playerColor == G.gameMode.playerColor)
-        {
-            if(!G.gridFuncion.ShowPossibleLocation(G.gameMode.playerColor))
-                return;
-
-            G.gridFuncion.EnableAndDisableIndc(true);
-
-            G.UIController.motionText.ThrowText(new LocString("Your move!", "Ваш ход!"), R.normalVoice);
-        }
-        else
-        {
-            if(!G.gridFuncion.ShowPossibleLocation((GridBox.Status)((int)G.gameMode.playerColor * -1)))
-                return;
-
-            G.gridFuncion.EnableAndDisableIndc(false);
-
-            G.UIController.motionText.ThrowText(new LocString("The opponent's move!", "Ход противника!"), R.normalVoice);
-
-            G.inputs.Player.Disable();
-            G.gameMode.StartCoroutine(Next());
-        }
-
-        G.UIController.ActualSelect();
-    }
-    private IEnumerator Next()
-    {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.4f));
-        G.ai.Execute(G.PlayerController.playerColor);
-
-        G.inputs.Player.Enable();
+        myCoroutineSkillGridBox = null;
     }
 
     public void ActualPiece()
     {
-        actualPiece = (G.PlayerController.playerColor == G.gameMode.playerColor) ? pieceObj.state.model.id : EnemyPieceObject;
+        actualPiece = (G.PlayerController.playerColor == G.mainEnterPoint.playerColor) ? pieceObj.state.model.id : EnemyPieceObject;
     }
 }

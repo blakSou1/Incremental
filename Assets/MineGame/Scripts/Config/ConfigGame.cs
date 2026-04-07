@@ -9,6 +9,9 @@ public class ConfigGame : EntityComponentDefinition
     [NonSerialized] private ConfigLevel configLevel = null;
 
     public static string standertPiece = "PieceStandart";
+    public static string damageModBox = "DamageModifireBox";
+
+    public int damagePlayer = 1;
 
     [NonSerialized] private List<(CMSEntity e, ConfigLevel tag)> list;
 

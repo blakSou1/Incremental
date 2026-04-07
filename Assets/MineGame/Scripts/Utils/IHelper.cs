@@ -5,6 +5,11 @@ public class IHelper : ScriptableObject
 {
     float modifVolume = 0;
 
+    public void Pass()
+    {
+        G.mainEnterPoint.StartCoroutine(G.conditionsOfVictoryAndDefeat.Pass());
+    }
+
     public void SetRu()
     {
         G.LocSystem.SetLaungie(LocSystem.LANG_RU);
@@ -58,22 +63,22 @@ public class IHelper : ScriptableObject
 
     public void StartGame()
     {
-        if(G.gameMode != null)
-            G.gameMode.StartGame();
+        if(G.mainEnterPoint != null)
+            G.mainEnterPoint.StartGame();
     }
     public void RestartGame()
     {
-        if (G.gameMode != null)
-            G.gameMode.StartCoroutine(G.gameMode.RestartGame());
+        if (G.mainEnterPoint != null)
+            G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.RestartGame());
     }
 
     public void CameraMovePos2()
     {
-        G.gameMode.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position1, G.PlayerController.position2));
+        G.mainEnterPoint.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position1, G.PlayerController.position2));
     }
     public void CameraMovePos1()
     {
-        G.gameMode.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position2, G.PlayerController.position1));
+        G.mainEnterPoint.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position2, G.PlayerController.position1));
     }
     public void Louse()
     {

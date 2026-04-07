@@ -4,56 +4,58 @@ using UnityEngine;
 
 public class ModifirePieces
 {
-    public List<SlotModPiece> slots;
+    public List<SlotModPiece> modSlots;
+    public SlotModPiece standartSlot;
 
     public void Init()
     {
-        slots = new List<SlotModPiece>(GameObject.FindObjectsByType<SlotModPiece>(FindObjectsSortMode.None));
-        slots = slots
-        .Where(s => s is not SlotModPieceStandart)
-        .Concat(slots.Where(s => s is SlotModPieceStandart))
-        .ToList();
+        var allSlots = GameObject.FindObjectsByType<SlotModPiece>(FindObjectsSortMode.None).ToList();
+
+        standartSlot = allSlots.FirstOrDefault(s => s is SlotModPieceStandart);
+        modSlots = allSlots.Where(s => s is not SlotModPieceStandart).ToList();
 
         G.modifirePieces = this;
     }
 
-    public void SpawnPiece()
+    public void AddModPieceInSlot(string piece)
     {
-        List<SlotModPiece> nonStandardSlots = slots.Where(s => s is not SlotModPieceStandart).ToList();
-        List<SlotModPiece> standardSlots = slots.Where(s => s is SlotModPieceStandart).ToList();
+        InteractiveObject p = G.chooice.AddPiece(piece);
+        p.Start();
+        SetColorAnimPiece(p);
 
-        // 1. Спавним специальные фишки
-        for (int i = 0; i < nonStandardSlots.Count && i < G.run.pieceStorage.Count; i++)
+        foreach (SlotModPiece i in modSlots)
         {
-            var p = G.chooice.AddPiece(G.run.pieceStorage[i]);
-            p.moveable.targetPosition = nonStandardSlots[i].transform.position;
-            p.transform.rotation = nonStandardSlots[i].transform.rotation;
+            if (i.piece == null)
+            {
+                p.moveable.targetPosition = i.transform.position;
+                p.transform.rotation = i.transform.rotation;
 
-            p.transform.parent = nonStandardSlots[i].transform;
-            p.Start();
-            SetColorAnimPiece(p);
-            nonStandardSlots[i].piece = p;
+                p.transform.parent = i.transform;
+
+                i.piece = p;
+            }
         }
+    }
+    
+    public void AddStandertPieceInSlot(string piece)
+    {
+        InteractiveObject p = G.chooice.AddPiece(piece);
+        p.Start();
+        SetColorAnimPiece(p);
 
-        // 2. Спавним стандартные фишки
-        foreach (SlotModPiece standardSlot in standardSlots)
-        {
-            var p = G.gameLogic.pieceObj;
-            p.moveable.targetPosition = standardSlot.transform.position;
-            p.transform.rotation = standardSlot.transform.rotation;
+        p.moveable.targetPosition = standartSlot.transform.position;
+        p.transform.rotation = standartSlot.transform.rotation;
 
-            p.transform.parent = standardSlot.transform;
-            p.Start();
-            SetColorAnimPiece(p);
-            standardSlot.piece = p;
+        p.transform.parent = standartSlot.transform;
 
-            standardSlot.Click();
-        }
+        standartSlot.piece = p;
+
+        standartSlot.Click();
     }
 
     private void SetColorAnimPiece(InteractiveObject p)
     {
-        if(G.gameMode.playerColor == GridBox.Status.White)
+        if(G.mainEnterPoint.playerColor == GridBox.Status.White)
             p.animationController.SetAnimation(p.SpawnWhiteAnimDataSO);
         else
             p.animationController.SetAnimation(p.SpawnBlackAnimDataSO);
@@ -61,7 +63,7 @@ public class ModifirePieces
 
     public void Restart()
     {
-        foreach (var i in slots)
+        foreach (var i in modSlots)
             i.Restart();
     }
 }

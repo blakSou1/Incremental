@@ -30,9 +30,6 @@ public static class GameBootstrapper
         G.inputs = new();
         G.inputs.Enable();
 
-        G.interactor = new();
-        G.interactor.Init();
-
         G.gameLogic = new();
         G.gameLogic.Init();
 
@@ -44,11 +41,12 @@ public static class GameBootstrapper
 
         G.winAndLouse = new();
         G.run = new();
+        G.configGridFunction = Resources.Load<ConfigGridFunction>("IconfigGridFunction"); ;
 
         G.configGame = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigGame>())!.Get<ConfigGame>();
 
         //
-        G.gameMode = Object.FindFirstObjectByType<GameMode>();
+        G.mainEnterPoint = Object.FindFirstObjectByType<MainEnterPoint>();
         G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
         G.ai = Object.FindFirstObjectByType<AI>();
         G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
@@ -60,7 +58,7 @@ public static class GameBootstrapper
 
         G.SceneLoader.onLoadAction = (scene, sceneMode) =>
         {
-            G.gameMode = Object.FindFirstObjectByType<GameMode>();
+            G.mainEnterPoint = Object.FindFirstObjectByType<MainEnterPoint>();
             G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
             G.ai = Object.FindFirstObjectByType<AI>();
             G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
