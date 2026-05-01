@@ -22,6 +22,7 @@ public class MainEnterPoint : MonoBehaviour
         G.gridController = new();
         G.modifirePieces = new();
         G.conditionsOfVictoryAndDefeat = new();
+        G.gameLogic.Init();
 
         G.pieceController.Init();
         G.gridController.Init();
@@ -35,12 +36,16 @@ public class MainEnterPoint : MonoBehaviour
     {
         G.AudioManager.PlayMusic(R.Audio.tutorial);
 
+        StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 0f, 0f));
+
         G.gridController.NewMatrix();
         StartCoroutine(StartAnimationSpawnGrid(G.configGridFunction.item1, G.gridController.matrix.GetData(), G.gridController.matrix.GetParent()));
     }
 
     private IEnumerator StartAnimationSpawnGrid(int index, GridBox[,] data, Transform parent)
     {
+        yield return StartCoroutine(VisibalTextActualLvl());
+
         float offsetX = (index - 1) * G.configGridFunction.indentGrid.x / 2;
         float offsetY = (index - 1) * G.configGridFunction.indentGrid.y / 2;
 
@@ -101,7 +106,7 @@ public class MainEnterPoint : MonoBehaviour
     }
 
     private IEnumerator SpawnEnemy()
-    {
+    {        
         yield return StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position1, G.PlayerController.position2));
 
         G.enemySprite.UpdateSprite();
@@ -121,6 +126,17 @@ public class MainEnterPoint : MonoBehaviour
         G.gridController.StartInitModGrid();
     }
 
+    private IEnumerator VisibalTextActualLvl()
+    {
+        G.UIController.textActualLvl.text = G.configGame.GetConfigLevel().preview;
+
+        yield return StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 1f, 1.2f));
+
+        yield return new WaitForSeconds(.8f);
+
+        yield return StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 0f));
+
+    }
 
     //SoProgram
     public void PlayerInputUpdate()

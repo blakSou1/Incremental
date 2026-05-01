@@ -24,6 +24,7 @@ public static class G
     public static Chooice chooice;
     public static UIController UIController;
     public static DamageEnemyScenario DamageEnemyScenario;
+    public static PiecePicker PiecePicker;
 
     //обьекты не монобех контроллеры
     public static Inpyts inputs;
@@ -69,7 +70,7 @@ public class RunState
     public float indexLvl = 0;
     public List<string> pieceStorage = new(); //не сыгранные 
     public List<string> pieceBag = new(); //в сумке игрока
-    public float health = 10;
+    public float Damage = 0;
     public float maxHealth = 10;
 
     public bool HasPiece(string mID)

@@ -26,10 +26,6 @@ public class Loss : MonoBehaviour
 
     public IEnumerator Win()
     {
-        G.run.indexLvl++;
-
-        var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-
         G.UIController.IndicatorText("WIN");
         G.UIController.motionText._textAnimator.ShowText("");
 
@@ -37,7 +33,10 @@ public class Loss : MonoBehaviour
 
         yield return null;
 
-        G.SceneLoader.Load(currentScene.name);
+        G.run.indexLvl++;
+
+        var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        G.SceneLoader.Load(currentScene.name);//TODO 
     }
 
 
@@ -61,6 +60,7 @@ public class Loss : MonoBehaviour
 
         G.SceneLoader.Load("MainMenu");
     }
+    
     private IEnumerator ChangeVolumeWeight()
     {
         float startWeight = volume.weight;
@@ -79,6 +79,7 @@ public class Loss : MonoBehaviour
 
         yield return StartCoroutine(G.enemySprite.DisableSprite());
     }
+
 }
 
 [Serializable]

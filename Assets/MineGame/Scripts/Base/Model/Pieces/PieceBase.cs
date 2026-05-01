@@ -6,6 +6,7 @@ public class BasicPiece : PieceBase
     public BasicPiece()
     {
         id = ConfigGame.standertPiece;
+        idS = id;
 
         Define<TagPrefab>().prefab = ("prefab/Piece/" + $"{id}").Load<InteractiveObject>();
         Define<TagExcludeFromReward>();
@@ -46,16 +47,6 @@ public class BasicPiece : PieceBase
         foreach (var revColorPiece in revColorPieces)
         {
             revColorPiece.Flip();
-            if (revColorPiece.GetStat() == GridBox.Status.Black)
-            {
-                G.gridController.blackPieces.Add(revColorPiece.piece);
-                G.gridController.whitePieces.Remove(revColorPiece.piece);
-            }
-            else
-            {
-                G.gridController.whitePieces.Add(revColorPiece.piece);
-                G.gridController.blackPieces.Remove(revColorPiece.piece);
-            }
         }
     }
 
@@ -63,12 +54,15 @@ public class BasicPiece : PieceBase
 
 public abstract class PieceBase : CMSEntity
 {
+    public static string idS;
+
     public PieceBase()
     {
         Define<TagPrefab>().prefab = "prefab/Piece/name".Load<InteractiveObject>();
         Define<TagRarity>().rarity = PieceRarity.COMMON;
         Define<TagExcludeFromReward>();
         id = "name";
+        idS = id;
     }
 
     public virtual bool CheckPieceValid(GridBox.Status color, GridBox curentBox, out List<GridBox> revColorPieces)

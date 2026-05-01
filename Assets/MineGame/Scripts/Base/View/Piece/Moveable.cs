@@ -9,6 +9,8 @@ public class MoveableBalatro : MoveableBase
 
     private void Update()
     {
+        if (isStop) return;
+
         // Предполагая, что realDt является дельтой времени между кадрами
         float realDt = Mathf.Clamp(Time.smoothDeltaTime, 1 / 50f, 1 / 100f);
         
@@ -85,6 +87,7 @@ public class MoveableBalatro : MoveableBase
 public class MoveableBase : ManagedBehaviour
 {
     public Vector3 targetPosition;
+    [NonSerialized] public bool isStop = false;
     [NonSerialized] public List<Action> events = new();
 
     void OnDrawGizmos()

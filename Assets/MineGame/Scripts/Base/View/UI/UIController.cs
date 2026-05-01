@@ -28,6 +28,10 @@ public class UIController : MonoBehaviour
     public float dropSpeed = 0.5f;
     private float dropEffectPercentage = 1;
 
+    [Space]
+    public TextMeshProUGUI textActualLvl;
+    public CanvasGroup GroupTextActualLvl;
+
     public void Awake()
     {
         G.UIController = this;
@@ -93,11 +97,29 @@ public class UIController : MonoBehaviour
         StartCoroutine(UpdateHp());
     }
 
+    public IEnumerator FadeCanvasGroup(CanvasGroup group, float targetAlpha, float duration = .4f)
+    {
+        if (group == null) yield break;
+
+        float startAlpha = group.alpha;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            group.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+            yield return null;
+        }
+
+        group.alpha = targetAlpha;
+    }
+
     private IEnumerator UpdateHp()
     {
-        PlayerHpText.text = $"{G.run.health}";
+        PlayerHpText.text = $"{G.run.maxHealth - G.run.Damage}";
 
-        float healthPercentage = Mathf.Min(Mathf.Max(0, G.run.health / G.run.maxHealth), 1);
+        float healthPercentage = Mathf.Min(Mathf.Max(0, (G.run.maxHealth - G.run.Damage) / G.run.maxHealth), 1);
 
         PlayerHpImage.fillAmount = healthPercentage;
 

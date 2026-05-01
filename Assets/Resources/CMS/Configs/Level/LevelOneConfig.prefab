@@ -54,4 +54,6 @@ MonoBehaviour:
       type: {class: ConfigLevel, ns: , asm: Assembly-CSharp}
       data:
         indexLvl: 1
+        preview: Lvl - 1/5
         enemyConfigPfb: {fileID: 57408262869493365, guid: 224592352ad1f474dac8fccff0ee8357, type: 3}
+        pickablePiecesId: []

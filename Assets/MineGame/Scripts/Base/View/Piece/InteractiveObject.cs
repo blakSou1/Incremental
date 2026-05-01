@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PieceState
 {
@@ -6,30 +7,44 @@ public class PieceState
     public InteractiveObject view;
     public bool isPlayed;
     public bool isDead;
+    public GridBox gridBox;
 }
 
 public class InteractiveObject : MonoBehaviour
 {
     public SpriteRenderer iconPiece;
 
+    [Space]
     public AnimationDataSO SpawnBlackAnimDataSO;
     public AnimationDataSO SpawnWhiteAnimDataSO;
 
+    [Space]
     public AnimationDataSO MoveBlackAnimDataSO;
     public AnimationDataSO MoveWhiteAnimDataSO;
 
+    [Space]
+    [SerializeReference, SubclassSelector] public PieceModifierBase modifier;
+
     [HideInInspector] public AnimationController animationController;
+    public AnimationController modefireAnimationController;
+
     [HideInInspector] public MoveableBase moveable;
     
     public PieceState state;
+
+    [HideInInspector] public UnityEvent flipAnim;
+    [HideInInspector] public UnityEvent SpawnPiece;
 
     public void Start()
     {
         moveable = GetComponent<MoveableBase>();
         animationController = GetComponent<AnimationController>();
         animationController.Init();
+        modefireAnimationController?.Init();
 
-        StartCoroutine(animationController.FadeCoroutine(true, .3f, iconPiece));
+        modifier?.Init(this);
+
+        animationController.SetFadeCoroutine(true, .3f, iconPiece);
     }
 
     public PieceBase GetBaseModel()
@@ -55,6 +70,8 @@ public class InteractiveObject : MonoBehaviour
             Destroy(this.gameObject);
 
         SetColorIcon(color);
+
+        SpawnPiece?.Invoke();
     }
 
     private void SetColorIcon(GridBox.Status color)
@@ -69,7 +86,7 @@ public class InteractiveObject : MonoBehaviour
 
     public void FlipAnim(GridBox.Status color)
     {
-        StartCoroutine(animationController.FadeCoroutine(false, .1f, iconPiece));
+        animationController.SetFadeCoroutine(false, .1f, iconPiece);
         SetColorIcon(color);
 
         if (color == GridBox.Status.Black)
@@ -85,7 +102,9 @@ public class InteractiveObject : MonoBehaviour
 
     private void EndAnimFlipToFabe()
     {
-        if(gameObject.activeInHierarchy)
-            StartCoroutine(animationController.FadeCoroutine(true, .3f, iconPiece));
+        if (gameObject.activeInHierarchy)
+            animationController.SetFadeCoroutine(true, .3f, iconPiece);
+
+        flipAnim?.Invoke();
     }
 }

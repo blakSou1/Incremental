@@ -4,100 +4,100 @@ using UnityEngine;
 
 public class EnemyHp : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI damageIndicator;
+	[SerializeField] private TextMeshProUGUI damageIndicator;
 
-    [HideInInspector] public int damageBuffer;
+	[HideInInspector] public int damageBuffer;
 
-    private int hp = 0;
+	private int hp = 0;
 
-    public void Start()
-    {
-        G.enemyHp = this;
-        damageIndicator.text = "";
+	public void Start()
+	{
+		G.enemyHp = this;
+		damageIndicator.text = "";
 
-        SetHp(G.configGame.GetConfigLevel().GetConfigEnemy().hp);
-    }
+		SetHp(G.configGame.GetConfigLevel().GetConfigEnemy().hp);
+	}
 
-    public void SetHp(int hp)
-    {
-        this.hp = hp;
-    }
-    public int GetHp()
-    {
-        return hp;
-    }
-    public int GetBuffer()
-    {
-        return damageBuffer;
-    }
+	public void SetHp(int hp)
+	{
+		this.hp = hp;
+	}
+	public int GetHp()
+	{
+		return hp;
+	}
+	public int GetBuffer()
+	{
+		return damageBuffer;
+	}
 
-    public void Damage(int damage)
-    {
-        damageBuffer += damage;
+	public void Damage(int damage)
+	{
+		damageBuffer += damage;
 
-        damageIndicator.text = $"{damageBuffer}";
-    }
-    public void ActivDamage(int damage)
-    {
-        hp -= damage;//TODO Remove 1 piece
+		damageIndicator.text = $"{damageBuffer}";
+	}
+	public void ActivDamage(int damage)
+	{
+		hp -= damage;//TODO Remove 1 piece
 
-        damageBuffer -= damage;
+		damageBuffer -= damage;
 
-        damageIndicator.text = $"{damageBuffer}";
+		damageIndicator.text = $"{damageBuffer}";
 
-        if (hp <= 0)
-            ;//TODO Add Money
-    }
+		if (hp <= 0)
+			;//TODO Add Money
+	}
 
-    public bool WhatDead()
-    {
-        if (hp <= 0)
-        {
-            Dead();
-            return true;
-        }
+	public bool WhatDead()
+	{
+		if (hp <= 0)
+		{
+			Dead();
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public IEnumerator DamagePlayer(int damage)
-    {
-        G.run.health -= damage;
+	public IEnumerator DamagePlayer(int damage)
+	{
+		G.run.Damage -= damage;
 
-        G.AudioManager.PlaySound(R.Audio.damage, Random.Range(0, .5f));
+		G.AudioManager.PlaySound(R.Audio.damage, Random.Range(0, .5f));
 
-        G.UIController.UpdatePlayerHp();
+		G.UIController.UpdatePlayerHp();
 
-        if (G.run.health <= 0)
-            G.winAndLouse.WinEnemy();
+		if (G.run.Damage <= 0)
+			G.winAndLouse.WinEnemy();
 
-        yield return StartCoroutine(ChangeVolumeWeight(1 - Mathf.Min(Mathf.Max(0, G.run.health / G.run.maxHealth), 1)));
+		yield return StartCoroutine(ChangeVolumeWeight(1 - Mathf.Min(Mathf.Max(0, G.run.Damage / G.run.maxHealth), 1)));
 
-        yield return new WaitForSeconds(.3f);
+		yield return new WaitForSeconds(.3f);
 
-        StartCoroutine(ChangeVolumeWeight(0));
+		StartCoroutine(ChangeVolumeWeight(0));
 
-        yield return null;
-    }
-    
-    private IEnumerator ChangeVolumeWeight(float target = 1)
-    {
-        float startWeight = G.louse.volume.weight;
-        float elapsedTime = 0f;
+		yield return null;
+	}
 
-        while (elapsedTime < .1f)
-        {
-            G.louse.volume.weight = Mathf.Lerp(startWeight, target, elapsedTime / .3f);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+	private IEnumerator ChangeVolumeWeight(float target = 1)
+	{
+		float startWeight = G.louse.volume.weight;
+		float elapsedTime = 0f;
 
-        G.louse.volume.weight = target;
-    }
+		while (elapsedTime < .1f)
+		{
+			G.louse.volume.weight = Mathf.Lerp(startWeight, target, elapsedTime / .3f);
+			elapsedTime += Time.deltaTime;
+			yield return null;
+		}
 
-    private void Dead()
-    {
-        G.mainEnterPoint.StopAllCoroutines();
-        G.winAndLouse.WinPlayer();
-    }
+		G.louse.volume.weight = target;
+	}
+
+	private void Dead()
+	{
+		G.mainEnterPoint.StopAllCoroutines();
+		G.winAndLouse.WinPlayer();
+	}
 }

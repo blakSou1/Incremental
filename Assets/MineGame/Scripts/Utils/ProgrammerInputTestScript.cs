@@ -28,6 +28,7 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         G.inputs.Debug._6.started += i => Louse();
         G.inputs.Debug._7.started += i => Damage();
         G.inputs.Debug._8.started += i => Scen();
+        G.inputs.Debug._9.started += i => AddPiece();
 
         Debug.Log("Controls initialized:");
         Debug.Log("1 - Debug method");
@@ -53,6 +54,10 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     private void Damage()
     {
         StartCoroutine(G.enemyHp.DamagePlayer(1));
+    }
+    private void AddPiece()
+    {
+        G.run.pieceBag.Add(PieceFullMove.idS);
     }
 
     // «¿Ã≈ƒÀ≈Õ»≈ »√–€ (Slow motion)

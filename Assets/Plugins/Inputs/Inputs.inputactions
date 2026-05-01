@@ -1028,9 +1028,9 @@
             "id": "8b70e899-f8b9-4111-899b-60222ab08c4b",
             "actions": [
                 {
-                    "name": "7",
+                    "name": "9",
                     "type": "Button",
-                    "id": "57cd2ecb-2190-48a7-9d12-7b012c4abc69",
+                    "id": "16d4916b-bba0-41ca-b8e0-e7e06405fa58",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1040,6 +1040,15 @@
                     "name": "8",
                     "type": "Button",
                     "id": "a9b6589e-2d8b-4a3e-aa4e-0f3bdcdb0aaa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "7",
+                    "type": "Button",
+                    "id": "57cd2ecb-2190-48a7-9d12-7b012c4abc69",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1142,6 +1151,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "71e4a4ab-9c50-470e-9a84-c0589d2b4b45",
+                    "path": "<Keyboard>/9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "9",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

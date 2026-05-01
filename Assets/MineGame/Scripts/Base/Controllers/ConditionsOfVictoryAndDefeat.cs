@@ -31,6 +31,12 @@ public class ConditionsOfVictoryAndDefeat
 
         if (G.PlayerController.playerColor == G.mainEnterPoint.playerColor)
         {
+            if (!ShowPossibleLocation(G.mainEnterPoint.playerColor))
+            {
+                Pass();
+                return;
+            }
+
             G.gridController.CreateIndisObject(G.mainEnterPoint.playerColor, G.gameLogic.actualPieceInsanting);
 
             G.gridController.EnableAndDisableIndc(true);
@@ -79,12 +85,14 @@ public class ConditionsOfVictoryAndDefeat
         {
             if (G.gridController.blackPieces.Count + G.gridController.whitePieces.Count == item1 * item1)
                 G.mainEnterPoint.StartCoroutine(WhatWin());
+            else if (G.gridController.blackPieces.Count == 0 || G.gridController.whitePieces.Count == 0)
+                G.mainEnterPoint.StartCoroutine(WhatWin());
 
             return false;
         }
 
         return true;
-    }
+    }//not move -> what win?
 
     private IEnumerator WhatWin()
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
 
@@ -81,17 +80,14 @@ public class GameLogic
 
         grid.SetStat(color);
         myCoroutineSkillGridBox = G.mainEnterPoint.StartCoroutine(grid.SetPiece(actualPieceInsanting));
+        actualPieceInsanting.state.gridBox = grid;
 
         actualPieceInsanting.SetColor(color);
 
         if (!isStatic)
         {
             if(pieceObj.state.model.id != ConfigGame.standertPiece && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
-            {
-                List<SlotModPiece> standardSlots = G.modifirePieces.modSlots.Where(s => s is SlotModPieceStandart).ToList();
-
-                standardSlots[0].Click();
-            }
+                G.modifirePieces.standartSlot.Click();
 
             bool isNext = false;
             actualPieceInsanting.animationController.endAnimation.AddListener(() => isNext = true);

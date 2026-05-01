@@ -24,6 +24,8 @@ public class GridBox : MonoBehaviour
         var newC = (Status) ((int) stat * -1);
         piece.FlipAnim(newC);
         SetStat(newC);
+
+        G.gridController.UpdateCountPiece(this);
     }
 
     public void SetModifire(string id)
@@ -42,9 +44,9 @@ public class GridBox : MonoBehaviour
     {
         return stat;
     }
-    public void SetStat(Status stat)
+    public void SetStat(Status status)
     {
-        this.stat = stat;
+        stat = status;
     }
 
     public Index GetIndex()

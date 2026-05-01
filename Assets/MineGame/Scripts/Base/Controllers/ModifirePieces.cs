@@ -65,5 +65,7 @@ public class ModifirePieces
     {
         foreach (var i in modSlots)
             i.Restart();
+
+        standartSlot.Restart();
     }
 }

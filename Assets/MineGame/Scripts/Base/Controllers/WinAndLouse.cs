@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 
 public class WinAndLouse
 {
@@ -13,8 +14,21 @@ public class WinAndLouse
         G.UIController.motionText.ThrowText(new LocString("You Win!", "Победа!"), R.normalVoice);
 
         G.enemySprite.animationController.SetAnimation(G.configGame.GetConfigLevel().GetConfigEnemy().enemyWinAnim);
-        yield return null;
+
+        G.enemySprite.animationController.endAnimation.AddListener(() => G.PiecePicker.StartCoroutine(G.PiecePicker.StartPicker()));
+        G.PiecePicker.isEndPick = false;
+
+        yield return G.PiecePicker.StartCoroutine(PickedEnd());
+
+        G.louse.StartCoroutine(G.louse.Win());
     }
+
+    private IEnumerator PickedEnd()
+    {
+        while (!G.PiecePicker.isEndPick)
+            yield return new WaitForSeconds(.2f);
+    }
+
     private IEnumerator Loss()
     {
         G.UIController.IndicatorText("LOSS");
@@ -22,5 +36,8 @@ public class WinAndLouse
 
         G.enemySprite.animationController.SetAnimation(G.configGame.GetConfigLevel().GetConfigEnemy().enemyLouseAnim);
         yield return null;
+
+        G.louse.StartCoroutine(G.louse.Louses());
+
     }
 }

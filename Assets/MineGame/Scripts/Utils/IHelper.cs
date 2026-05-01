@@ -1,9 +1,17 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "IHelper", menuName = "IHelper")]
 public class IHelper : ScriptableObject
 {
     float modifVolume = 0;
+    public static UnityEvent customEventAnim = new();
+
+    public void InvokeEvent()
+    {
+        customEventAnim?.Invoke();
+        customEventAnim.RemoveAllListeners();
+    }
 
     public void Pass()
     {

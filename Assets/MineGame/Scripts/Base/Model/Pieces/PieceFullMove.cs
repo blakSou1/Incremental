@@ -6,6 +6,7 @@ public class PieceFullMove : PieceBase
     public PieceFullMove()
     {
         id = "PieceMoveFull";
+        idS = id;
 
         Define<TagPrefab>().prefab = ("prefab/Piece/" + $"{id}").Load<InteractiveObject>();
         Define<TagExcludeFromReward>();
@@ -43,16 +44,6 @@ public class PieceFullMove : PieceBase
         foreach (var revColorPiece in revColorPieces)
         {
             revColorPiece.Flip();
-            if (revColorPiece.GetStat() == GridBox.Status.Black)
-            {
-                G.gridController.blackPieces.Add(revColorPiece.piece);
-                G.gridController.whitePieces.Remove(revColorPiece.piece);
-            }
-            else
-            {
-                G.gridController.whitePieces.Add(revColorPiece.piece);
-                G.gridController.blackPieces.Remove(revColorPiece.piece);
-            }
         }
     }
 }

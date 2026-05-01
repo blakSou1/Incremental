@@ -53,4 +53,9 @@ MonoBehaviour:
     - rid: 5303922306268004410
       type: {class: ConfigLevel, ns: , asm: Assembly-CSharp}
       data:
+        indexLvl: 0
+        preview: Tutorial
         enemyConfigPfb: {fileID: 57408262869493365, guid: 2b6ebfd38eaa537428416c07a4161d8b, type: 3}
+        pickablePiecesId:
+        - PieceMoveFull
+        - PieceSheild

@@ -210,11 +210,15 @@ MonoBehaviour:
   SpawnWhiteAnimDataSO: {fileID: 11400000, guid: 3c0d26e606f88eb42b45b7f21040466b, type: 2}
   MoveBlackAnimDataSO: {fileID: 11400000, guid: 30ad50aaf6055944dba7ad8d7f8bb0d3, type: 2}
   MoveWhiteAnimDataSO: {fileID: 11400000, guid: 0a79d0f3845f5e246bf57eb438926a84, type: 2}
+  modifier:
+    rid: -2
   animationController: {fileID: 0}
   moveable: {fileID: 1664809416595111963}
-  zone: {fileID: 0}
-  order: 0
-  Width: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &1664809416595111963
 MonoBehaviour:
   m_ObjectHideFlags: 0

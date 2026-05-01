@@ -25,6 +25,20 @@ public class GridController
         parentIndc = new GameObject("IndcPool").transform;
     }
 
+    public void UpdateCountPiece(GridBox revColorPiece)
+    {
+        if (revColorPiece.GetStat() == GridBox.Status.Black)
+        {
+            blackPieces.Add(revColorPiece.piece);
+            whitePieces.Remove(revColorPiece.piece);
+        }
+        else
+        {
+            whitePieces.Add(revColorPiece.piece);
+            blackPieces.Remove(revColorPiece.piece);
+        }
+    }
+
     #region SpawnerGrid
 
     public void StartInitModGrid()

@@ -26,7 +26,7 @@ public class GridBoxMode : MonoBehaviour
         animationController.Init();
         animSkillController.Init();
 
-        StartCoroutine(animationController.FadeCoroutine(true, .3f, animationController._targetRenderer));
+        animationController.SetFadeCoroutine(true, .3f, animationController._targetRenderer);
     }
 
     public IEnumerator ActivationScill()

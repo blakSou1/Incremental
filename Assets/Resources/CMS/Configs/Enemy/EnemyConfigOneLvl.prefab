@@ -53,8 +53,8 @@ MonoBehaviour:
     - rid: 5303922628337074233
       type: {class: ConfigEnemy, ns: , asm: Assembly-CSharp}
       data:
-        enemySpawnAnim: {fileID: 11400000, guid: 1ba06241601e3a34595845bb042901b2, type: 2}
-        enemyWinAnim: {fileID: 11400000, guid: cfe7ac1d6b464734da7dbb40223ca1e2, type: 2}
-        enemyLouseAnim: {fileID: 11400000, guid: 4abc8d8ff8995ff438b59d4994819b9e, type: 2}
+        enemySpawnAnim: {fileID: 11400000, guid: fce9d0e45973a03478ed7f50df332bc0, type: 2}
+        enemyWinAnim: {fileID: 11400000, guid: a082ab250d4b53a4e9a7f08f5248e272, type: 2}
+        enemyLouseAnim: {fileID: 11400000, guid: 732792433cd5c92489ae8a083e58aeff, type: 2}
         Scale: {x: 0.6, y: 0.6}
         hp: 3

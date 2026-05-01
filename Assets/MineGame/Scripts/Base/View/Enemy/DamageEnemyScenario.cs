@@ -25,7 +25,11 @@ public class DamageEnemyScenario : MonoBehaviour
 
             yield return new WaitForSeconds(.2f);
         }
-    }//TODO
+
+        yield return new WaitForSeconds(.2f);
+
+        G.enemyHp.WhatDead();
+    }
 
     private IEnumerator StopVFX(ParticleSystem particleSystem)
     {

@@ -75,7 +75,19 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    public IEnumerator FadeCoroutine(bool fadeIn, float fadeDuration, SpriteRenderer sprite)
+    Coroutine _animationCoroutineFabe;
+    public void SetFadeCoroutine(bool fadeIn, float fadeDuration, SpriteRenderer sprite)
+    {
+        if (_animationCoroutineFabe != null)
+        {
+            StopCoroutine(_animationCoroutineFabe);
+            _animationCoroutineFabe = null;
+        }
+
+        _animationCoroutineFabe = StartCoroutine(FadeCoroutine(fadeIn, fadeDuration, sprite));
+    }
+
+    private IEnumerator FadeCoroutine(bool fadeIn, float fadeDuration, SpriteRenderer sprite)
     {
         if (sprite == null) yield break;
 
