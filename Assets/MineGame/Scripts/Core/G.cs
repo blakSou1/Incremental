@@ -25,11 +25,13 @@ public static class G
     public static UIController UIController;
     public static DamageEnemyScenario DamageEnemyScenario;
     public static PiecePicker PiecePicker;
+    public static CameraShake cameraShake;
 
     //обьекты не монобех контроллеры
     public static Inpyts inputs;
 
     public static LocSystem LocSystem;
+    public static AnaliticksManager analiticksManager;
     public static AudioManager AudioManager;
     public static SceneLoader SceneLoader;
     public static PausePanel pausePanel;

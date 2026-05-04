@@ -54,3 +54,5 @@ MonoBehaviour:
       type: {class: ConfigGame, ns: , asm: Assembly-CSharp}
       data:
         isTutorial: 0
+        indexWinLvl: 2
+        damagePlayer: 1

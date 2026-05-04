@@ -11,6 +11,8 @@ public class ConfigGame : EntityComponentDefinition
     public static string standertPiece = "PieceStandart";
     public static string damageModBox = "DamageModifireBox";
 
+    public int indexWinLvl = 2;
+
     public int damagePlayer = 1;
 
     [NonSerialized] private List<(CMSEntity e, ConfigLevel tag)> list;

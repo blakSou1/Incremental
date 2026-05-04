@@ -25,7 +25,6 @@ public static partial class R
         public static AudioClip o;
         public static AudioClip PanelIn;
         public static AudioClip PanelOut;
-        public static AudioClip part;
         public static AudioClip pin;
         public static AudioClip poo;
         public static AudioClip positive;
@@ -35,22 +34,26 @@ public static partial class R
         public static AudioClip sfx_woosh;
         public static AudioClip sharp_echo;
         public static AudioClip Upper01;
-        public static AudioClip vriiis;
         public static AudioClip win_magic;
         public static AudioClip Wrong_Error;
         public static AudioClip y;
+        public static AudioClip AddShield;
         public static AudioClip click;
         public static AudioClip click_2;
         public static AudioClip damage;
+        public static AudioClip DestroyShield;
         public static AudioClip Louse;
         public static AudioClip Meow;
         public static AudioClip NewMainMenu;
+        public static AudioClip part;
         public static AudioClip pop1;
         public static AudioClip pop2;
         public static AudioClip pop3;
         public static AudioClip SpawnPiece;
+        public static AudioClip squeakEcho;
         public static AudioClip tutorial;
         public static AudioClip TypingSound;
+        public static AudioClip vriiis;
     }
 
     public static void InitAudio()
@@ -75,7 +78,6 @@ public static partial class R
         Audio.o = Resources.Load<AudioClip>("Audio/Bank/o");
         Audio.PanelIn = Resources.Load<AudioClip>("Audio/Bank/PanelIn");
         Audio.PanelOut = Resources.Load<AudioClip>("Audio/Bank/PanelOut");
-        Audio.part = Resources.Load<AudioClip>("Audio/Bank/part");
         Audio.pin = Resources.Load<AudioClip>("Audio/Bank/pin");
         Audio.poo = Resources.Load<AudioClip>("Audio/Bank/poo");
         Audio.positive = Resources.Load<AudioClip>("Audio/Bank/positive");
@@ -85,21 +87,25 @@ public static partial class R
         Audio.sfx_woosh = Resources.Load<AudioClip>("Audio/Bank/sfx_woosh");
         Audio.sharp_echo = Resources.Load<AudioClip>("Audio/Bank/sharp_echo");
         Audio.Upper01 = Resources.Load<AudioClip>("Audio/Bank/Upper01");
-        Audio.vriiis = Resources.Load<AudioClip>("Audio/Bank/vriiis");
         Audio.win_magic = Resources.Load<AudioClip>("Audio/Bank/win_magic");
         Audio.Wrong_Error = Resources.Load<AudioClip>("Audio/Bank/Wrong Error");
         Audio.y = Resources.Load<AudioClip>("Audio/Bank/y");
+        Audio.AddShield = Resources.Load<AudioClip>("Audio/Use/AddShield");
         Audio.click = Resources.Load<AudioClip>("Audio/Use/click");
         Audio.click_2 = Resources.Load<AudioClip>("Audio/Use/click_2");
         Audio.damage = Resources.Load<AudioClip>("Audio/Use/damage");
+        Audio.DestroyShield = Resources.Load<AudioClip>("Audio/Use/DestroyShield");
         Audio.Louse = Resources.Load<AudioClip>("Audio/Use/Louse");
         Audio.Meow = Resources.Load<AudioClip>("Audio/Use/Meow");
         Audio.NewMainMenu = Resources.Load<AudioClip>("Audio/Use/NewMainMenu");
+        Audio.part = Resources.Load<AudioClip>("Audio/Use/part");
         Audio.pop1 = Resources.Load<AudioClip>("Audio/Use/pop1");
         Audio.pop2 = Resources.Load<AudioClip>("Audio/Use/pop2");
         Audio.pop3 = Resources.Load<AudioClip>("Audio/Use/pop3");
         Audio.SpawnPiece = Resources.Load<AudioClip>("Audio/Use/SpawnPiece");
+        Audio.squeakEcho = Resources.Load<AudioClip>("Audio/Use/squeakEcho");
         Audio.tutorial = Resources.Load<AudioClip>("Audio/Use/tutorial");
         Audio.TypingSound = Resources.Load<AudioClip>("Audio/Use/TypingSound");
+        Audio.vriiis = Resources.Load<AudioClip>("Audio/Use/vriiis");
     }
 }

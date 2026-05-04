@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <framerate>k__BackingField: 1
   <frames>k__BackingField:
-  - {fileID: 2066140170221581557, guid: cb6c6ea26e7508e4fb529d9521348409, type: 3}
-  - {fileID: 2066140170221581557, guid: cb6c6ea26e7508e4fb529d9521348409, type: 3}
+  - {fileID: 21300000, guid: 8a70d06d62b4a364fb4aff795bb3f115, type: 3}
+  - {fileID: 21300000, guid: 8a70d06d62b4a364fb4aff795bb3f115, type: 3}
   <framesSettings>k__BackingField:
   - <indexFrame>k__BackingField: 0
     <Event>k__BackingField:

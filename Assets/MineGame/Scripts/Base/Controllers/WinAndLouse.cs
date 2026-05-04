@@ -27,6 +27,8 @@ public class WinAndLouse
     {
         while (!G.PiecePicker.isEndPick)
             yield return new WaitForSeconds(.2f);
+
+        yield return new WaitForSeconds(1.2f);
     }
 
     private IEnumerator Loss()

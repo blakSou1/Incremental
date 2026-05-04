@@ -15,6 +15,10 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         Init();
+
+        G.AudioManager.PlayMusic(R.Audio.NewMainMenu);
+        G.analiticksManager.Inits();
+        G.analiticksManager.EnterGame();
     }
 
     private void Start()

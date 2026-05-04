@@ -17,6 +17,7 @@ public class CameraShake : MonoBehaviour
     {
         _cameraTransform = Camera.main.transform;
         _originalPos = _cameraTransform.localPosition;
+        G.cameraShake = this;
     }
 
     public void Shake(float force = 1)

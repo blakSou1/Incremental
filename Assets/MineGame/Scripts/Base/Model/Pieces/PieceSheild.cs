@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class PieceSheild : PieceBase
 {
@@ -8,6 +7,7 @@ public class PieceSheild : PieceBase
     {
         id = "PieceSheild";
         idS = id;
+        Description = new(en: "1 time prevents a coup", ru: "1 Раз препятствует перевороту");
 
         Define<TagPrefab>().prefab = ("prefab/Piece/" + $"{id}").Load<InteractiveObject>();
         Define<TagExcludeFromReward>();

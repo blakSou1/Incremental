@@ -106,6 +106,9 @@ public class UIController : MonoBehaviour
 
         while (elapsedTime < duration)
         {
+            if (group == null)
+                break;
+
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             group.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);

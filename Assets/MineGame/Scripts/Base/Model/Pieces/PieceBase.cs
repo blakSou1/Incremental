@@ -55,6 +55,7 @@ public class BasicPiece : PieceBase
 public abstract class PieceBase : CMSEntity
 {
     public static string idS;
+    public LocString Description;
 
     public PieceBase()
     {

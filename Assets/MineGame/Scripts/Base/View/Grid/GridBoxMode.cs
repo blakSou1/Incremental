@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static GridBox;
 
 public class modeState
 {
@@ -29,7 +30,7 @@ public class GridBoxMode : MonoBehaviour
         animationController.SetFadeCoroutine(true, .3f, animationController._targetRenderer);
     }
 
-    public IEnumerator ActivationScill()
+    public IEnumerator ActivationScill(Status stat)
     {
         animSkillController.SetAnimation(ActivationGridAnimDataSO);
 
@@ -38,7 +39,10 @@ public class GridBoxMode : MonoBehaviour
 
         GridModifireBase model = state.model as GridModifireBase;
 
-        yield return StartCoroutine(model.ActivationScill());
+        if (stat == G.mainEnterPoint.playerColor)
+            yield return StartCoroutine(model.ActivationScillPlayer());
+        else
+            yield return StartCoroutine(model.ActivationScillEnemy());
     }
     private void EndAnimActivScill()
     {

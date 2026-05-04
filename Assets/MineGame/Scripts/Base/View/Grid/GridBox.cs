@@ -62,7 +62,7 @@ public class GridBox : MonoBehaviour
     {
         this.piece = piece;
 
-        if(boxMode != null && stat == G.mainEnterPoint.playerColor)
-            yield return StartCoroutine(boxMode.ActivationScill());
+        if(boxMode != null)
+            yield return StartCoroutine(boxMode.ActivationScill(stat));
     }//TODO
 }

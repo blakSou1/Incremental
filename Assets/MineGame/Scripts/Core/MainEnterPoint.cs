@@ -128,6 +128,15 @@ public class MainEnterPoint : MonoBehaviour
 
     private IEnumerator VisibalTextActualLvl()
     {
+        G.analiticksManager.StartLvl();
+
+        if (G.run.indexLvl == G.configGame.indexWinLvl)
+        {
+            G.SceneLoader.Load("Win");
+
+            yield break;
+        }
+
         G.UIController.textActualLvl.text = G.configGame.GetConfigLevel().preview;
 
         yield return StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 1f, 1.2f));

@@ -62,16 +62,20 @@ public class EnemyHp : MonoBehaviour
 
 	public IEnumerator DamagePlayer(int damage)
 	{
-		G.run.Damage -= damage;
+		G.run.Damage += damage;
 
 		G.AudioManager.PlaySound(R.Audio.damage, Random.Range(0, .5f));
 
 		G.UIController.UpdatePlayerHp();
 
-		if (G.run.Damage <= 0)
+		if (G.run.maxHealth - G.run.Damage <= 0)
 			G.winAndLouse.WinEnemy();
 
-		yield return StartCoroutine(ChangeVolumeWeight(1 - Mathf.Min(Mathf.Max(0, G.run.Damage / G.run.maxHealth), 1)));
+		float target = 1 - Mathf.Min(Mathf.Max(0, (G.run.maxHealth - G.run.Damage) / G.run.maxHealth), 1);
+
+        G.cameraShake.Shake(target);
+
+        yield return StartCoroutine(ChangeVolumeWeight(target));
 
 		yield return new WaitForSeconds(.3f);
 

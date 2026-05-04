@@ -7,6 +7,7 @@ public class PieceFullMove : PieceBase
     {
         id = "PieceMoveFull";
         idS = id;
+        Description = new(en: "Moves to any square on the field", ru: "Ходит на любую клетку поля");
 
         Define<TagPrefab>().prefab = ("prefab/Piece/" + $"{id}").Load<InteractiveObject>();
         Define<TagExcludeFromReward>();
