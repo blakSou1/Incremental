@@ -26,6 +26,9 @@ public class Chooice : MonoBehaviour
 
     public InteractiveObject AddPiece(string id)
     {
+        if (string.IsNullOrEmpty(id))
+            id = ConfigGame.standertPiece;
+
         return CreatePiece(id);
     }
 

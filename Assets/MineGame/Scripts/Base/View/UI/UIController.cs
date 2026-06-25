@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public TextThrower coinTextPlayer;
-    public TextThrower coinTextEnemy;
+    public CoinTextNumderAnim coinPlayer;
+    public CoinTextNumderAnim coinEnemy;
 
     public GameObject playerSelect;
     public GameObject EnemySelect;
@@ -57,21 +57,8 @@ public class UIController : MonoBehaviour
 
     public void UpdateCountPlayers()
     {
-        string bText;
-        string wText;
-
-        if (G.gridController.blackPieces.Count < 10)
-            bText = "0" + G.gridController.blackPieces.Count.ToString();
-        else
-            bText = G.gridController.blackPieces.Count.ToString();
-
-        if (G.gridController.whitePieces.Count < 10)
-            wText = "0" + G.gridController.whitePieces.Count.ToString();
-        else
-            wText = G.gridController.whitePieces.Count.ToString();
-
-        coinTextPlayer.ThrowText(new LocString(bText, bText), R.normalVoice);
-        coinTextEnemy.ThrowText(new LocString(wText, wText), R.normalVoice);
+        coinPlayer.EditCoin(G.gridController.blackPieces.Count);
+        coinEnemy.EditCoin(G.gridController.whitePieces.Count);
     }
 
     public void ActualSelect()

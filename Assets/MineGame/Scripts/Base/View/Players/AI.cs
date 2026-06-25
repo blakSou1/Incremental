@@ -12,7 +12,7 @@ public class AI : MonoBehaviour
     public void InitWeight()
     {
         gridWeight.Clear();
-        int size = G.configGridFunction.item1;
+        int size = G.configGame.MatrixModel.matrixField.size;
 
         for (int i = 0; i < size; i++)
         {
@@ -65,7 +65,7 @@ public class AI : MonoBehaviour
 
         isDebug = !isDebug;
 
-        int size = G.configGridFunction.item1;
+        int size = G.configGame.MatrixModel.matrixField.size;
 
         for (int i = 0; i < size; i++)
         {
@@ -75,14 +75,14 @@ public class AI : MonoBehaviour
     }
     private void DeleteDebugMethod()
     {
-        int size = G.configGridFunction.item1;
+        int size = G.configGame.MatrixModel.matrixField.size;
 
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 G.gridController.matrix.GetGrid(new(i, j)).debugTextWeight.text = "";
     }
 
-    public void Execute(GridBox.Status comColor)
+    public void Execute(Status comColor)
     {
         List<GridBox> possibleLocs = G.conditionsOfVictoryAndDefeat.GetPossibleLocation(comColor);
 

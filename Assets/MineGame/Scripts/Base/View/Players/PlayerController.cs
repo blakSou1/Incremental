@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static GridBox;
 
 public class PlayerController : MonoBehaviour
 {

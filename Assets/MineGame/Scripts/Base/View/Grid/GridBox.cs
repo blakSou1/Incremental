@@ -5,8 +5,6 @@ using Index = System.Tuple<int, int>;
 
 public class GridBox : MonoBehaviour
 {
-    public enum Status { Black = -1, None = 0, White = 1 }
-
     [HideInInspector] public Indic indic = null;
 
     private Index index = new(-1, -1);

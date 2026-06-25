@@ -10,6 +10,4 @@ public class ConfigGridFunction : ScriptableObject
 
     public Indic indcObj;
 
-    public int item1 = 8;
-
 }

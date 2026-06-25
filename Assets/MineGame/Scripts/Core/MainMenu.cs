@@ -17,8 +17,6 @@ public class MainMenu : MonoBehaviour
         Init();
 
         G.AudioManager.PlayMusic(R.Audio.NewMainMenu);
-        G.analiticksManager.Inits();
-        G.analiticksManager.EnterGame();
     }
 
     private void Start()

@@ -55,5 +55,7 @@ MonoBehaviour:
       data:
         indexLvl: 1
         preview: Lvl - 1/5
-        enemyConfigPfb: {fileID: 57408262869493365, guid: 224592352ad1f474dac8fccff0ee8357, type: 3}
+        matrixNode: {fileID: 4704001615951451078, guid: e9010b76b7f723844930a1f9f8f870ec, type: 3}
+        enemyConfig: {fileID: -547717990848652658, guid: 224592352ad1f474dac8fccff0ee8357, type: 3}
         pickablePiecesId: []
+        brain: {fileID: 3352815929204388788, guid: ba193e0461e24704197f69b523cf0bfa, type: 3}

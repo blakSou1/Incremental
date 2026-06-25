@@ -15,7 +15,7 @@ public class EnemyHp : MonoBehaviour
 		G.enemyHp = this;
 		damageIndicator.text = "";
 
-		SetHp(G.configGame.GetConfigLevel().GetConfigEnemy().hp);
+		SetHp(G.configGame.GetConfigLevel().enemyConfig.hp);
 	}
 
 	public void SetHp(int hp)

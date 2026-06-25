@@ -21,8 +21,8 @@ public class EnemySprite : MonoBehaviour
 
     public void UpdateSprite()
     {
-        animationController.SetAnimation(G.configGame.GetConfigLevel().GetConfigEnemy().enemySpawnAnim);
-        transform.localScale = G.configGame.GetConfigLevel().GetConfigEnemy().Scale;
+        animationController.SetAnimation(G.configGame.GetConfigLevel().enemyConfig.enemySpawnAnim);
+        transform.localScale = G.configGame.GetConfigLevel().enemyConfig.Scale;
 
         StartCoroutine(EnableSprite());
     }

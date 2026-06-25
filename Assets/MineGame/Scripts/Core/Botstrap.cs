@@ -37,7 +37,6 @@ public static class GameBootstrapper
         G.LocSystem = CreateSimpleService<LocSystem>();
         G.pausePanel = CreateSimpleService<PausePanel>();
         G.faqPanel = CreateSimpleService<FAQ>();
-        G.analiticksManager = CreateSimpleService<AnaliticksManager>();
 
         G.winAndLouse = new();
         G.run = new();

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4223233497506694888}
-  - component: {fileID: 57408262869493365}
+  - component: {fileID: 4336106110857942914}
   m_Layer: 0
   m_Name: EnemyConfigTutorial
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &57408262869493365
+--- !u!114 &4336106110857942914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,20 +41,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8218670344710631470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1729a46f79086449a991b5512530e60, type: 3}
+  m_Script: {fileID: 11500000, guid: 36cda31cd3fc7084eb9ac5042dac9e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idCMS: CMS/Configs/Enemy/EnemyConfigTutorial
-  Components:
-  - rid: 5303922628337074233
-  references:
-    version: 2
-    RefIds:
-    - rid: 5303922628337074233
-      type: {class: ConfigEnemy, ns: , asm: Assembly-CSharp}
-      data:
-        enemySpawnAnim: {fileID: 11400000, guid: 1ba06241601e3a34595845bb042901b2, type: 2}
-        enemyWinAnim: {fileID: 11400000, guid: cfe7ac1d6b464734da7dbb40223ca1e2, type: 2}
-        enemyLouseAnim: {fileID: 11400000, guid: 4abc8d8ff8995ff438b59d4994819b9e, type: 2}
-        Scale: {x: 0.6, y: 0.6}
-        hp: 2
+  enemySpawnAnim: {fileID: 11400000, guid: 1ba06241601e3a34595845bb042901b2, type: 2}
+  enemyWinAnim: {fileID: 11400000, guid: cfe7ac1d6b464734da7dbb40223ca1e2, type: 2}
+  enemyLouseAnim: {fileID: 11400000, guid: 4abc8d8ff8995ff438b59d4994819b9e, type: 2}
+  Scale: {x: 0.7, y: 0.7}
+  hp: 3

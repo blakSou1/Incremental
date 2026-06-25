@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 
-[Serializable]
-public class ConfigEnemy : EntityComponentDefinition
+public class EnemyModel : MonoBehaviour
 {
     public AnimationDataSO enemySpawnAnim;
     public AnimationDataSO enemyWinAnim;

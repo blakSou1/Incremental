@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 [Serializable]
 public class ConfigLevel : EntityComponentDefinition
@@ -9,17 +8,13 @@ public class ConfigLevel : EntityComponentDefinition
 
     public string preview;
 
-    public CMSEntityPfb enemyConfigPfb;
-    [NonSerialized] private ConfigEnemy enemyConfig;
+    public MatrixNode matrixNode;
+
+    public EnemyModel enemyConfig;
 
     public List<string> pickablePiecesId;
 
-    public ConfigEnemy GetConfigEnemy()
-    {
-        if (enemyConfig == null)
-            enemyConfig = enemyConfigPfb.Components.OfType<ConfigEnemy>().FirstOrDefault();
-        return enemyConfig;
-    }
+    public BaseBrain brain;
 
     public List<string> GetPickablePiece()
     {

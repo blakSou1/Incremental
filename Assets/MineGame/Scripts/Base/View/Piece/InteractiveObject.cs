@@ -58,13 +58,13 @@ public class InteractiveObject : MonoBehaviour
         state.view = this;
     }
 
-    public void SetColor(GridBox.Status color)
+    public void SetColor(Status color)
     {
         Start();
 
-        if (color == GridBox.Status.Black)
+        if (color == Status.Black)
             animationController.SetAnimation(SpawnBlackAnimDataSO);
-        else if (color == GridBox.Status.White)
+        else if (color == Status.White)
             animationController.SetAnimation(SpawnWhiteAnimDataSO);
         else
             Destroy(this.gameObject);
@@ -74,24 +74,24 @@ public class InteractiveObject : MonoBehaviour
         SpawnPiece?.Invoke();
     }
 
-    private void SetColorIcon(GridBox.Status color)
+    private void SetColorIcon(Status color)
     {
         if (!iconPiece) return;
 
-        if (color == GridBox.Status.Black)
+        if (color == Status.Black)
             iconPiece.color = Color.white;
-        else if (color == GridBox.Status.White)
+        else if (color == Status.White)
             iconPiece.color = Color.black;
     }
 
-    public void FlipAnim(GridBox.Status color)
+    public void FlipAnim(Status color)
     {
         animationController.SetFadeCoroutine(false, .1f, iconPiece);
         SetColorIcon(color);
 
-        if (color == GridBox.Status.Black)
+        if (color == Status.Black)
             animationController.SetAnimation(MoveBlackAnimDataSO);
-        else if (color == GridBox.Status.White)
+        else if (color == Status.White)
             animationController.SetAnimation(MoveWhiteAnimDataSO);
         else
             return;

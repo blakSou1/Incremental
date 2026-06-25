@@ -8,7 +8,7 @@ public class ConditionsOfVictoryAndDefeat
 {
     private int item1
     {
-        get { return G.configGridFunction.item1; }
+        get { return G.configGame.MatrixModel.matrixField.size; }
     }
 
     public void Init()
@@ -16,55 +16,30 @@ public class ConditionsOfVictoryAndDefeat
         G.conditionsOfVictoryAndDefeat = this;
     }
 
-    /// <summary>
-    /// Travel transfer 
-    /// Changes the current player (from white to black and vice versa)
-    /// Checks if the new player has available moves
-    /// Shows indicators of possible moves
-    /// Starts the AI ​​if it's the opponent's turn
-    /// </summary>
-    public void PassTurn()
+    public void PlayerMove()
     {
-        G.PlayerController.playerColor = (GridBox.Status)((int)G.PlayerController.playerColor * -1);
-
         G.inputs.Player.Enable();
 
-        if (G.PlayerController.playerColor == G.mainEnterPoint.playerColor)
+        G.gridController.EnableAndDisableIndc(true);
+
+        G.UIController.motionText.ThrowText(new LocString("Your move!", "Ваш ход!"), R.normalVoice);
+
+    }
+    public void EnemyMove()
+    {
+        G.inputs.Player.Disable();
+
+        G.gridController.EnableAndDisableIndc(false);
+
+        G.UIController.motionText.ThrowText(new LocString("The opponent's move!", "Ход противника!"), R.normalVoice);
+
+        G.mainEnterPoint.StartCoroutine(Next());
+        static IEnumerator Next()
         {
-            if (!ShowPossibleLocation(G.mainEnterPoint.playerColor))
-            {
-                Pass();
-                return;
-            }
-
-            G.gridController.CreateIndisObject(G.mainEnterPoint.playerColor, G.gameLogic.actualPieceInsanting);
-
-            G.gridController.EnableAndDisableIndc(true);
-
-            G.UIController.motionText.ThrowText(new LocString("Your move!", "Ваш ход!"), R.normalVoice);
-        }
-        else
-        {
-            if (!ShowPossibleLocation((GridBox.Status)((int)G.mainEnterPoint.playerColor * -1)))
-            {
-                Pass();
-                return;
-            }
-
-            G.gridController.EnableAndDisableIndc(false);
-
-            G.UIController.motionText.ThrowText(new LocString("The opponent's move!", "Ход противника!"), R.normalVoice);
-
-            G.inputs.Player.Disable();
-            G.mainEnterPoint.StartCoroutine(Next());
-            static IEnumerator Next()
-            {
-                yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.4f));
-                G.ai.Execute(G.PlayerController.playerColor);
-            }
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.4f));
+            G.ai.Execute(G.PlayerController.playerColor);
         }
 
-        G.UIController.ActualSelect();
     }
 
     /// <summary>
@@ -77,10 +52,8 @@ public class ConditionsOfVictoryAndDefeat
     /// <param name="color"></param>
     /// <param name="isCheck"></param>
     /// <returns></returns>
-    public bool ShowPossibleLocation(GridBox.Status color)//move possibility
+    public bool ShowPossibleLocation(int indicCount)//move possibility
     {
-        int indicCount = G.gridController.CreateIndisObject(color, G.gameLogic.actualPieceInsanting);//PassTurn after PlacePiece
-
         if (indicCount == 0)
         {
             if (G.gridController.blackPieces.Count + G.gridController.whitePieces.Count == item1 * item1)
@@ -127,7 +100,7 @@ public class ConditionsOfVictoryAndDefeat
 
         G.mainEnterPoint.disableInputForPass = true;
 
-        PassTurn();
+        G.gameLogic.isPlace = false;
 
         yield return new WaitForSeconds(1.3f);
 
@@ -141,7 +114,7 @@ public class ConditionsOfVictoryAndDefeat
     /// <param name="color"></param>
     /// <param name="isCheck"></param>
     /// <returns></returns>
-    public List<GridBox> GetPossibleLocation(GridBox.Status color, bool isCheck = false)
+    public List<GridBox> GetPossibleLocation(Status color, bool isCheck = false)
     {
         List<GridBox> list = G.gridController.indicPositionGrid;
 

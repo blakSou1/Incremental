@@ -1,6 +1,4 @@
-﻿using DG.Tweening;
-using System;
-using System.Collections;
+﻿using System;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
 
@@ -11,13 +9,13 @@ public class Matrix
 
     private Transform parent;
 
-    public Matrix(int index)
+    public Matrix(MatrixModel matrixModel)
     {
         if (parent != null)
             GameObject.Destroy(parent.gameObject);
         parent = new GameObject("GridBoxParent").transform;
 
-        data = new GridBox[index, index];
+        data = new GridBox[matrixModel.matrixField.size, matrixModel.matrixField.size];
     }
 
     public GridBox[,] GetData()

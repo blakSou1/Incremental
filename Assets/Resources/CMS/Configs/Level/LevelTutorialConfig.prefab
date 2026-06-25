@@ -55,7 +55,7 @@ MonoBehaviour:
       data:
         indexLvl: 0
         preview: Tutorial
-        enemyConfigPfb: {fileID: 57408262869493365, guid: 2b6ebfd38eaa537428416c07a4161d8b, type: 3}
-        pickablePiecesId:
-        - PieceMoveFull
-        - PieceSheild
+        matrixNode: {fileID: -5092946130732304248, guid: ac1b2af4ad516f346ac2dbadfa23d477, type: 3}
+        enemyConfig: {fileID: 4336106110857942914, guid: 2b6ebfd38eaa537428416c07a4161d8b, type: 3}
+        pickablePiecesId: []
+        brain: {fileID: -5960439075800366532, guid: 07ccb16a4c9ad9e469288296d8f7cd42, type: 3}

@@ -55,7 +55,7 @@ public class ModifirePieces
 
     private void SetColorAnimPiece(InteractiveObject p)
     {
-        if(G.mainEnterPoint.playerColor == GridBox.Status.White)
+        if(G.mainEnterPoint.playerColor == Status.White)
             p.animationController.SetAnimation(p.SpawnWhiteAnimDataSO);
         else
             p.animationController.SetAnimation(p.SpawnBlackAnimDataSO);

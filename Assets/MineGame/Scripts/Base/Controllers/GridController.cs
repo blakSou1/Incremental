@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Index = System.Tuple<int, int>;
@@ -16,7 +17,7 @@ public class GridController
 
     private int item1
     {
-        get { return G.configGridFunction.item1; }
+        get { return G.configGame.MatrixModel.matrixField.size; }
     }
 
     public void Init()
@@ -27,7 +28,7 @@ public class GridController
 
     public void UpdateCountPiece(GridBox revColorPiece)
     {
-        if (revColorPiece.GetStat() == GridBox.Status.Black)
+        if (revColorPiece.GetStat() == Status.Black)
         {
             blackPieces.Add(revColorPiece.piece);
             whitePieces.Remove(revColorPiece.piece);
@@ -43,43 +44,29 @@ public class GridController
 
     public void StartInitModGrid()
     {
-        SpawnDamageGrid();
-
-    }
-    //TODO
-
-    private void SpawnDamageGrid()
-    {
-        int random = Random.Range(0, 4);
-        RandomSpawnModGridBox(G.configGame.GetConfigLevel().GetConfigEnemy().hp + random, ConfigGame.damageModBox);
+        G.mainEnterPoint.StartCoroutine(InitModifireGrid());
     }
 
-    private void RandomSpawnModGridBox(int countSpawnDamageBox = 0, string id = "")
+    public IEnumerator InitModifireGrid()
     {
-        List<GridBox> freeCells = new();
-
+        int size = G.configGame.MatrixModel.matrixField.size;
         var data = matrix.GetData();
 
-        for (int x = 0; x < data.GetLength(0); x++)
+        for (int i = 0; i < size; i++)
         {
-            for (int y = 0; y < data.GetLength(1); y++)
+            for (int s = 0; s < size; s++)
             {
-                if (data[x, y] != null && data[x, y].GetStat() == GridBox.Status.None)
-                    freeCells.Add(data[x, y]);
+                string id = G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idModifireGrid;
+
+                if (string.IsNullOrEmpty(id))
+                    continue;
+
+                if (data[i, s] != null && data[i, s].GetStat() == Status.None)
+                    data[i, s].SetModifire(G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idModifireGrid);
+
+                yield return new WaitForSeconds(.15f);
             }
         }
-
-        for (int i = 0; i < countSpawnDamageBox; i++)
-        {
-            if (freeCells.Count <= 0)
-                return;
-
-            int randomIndex = Random.Range(0, freeCells.Count);
-            freeCells[randomIndex].SetModifire(id);
-
-            freeCells.RemoveAt(randomIndex);
-        }
-
     }
 
     #endregion
@@ -88,7 +75,8 @@ public class GridController
 
     public void NewMatrix()
     {
-        matrix = new Matrix(G.configGridFunction.item1);
+        G.configGame.MatrixModel = G.configGame.GetConfigLevel().matrixNode.GetMatrix();
+        matrix = new Matrix(G.configGame.MatrixModel);
     }
 
     public Vector2 IndexToVector2(Index index)
@@ -111,12 +99,11 @@ public class GridController
 
         NewMatrix();
     }
-
     #endregion
 
     #region Indic
 
-    public int CreateIndisObject(GridBox.Status color, InteractiveObject piecePrefabValid)
+    public int CreateIndisObject(Status color, InteractiveObject piecePrefabValid)
     {
         ClearIndicObjs();
 
@@ -164,19 +151,6 @@ public class GridController
 
     #region GetFunction
 
-    public List<Index> GetCenterCells()
-    {
-        List<Index> centerCells = new()
-        {
-            new(G.configGridFunction.item1 / 2 - 1, G.configGridFunction.item1 / 2 - 1),
-            new(G.configGridFunction.item1 / 2, G.configGridFunction.item1 / 2 - 1),
-            new(G.configGridFunction.item1 / 2, G.configGridFunction.item1 / 2),
-            new(G.configGridFunction.item1 / 2 - 1, G.configGridFunction.item1 / 2)
-        };
-
-        return centerCells;
-    }
-
     public List<GridBox> GetCrossPieces(Index i1, Index i2, bool excludeNone = true)
     {
         var list = new List<GridBox>();
@@ -190,7 +164,7 @@ public class GridController
             for (var j = start + 1; j <= end - 1; j++)
             {
                 var grid = matrix.GetGrid(new Index(i1.Item1, j));
-                if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+                if (grid.GetStat() != Status.None || !excludeNone)
                     list.Add(grid);
             }
 
@@ -204,7 +178,7 @@ public class GridController
             for (var i = start + 1; i <= end - 1; i++)
             {
                 var grid = matrix.GetGrid(new Index(i, i1.Item2));
-                if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+                if (grid.GetStat() != Status.None || !excludeNone)
                     list.Add(grid);
             }
 
@@ -228,7 +202,7 @@ public class GridController
                         (b ? i1.Item2 : i2.Item2) + d)
                     );
 
-                    if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+                    if (grid.GetStat() != Status.None || !excludeNone)
                         list.Add(grid);
                 }
 
@@ -246,7 +220,7 @@ public class GridController
                         (b ? i1.Item2 : i2.Item2) - d)
                     );
 
-                    if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+                    if (grid.GetStat() != Status.None || !excludeNone)
                         list.Add(grid);
                 }
 
@@ -268,7 +242,7 @@ public class GridController
             if (i == cx) continue;
 
             var grid = matrix.GetGrid(new Index(i, index.Item2));
-            if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+            if (grid.GetStat() != Status.None || !excludeNone)
                 list.Add(grid);
         }
 
@@ -277,7 +251,7 @@ public class GridController
             if (j == cy) continue;
 
             var grid = matrix.GetGrid(new Index(index.Item1, j));
-            if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+            if (grid.GetStat() != Status.None || !excludeNone)
                 list.Add(grid);
         }
 
@@ -286,7 +260,7 @@ public class GridController
             if (cx + d >= item1 || cy + d >= item1) continue;
 
             var grid = matrix.GetGrid(new Index(cx + d, cy + d));
-            if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+            if (grid.GetStat() != Status.None || !excludeNone)
                 list.Add(grid);
         }
 
@@ -295,7 +269,7 @@ public class GridController
             if (cx - d < 0 || cy - d < 0) continue;
 
             var grid = matrix.GetGrid(new Index(cx - d, cy - d));
-            if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+            if (grid.GetStat() != Status.None || !excludeNone)
                 list.Add(grid);
         }
 
@@ -304,7 +278,7 @@ public class GridController
             if (cx + d >= item1 || cy - d < 0) continue;
 
             var grid = matrix.GetGrid(new Index(cx + d, cy - d));
-            if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+            if (grid.GetStat() != Status.None || !excludeNone)
                 list.Add(grid);
         }
 
@@ -313,7 +287,7 @@ public class GridController
             if (cx - d < 0 || cy + d >= item1) continue;
 
             var grid = matrix.GetGrid(new Index(cx - d, cy + d));
-            if (grid.GetStat() != GridBox.Status.None || !excludeNone)
+            if (grid.GetStat() != Status.None || !excludeNone)
                 list.Add(grid);
         }
 

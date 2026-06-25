@@ -13,7 +13,7 @@ public class WinAndLouse
         G.UIController.IndicatorText("WIN");
         G.UIController.motionText.ThrowText(new LocString("You Win!", "Победа!"), R.normalVoice);
 
-        G.enemySprite.animationController.SetAnimation(G.configGame.GetConfigLevel().GetConfigEnemy().enemyWinAnim);
+        G.enemySprite.animationController.SetAnimation(G.configGame.GetConfigLevel().enemyConfig.enemyWinAnim);
 
         G.enemySprite.animationController.endAnimation.AddListener(() => G.PiecePicker.StartCoroutine(G.PiecePicker.StartPicker()));
         G.PiecePicker.isEndPick = false;
@@ -36,7 +36,7 @@ public class WinAndLouse
         G.UIController.IndicatorText("LOSS");
         G.UIController.motionText.ThrowText(new LocString("Loss!", "Проиграл!"), R.normalVoice);
 
-        G.enemySprite.animationController.SetAnimation(G.configGame.GetConfigLevel().GetConfigEnemy().enemyLouseAnim);
+        G.enemySprite.animationController.SetAnimation(G.configGame.GetConfigLevel().enemyConfig.enemyLouseAnim);
         yield return null;
 
         G.louse.StartCoroutine(G.louse.Louses());

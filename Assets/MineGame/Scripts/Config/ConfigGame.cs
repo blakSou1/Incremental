@@ -7,6 +7,7 @@ public class ConfigGame : EntityComponentDefinition
     public bool isTutorial = false;
 
     [NonSerialized] private ConfigLevel configLevel = null;
+    [NonSerialized] public MatrixModel MatrixModel = null;
 
     public static string standertPiece = "PieceStandart";
     public static string damageModBox = "DamageModifireBox";

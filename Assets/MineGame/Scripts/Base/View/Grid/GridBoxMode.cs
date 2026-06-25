@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static GridBox;
 
 public class modeState
 {
@@ -37,7 +36,7 @@ public class GridBoxMode : MonoBehaviour
         animationController.endAnimation.AddListener(G.mainEnterPoint.PlayerInputUpdate);
         animationController.endAnimation.AddListener(EndAnimActivScill);
 
-        GridModifireBase model = state.model as GridModifireBase;
+        GridModBase model = state.model as GridModBase;
 
         if (stat == G.mainEnterPoint.playerColor)
             yield return StartCoroutine(model.ActivationScillPlayer());

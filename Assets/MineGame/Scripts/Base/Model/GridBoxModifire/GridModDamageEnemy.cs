@@ -1,10 +1,10 @@
 using System.Collections;
 
-public class GridModifireDamageEnemy : GridModifireBase
+public class GridModDamageEnemy : GridModBase
 {
     private int damage = 1;
 
-    public GridModifireDamageEnemy()
+    public GridModDamageEnemy()
     {
         id = "DamageModifireBox";
 
@@ -29,27 +29,4 @@ public class GridModifireDamageEnemy : GridModifireBase
         G.gameLogic.DestroyMyCoroutineSkillGridBox();
     }
 
-}
-
-public abstract class GridModifireBase : CMSEntity
-{
-    public GridModifireBase()
-    {
-        Define<TagPrefabGridBoxMode>().prefab = "prefab/GridBoxMod/name".Load<GridBoxMode>();
-        id = "name";
-    }
-
-    public virtual IEnumerator ActivationScillPlayer()
-    {
-        yield return null;
-    }
-    public virtual IEnumerator ActivationScillEnemy()
-    {
-        yield return null;
-    }
-}
-
-public class TagPrefabGridBoxMode : EntityComponentDefinition
-{
-    public GridBoxMode prefab;
 }

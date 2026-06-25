@@ -71,8 +71,7 @@ public class IHelper : ScriptableObject
 
     public void StartGame()
     {
-        if(G.mainEnterPoint != null)
-            G.mainEnterPoint.StartGame();
+        G.configGame.GetConfigLevel().brain.StartLvl();
     }
     public void RestartGame()
     {

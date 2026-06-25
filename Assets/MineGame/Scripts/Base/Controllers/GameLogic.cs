@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Index = System.Tuple<int, int>;
 
 [Serializable]
 public class GameLogic
@@ -15,6 +13,8 @@ public class GameLogic
 
     private Transform parentPiece;
 
+    public bool isPlace = false;
+
     public void Init()
     {
         parentPiece = new GameObject("PiecePool").transform;
@@ -22,33 +22,39 @@ public class GameLogic
 
     public IEnumerator InitStaticPieces()
     {
+        Status stat = Status.None;
+
+        int size = G.configGame.MatrixModel.matrixField.size;
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int s = 0; s < size; s++)
+            {
+                stat = G.configGame.MatrixModel.matrixField.data.GetValue(i, s).stat;
+                if (stat == Status.None)
+                    continue;
+
+                CreatePieceProcedure(G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idPiece, G.gridController.matrix.GetGrid(new (i, s)), G.configGame.MatrixModel.matrixField.data.GetValue(i, s).stat);
+
+                yield return new WaitForSeconds(.15f);
+            }
+        }
+
         pieceObj = G.chooice.AddPiece(ConfigGame.standertPiece);
 
-        List<Index> centerCells = G.gridController.GetCenterCells();
-        GridBox.Status status = GridBox.Status.White;
+        stat = Status.White;
 
         actualPiece = ConfigGame.standertPiece;
 
-        foreach (var i in centerCells)
-        {
-            G.mainEnterPoint.StartCoroutine(PlacePiece(status, G.gridController.matrix.GetGrid(i), true));
-            status = (GridBox.Status)((int)status * -1);
-            yield return new WaitForEndOfFrame();
-        }
-
         G.UIController.ActualSelect();
-
-        yield return new WaitForSeconds(.5f);
-
-        G.conditionsOfVictoryAndDefeat.PassTurn();
     }
 
     Coroutine myCoroutineSkillGridBox;
-    public IEnumerator PlacePiece(GridBox.Status color, GridBox grid, bool isStatic = false)
+    public IEnumerator PlacePiece(Status color, GridBox grid)
     {
-        if ((grid == null || grid.indic == null) && !isStatic) yield break;
+        if (grid == null || grid.indic == null) yield break;
 
-        if (!isStatic && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
+        if (G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
         {
             foreach (SlotModPiece i in G.modifirePieces.modSlots)
             {
@@ -84,25 +90,20 @@ public class GameLogic
 
         actualPieceInsanting.SetColor(color);
 
-        if (!isStatic)
-        {
-            if(pieceObj.state.model.id != ConfigGame.standertPiece && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
-                G.modifirePieces.standartSlot.Click();
+        if(pieceObj.state.model.id != ConfigGame.standertPiece && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
+            G.modifirePieces.standartSlot.Click();
 
-            bool isNext = false;
-            actualPieceInsanting.animationController.endAnimation.AddListener(() => isNext = true);
+        bool isNext = false;
+        actualPieceInsanting.animationController.endAnimation.AddListener(() => isNext = true);
 
-            while (!isNext)
-                yield return new WaitForEndOfFrame();
+        while (!isNext)
+            yield return new WaitForEndOfFrame();
 
-            actualPieceInsanting.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
-        }
+        actualPieceInsanting.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
 
         if (color == G.mainEnterPoint.playerColor)
             G.gridController.blackPieces.Add(actualPieceInsanting);
         else G.gridController.whitePieces.Add(actualPieceInsanting);
-
-        if (isStatic) yield break;
 
         G.UIController.UpdateCountPlayers();
         G.UIController.motionText._textAnimator.ShowText("");
@@ -112,11 +113,43 @@ public class GameLogic
         while (myCoroutineSkillGridBox != null)
             yield return new WaitForSeconds(.2f);
 
-        G.conditionsOfVictoryAndDefeat.PassTurn();
+        isPlace = true;
     }
+
     public void DestroyMyCoroutineSkillGridBox()
     {
         myCoroutineSkillGridBox = null;
+    }
+
+    private InteractiveObject CreatePieceProcedure(string id, GridBox grid, Status color)
+    {
+        InteractiveObject piece = G.chooice.AddPiece(id);
+        actualPieceInsanting = piece;
+
+        GameObject obj = piece.gameObject;
+        piece.moveable.targetPosition = grid.transform.position;
+        piece.transform.position = grid.transform.position;
+
+        obj.transform.parent = parentPiece;
+
+        obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
+
+        grid.SetStat(color);
+        myCoroutineSkillGridBox = G.mainEnterPoint.StartCoroutine(grid.SetPiece(piece));
+        piece.state.gridBox = grid;
+
+        piece.SetColor(color);
+
+        if (color == G.mainEnterPoint.playerColor)
+            G.gridController.blackPieces.Add(piece);
+        else G.gridController.whitePieces.Add(piece);
+
+        G.UIController.UpdateCountPlayers();
+        G.UIController.motionText._textAnimator.ShowText("");
+
+        G.AudioManager.PlaySound(R.Audio.SpawnPiece, 0, -.15f);
+
+        return piece;
     }
 
     public void ActualPiece()
