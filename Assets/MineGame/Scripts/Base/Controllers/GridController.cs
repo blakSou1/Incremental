@@ -75,7 +75,7 @@ public class GridController
 
     public void NewMatrix()
     {
-        G.configGame.MatrixModel = G.configGame.GetConfigLevel().matrixNode.GetMatrix();
+        G.configGame.MatrixModel = G.configGame.GetConfigLevel().matrixNode.GetMatrix().matrixModel;
         matrix = new Matrix(G.configGame.MatrixModel);
     }
 

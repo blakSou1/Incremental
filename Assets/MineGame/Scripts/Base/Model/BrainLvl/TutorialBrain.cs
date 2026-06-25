@@ -18,7 +18,7 @@ public class TutorialBrain : BaseBrain
 
     private IEnumerator StartAnimationSpawnGrid(int index, GridBox[,] data, Transform parent)
     {
-        yield return G.mainEnterPoint.StartCoroutine(VisibalTextActualLvl());
+        yield return G.mainEnterPoint.StartCoroutine(VisibalTextActualLvl((G.configGame.GetConfigLevel().matrixNode.GetMatrix() as ParamT).text.ToString()));
 
         float offsetX = (index - 1) * G.configGridFunction.indentGrid.x / 2;
         float offsetY = (index - 1) * G.configGridFunction.indentGrid.y / 2;
@@ -106,15 +106,7 @@ public class TutorialBrain : BaseBrain
                 indicCount = G.gridController.CreateIndisObject(G.PlayerController.playerColor, G.gameLogic.actualPieceInsanting);
 
             if (G.PlayerController.playerColor == G.mainEnterPoint.playerColor)
-            {
-                //if (!G.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount))
-                //{
-                //    G.conditionsOfVictoryAndDefeat.Pass();
-                //    return;
-                //}
-
                 G.conditionsOfVictoryAndDefeat.PlayerMove();
-            }
             else
             {
                 if (!G.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount))

@@ -6,7 +6,7 @@ public class ConfigLevel : EntityComponentDefinition
 {
     public float indexLvl = 0;
 
-    public string preview;
+    public LocString preview;
 
     public MatrixNode matrixNode;
 

@@ -28,7 +28,7 @@ public class BaseBrain : MonoBehaviour
         yield return G.mainEnterPoint.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.position2, G.PlayerController.position1));
     }
 
-    protected IEnumerator VisibalTextActualLvl()
+    protected IEnumerator VisibalTextActualLvl(string text = null)
     {
         if (G.run.indexLvl == G.configGame.indexWinLvl)
         {
@@ -37,7 +37,10 @@ public class BaseBrain : MonoBehaviour
             yield break;
         }
 
-        G.UIController.textActualLvl.text = G.configGame.GetConfigLevel().preview;
+        if(text == null)
+            G.UIController.textActualLvl.text = G.configGame.GetConfigLevel().preview.ToString();
+        else
+            G.UIController.textActualLvl.text = text;
 
         yield return G.mainEnterPoint.StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 1f, 1.2f));
 

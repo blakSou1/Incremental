@@ -5,9 +5,9 @@ public class MatrixRandomNode : MatrixNode
 {
     public List<Param> MatrixList;
 
-    public override MatrixModel GetMatrix()
+    public override Param GetMatrix()
     {
-        return MatrixList[UnityEngine.Random.Range(0, MatrixList.Count)].matrixModel;
+        return MatrixList[UnityEngine.Random.Range(0, MatrixList.Count)];
     }
 
 }

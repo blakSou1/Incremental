@@ -6,22 +6,23 @@ public class TutorialNode : MatrixNode
     public List<ParamT> MatrixList;
     [NonSerialized] public int index = 0;
 
-    public override MatrixModel GetMatrix()
+    public override Param GetMatrix()
     {
-        return MatrixList[index].matrixModel;
+        return MatrixList[index];
     }
 
     public void NextIndex()
     {
-        if(index < MatrixList.Count)
+        if(index < MatrixList.Count - 1)
             index++;
+        else
+            G.run.indexLvl++;
     }
 
 }
 
 [Serializable]
-public class ParamT
+public class ParamT : Param
 {
-    public MatrixModel matrixModel;
-    //probability
+    public LocString text;
 }

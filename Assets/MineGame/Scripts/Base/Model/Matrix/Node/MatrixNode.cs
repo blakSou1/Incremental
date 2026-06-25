@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MatrixNode : MonoBehaviour
 {
-    public virtual MatrixModel GetMatrix()
+    public virtual Param GetMatrix()
     {
         return null;
     }
