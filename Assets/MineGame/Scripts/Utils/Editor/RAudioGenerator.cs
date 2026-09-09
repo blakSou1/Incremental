@@ -63,7 +63,7 @@ public static class RAudioGenerator
     {
         int resourcesIndex = fullPath.IndexOf("Resources/") + 10;
         string path = fullPath.Substring(resourcesIndex)
-            .Replace("\\", "/") // Заменяем обратные слеши
+            .Replace("\\", "/")
             .Replace(Path.GetExtension(fullPath), "");
         return path;
     }

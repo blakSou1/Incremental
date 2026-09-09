@@ -14,12 +14,12 @@ public class ModifirePieces
         standartSlot = allSlots.FirstOrDefault(s => s is SlotModPieceStandart);
         modSlots = allSlots.Where(s => s is not SlotModPieceStandart).ToList();
 
-        G.modifirePieces = this;
+        G.mainEnterPoint.modifierPieces = this;
     }
 
     public void AddModPieceInSlot(string piece)
     {
-        InteractiveObject p = G.chooice.AddPiece(piece);
+        InteractiveObject p = G.choice.AddPiece(piece);
         p.Start();
         SetColorAnimPiece(p);
 
@@ -39,7 +39,7 @@ public class ModifirePieces
     
     public void AddStandertPieceInSlot(string piece)
     {
-        InteractiveObject p = G.chooice.AddPiece(piece);
+        InteractiveObject p = G.choice.AddPiece(piece);
         p.Start();
         SetColorAnimPiece(p);
 
@@ -55,7 +55,7 @@ public class ModifirePieces
 
     private void SetColorAnimPiece(InteractiveObject p)
     {
-        if(G.mainEnterPoint.playerColor == Status.White)
+        if(G.run.playerColor == Status.White)
             p.animationController.SetAnimation(p.SpawnWhiteAnimDataSO);
         else
             p.animationController.SetAnimation(p.SpawnBlackAnimDataSO);

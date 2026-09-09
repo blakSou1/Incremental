@@ -16,7 +16,7 @@ public class TutorialNode : MatrixNode
         if(index < MatrixList.Count - 1)
             index++;
         else
-            G.run.indexLvl++;
+            G.run.currentLevel++;
     }
 
 }
@@ -24,5 +24,5 @@ public class TutorialNode : MatrixNode
 [Serializable]
 public class ParamT : Param
 {
-    public LocString text;
+    public string text;
 }

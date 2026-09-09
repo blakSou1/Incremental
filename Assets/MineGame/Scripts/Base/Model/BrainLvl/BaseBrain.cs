@@ -30,7 +30,7 @@ public class BaseBrain : MonoBehaviour
 
     protected IEnumerator VisibalTextActualLvl(string text = null)
     {
-        if (G.run.indexLvl == G.configGame.indexWinLvl)
+        if (G.run.currentLevel == G.configGame.indexWinLvl)
         {
             G.SceneLoader.Load("Win");
 

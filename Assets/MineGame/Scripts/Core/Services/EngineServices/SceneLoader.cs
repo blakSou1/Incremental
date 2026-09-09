@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class SceneLoader : MonoBehaviour, IService
 {
     public string currentSceneName = null;
+
     public Action<Scene, LoadSceneMode> onLoadAction;
 
     private GameObject _fadeCanvas;
@@ -23,10 +24,7 @@ public class SceneLoader : MonoBehaviour, IService
         StartCoroutine(Unfade(0.5f));
     }
 
-    public void Load(string sceneName, float fadeSpeed = 0.5f)
-    {
-        StartCoroutine(LoadSceneCoroutine(sceneName, fadeSpeed));
-    }
+    public void Load(string sceneName, float fadeSpeed = 0.5f) => StartCoroutine(LoadSceneCoroutine(sceneName, fadeSpeed));
 
     private IEnumerator LoadSceneCoroutine(string sceneName, float fadeSpeed)
     {

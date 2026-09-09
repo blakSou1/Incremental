@@ -30,7 +30,11 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    public virtual void SetFlip(bool flip) => _targetRenderer.flipX = flip;
+    public virtual void SetFlip(bool flipX = false, bool flipY = false)
+    {
+        _targetRenderer.flipX = flipX;
+        _targetRenderer.flipY = flipY;
+    }
 
     protected virtual IEnumerator Anim()
     {
@@ -42,19 +46,16 @@ public class AnimationController : MonoBehaviour
                 _targetRenderer.sprite = _currentAnimation.frames[frame];
 
             Frame frameS = ContainsFrame(frame);
-            if (frameS != null)
-            {
-                frameS.Event?.Invoke();
-                yield return new WaitForSeconds((frameS.pause != 0) ? frameS.pause : 1f / _currentAnimation.framerate);
-            }
-            else
-                yield return new WaitForSeconds(1f / _currentAnimation.framerate);
+            frameS?.Event?.Invoke();
+
+            yield return new WaitForSeconds(1f / _currentAnimation.framerate);
 
             frame++;
 
             if (_currentAnimation.isLoop)
                 frame = frame % _currentAnimation.frames.Count;
         }
+
         StopAnimation();
     }
 
@@ -79,10 +80,7 @@ public class AnimationController : MonoBehaviour
     public void SetFadeCoroutine(bool fadeIn, float fadeDuration, SpriteRenderer sprite)
     {
         if (_animationCoroutineFabe != null)
-        {
             StopCoroutine(_animationCoroutineFabe);
-            _animationCoroutineFabe = null;
-        }
 
         _animationCoroutineFabe = StartCoroutine(FadeCoroutine(fadeIn, fadeDuration, sprite));
     }

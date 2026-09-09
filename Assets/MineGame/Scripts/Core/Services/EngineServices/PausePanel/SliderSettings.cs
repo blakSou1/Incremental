@@ -5,13 +5,17 @@ using UnityEngine.UI;
 public class SliderSettings : MonoBehaviour
 {
     private Slider slider;
-    public bool isSound = true;
+
+    public enum VolumeType { Sound, Music }
+    public VolumeType volumeType = VolumeType.Sound;
 
     public void Start()
     {
         slider = GetComponent<Slider>();
-        if (isSound) slider.value = G.AudioManager.soundVolume;
-        else slider.value = G.AudioManager.musicVolume;
+        if (volumeType == VolumeType.Sound)
+            slider.value = G.AudioManager.soundVolume;
+        else
+            slider.value = G.AudioManager.musicVolume;
     }
 
     public void UpdateMusicVolume()

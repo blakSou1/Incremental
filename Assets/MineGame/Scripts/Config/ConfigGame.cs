@@ -9,7 +9,7 @@ public class ConfigGame : EntityComponentDefinition
     [NonSerialized] private ConfigLevel configLevel = null;
     [NonSerialized] public MatrixModel MatrixModel = null;
 
-    public static string standertPiece = "PieceStandart";
+    public static string standardPiece = "PieceStandart";
     public static string damageModBox = "DamageModifireBox";
 
     public int indexWinLvl = 2;
@@ -25,7 +25,7 @@ public class ConfigGame : EntityComponentDefinition
 
         foreach (var i in list)
         {
-            if (i.tag.indexLvl == G.run.indexLvl)
+            if (i.tag.indexLvl == G.run.currentLevel)
             {
                 configLevel = i.tag;
 
@@ -36,7 +36,7 @@ public class ConfigGame : EntityComponentDefinition
 
     public ConfigLevel GetConfigLevel()
     {
-        if (configLevel == null || configLevel.indexLvl != G.run.indexLvl)
+        if (configLevel == null || configLevel.indexLvl != G.run.currentLevel)
             UpdateActualLvl();
         return configLevel;
     }

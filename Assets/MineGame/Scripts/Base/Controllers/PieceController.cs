@@ -5,21 +5,21 @@ public class PieceController
 {
     public void Init()
     {
-        G.pieceController = this;
+        G.mainEnterPoint.pieceController = this;
     }
 
     public void StartInitModPiece()
     {
-        G.run.pieceStorage = G.run.pieceBag;
+        G.run.hand = G.run.deck;
 
-        List<string> piece = GetRandomElementsUnique(G.modifirePieces.modSlots.Count, G.run.pieceStorage);
+        List<string> piece = GetRandomElementsUnique(G.mainEnterPoint.modifierPieces.modSlots.Count, G.run.hand);
 
         foreach(string i in piece)
         {
-            G.modifirePieces.AddModPieceInSlot(i);
+            G.mainEnterPoint.modifierPieces.AddModPieceInSlot(i);
         }
 
-        G.modifirePieces.AddStandertPieceInSlot(ConfigGame.standertPiece);
+        G.mainEnterPoint.modifierPieces.AddStandertPieceInSlot(ConfigGame.standardPiece);
     }
 
     //TODO

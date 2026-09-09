@@ -15,13 +15,12 @@ public class Loss : MonoBehaviour
     {
         volume.weight = 0;
 
-        G.louse = this;
+        G.loss = this;
 
         foreach(GameObject i in enableObject)
             i.SetActive(false);
         foreach (EnableAndMove i in enableAndMoveObject)
             i.objectMove.SetActive(false);
-
     }
 
     public IEnumerator Win()
@@ -33,13 +32,11 @@ public class Loss : MonoBehaviour
 
         yield return null;
 
-        G.run.indexLvl++;
+        G.run.currentLevel++;
 
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-        G.SceneLoader.Load(currentScene.name);//TODO 
+        G.SceneLoader.Load("MainMenu");
     }
-
-
     public IEnumerator Louses()
     {
         foreach (GameObject i in enableObject)

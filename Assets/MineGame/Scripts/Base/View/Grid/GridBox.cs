@@ -23,12 +23,12 @@ public class GridBox : MonoBehaviour
         piece.FlipAnim(newC);
         SetStat(newC);
 
-        G.gridController.UpdateCountPiece(this);
+        G.mainEnterPoint.gridController.UpdateCountPiece(this);
     }
 
-    public void SetModifire(string id)
+    public void SetModifier(string id)
     {
-        var instance = G.chooice.AddModifire(id);
+        var instance = G.choice.AddModifire(id);
 
         instance.state.gridBox = this;
 

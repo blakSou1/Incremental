@@ -13,25 +13,25 @@ public class ConditionsOfVictoryAndDefeat
 
     public void Init()
     {
-        G.conditionsOfVictoryAndDefeat = this;
+        G.mainEnterPoint.conditionsOfVictoryAndDefeat = this;
     }
 
     public void PlayerMove()
     {
         G.inputs.Player.Enable();
 
-        G.gridController.EnableAndDisableIndc(true);
+        G.mainEnterPoint.gridController.EnableAndDisableIndc(true);
 
-        G.UIController.motionText.ThrowText(new LocString("Your move!", "Ваш ход!"), R.normalVoice);
+        G.UIController.motionText.ThrowText("Your move!", R.normalVoice);
 
     }
     public void EnemyMove()
     {
         G.inputs.Player.Disable();
 
-        G.gridController.EnableAndDisableIndc(false);
+        G.mainEnterPoint.gridController.EnableAndDisableIndc(false);
 
-        G.UIController.motionText.ThrowText(new LocString("The opponent's move!", "Ход противника!"), R.normalVoice);
+        G.UIController.motionText.ThrowText("The opponent's move!", R.normalVoice);
 
         G.mainEnterPoint.StartCoroutine(Next());
         static IEnumerator Next()
@@ -56,9 +56,9 @@ public class ConditionsOfVictoryAndDefeat
     {
         if (indicCount == 0)
         {
-            if (G.gridController.blackPieces.Count + G.gridController.whitePieces.Count == item1 * item1)
+            if (G.mainEnterPoint.gridController.blackPieces.Count + G.mainEnterPoint.gridController.whitePieces.Count == item1 * item1)
                 G.mainEnterPoint.StartCoroutine(WhatWin());
-            else if (G.gridController.blackPieces.Count == 0 || G.gridController.whitePieces.Count == 0)
+            else if (G.mainEnterPoint.gridController.blackPieces.Count == 0 || G.mainEnterPoint.gridController.whitePieces.Count == 0)
                 G.mainEnterPoint.StartCoroutine(WhatWin());
 
             return false;
@@ -73,39 +73,39 @@ public class ConditionsOfVictoryAndDefeat
 
         if (!G.enemyHp.WhatDead())
         {
-            if (G.gridController.blackPieces.Count < G.gridController.whitePieces.Count)
+            if (G.mainEnterPoint.gridController.blackPieces.Count < G.mainEnterPoint.gridController.whitePieces.Count)
                 G.winAndLouse.WinEnemy();
-            else if (G.gridController.blackPieces.Count > G.gridController.whitePieces.Count)
+            else if (G.mainEnterPoint.gridController.blackPieces.Count > G.mainEnterPoint.gridController.whitePieces.Count)
                 G.winAndLouse.WinPlayer();
-            else if (G.gridController.blackPieces.Count == G.gridController.whitePieces.Count)
-                Drav();
+            else if (G.mainEnterPoint.gridController.blackPieces.Count == G.mainEnterPoint.gridController.whitePieces.Count)
+                Draw();
         }
     }
 
-    private void Drav()
+    private void Draw()
     {
         G.UIController.IndicatorText("Draw");
-        G.UIController.motionText.ThrowText(new LocString("Draw!", "Ничья!"), R.normalVoice);
+        G.UIController.motionText.ThrowText("Draw!", R.normalVoice);
 
-        G.mainEnterPoint.isGameEnd = true;
+        G.mainEnterPoint.PlayerInputUpdate(true);
     }//TODO
 
     public IEnumerator Pass()
     {
         G.UIController.IndicatorText("Pass");
 
-        G.UIController.motionText.ThrowText(new LocString("No move!", "Нет хода!"), R.normalVoice);
+        G.UIController.motionText.ThrowText("No move!", R.normalVoice);
 
         yield return new WaitForSeconds(1.3f);
 
-        G.mainEnterPoint.disableInputForPass = true;
+        G.mainEnterPoint.PlayerInputUpdate(false);
 
-        G.gameLogic.isPlace = false;
+        G.mainEnterPoint.gameLogic.isPlace = false;
 
         yield return new WaitForSeconds(1.3f);
 
         G.UIController.IndicatorText("");
-        G.mainEnterPoint.disableInputForPass = false;
+        G.mainEnterPoint.PlayerInputUpdate(true);
     }
 
     /// <summary>
@@ -116,7 +116,7 @@ public class ConditionsOfVictoryAndDefeat
     /// <returns></returns>
     public List<GridBox> GetPossibleLocation(Status color, bool isCheck = false)
     {
-        List<GridBox> list = G.gridController.indicPositionGrid;
+        List<GridBox> list = G.mainEnterPoint.gridController.indicPositionGrid;
 
         return list;
     }

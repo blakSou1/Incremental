@@ -49,11 +49,13 @@ public class PausePanel : MonoBehaviour, IService
         if (panel.gameObject.activeSelf)
         {
             panel.Close();
+            G.IsPaused = false;
             inMenu = false;
         }
         else
         {
             panel.Open();
+            G.IsPaused = true;
             inMenu = true;
         }
     }

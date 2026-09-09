@@ -22,7 +22,7 @@ public class GridController
 
     public void Init()
     {
-        G.gridController = this;
+        G.mainEnterPoint.gridController = this;
         parentIndc = new GameObject("IndcPool").transform;
     }
 
@@ -62,7 +62,7 @@ public class GridController
                     continue;
 
                 if (data[i, s] != null && data[i, s].GetStat() == Status.None)
-                    data[i, s].SetModifire(G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idModifireGrid);
+                    data[i, s].SetModifier(G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idModifireGrid);
 
                 yield return new WaitForSeconds(.15f);
             }
@@ -111,19 +111,19 @@ public class GridController
         {
             for (var j = 0; j < item1; j++)
             {
-                if (piecePrefabValid.GetBaseModel().CheckPieceValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                if (piecePrefabValid.GetBaseModel().Get<TagPieceRule>().valid.IsMoveValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
                 {
                     Vector2 v = IndexToVector2(new Index(i, j));
-                    Indic indc = GameObject.Instantiate(G.configGridFunction.indcObj, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
-                    indc.revColorPieces = revColorPieces;
-                    indc.transform.parent = parentIndc;
+                    Indic indicators = GameObject.Instantiate(G.boardVisualConfig.highlightIndicator, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
+                    indicators.revColorPieces = revColorPieces;
+                    indicators.transform.parent = parentIndc;
 
                     GridBox box = matrix.GetGrid(new Index(i, j));
 
-                    box.indic = indc;
+                    box.indic = indicators;
                     indicPositionGrid.Add(box);
 
-                    indicObjs.Add(indc);
+                    indicObjs.Add(indicators);
                 }
             }
         }

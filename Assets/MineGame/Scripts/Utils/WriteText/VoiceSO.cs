@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewVoice", menuName = "MyScriptableObject/Voice")]
+[CreateAssetMenu(fileName = "NewVoice", menuName = "Voice/NewVoice")]
 public class VoiceSO : ScriptableObject
 {
     public AudioClip voice;

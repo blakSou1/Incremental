@@ -33,16 +33,17 @@ public class GridBoxMode : MonoBehaviour
     {
         animSkillController.SetAnimation(ActivationGridAnimDataSO);
 
-        animationController.endAnimation.AddListener(G.mainEnterPoint.PlayerInputUpdate);
+        animationController.endAnimation.AddListener(() => G.mainEnterPoint.PlayerInputUpdate((stat == G.run.playerColor)? true : false));
         animationController.endAnimation.AddListener(EndAnimActivScill);
 
         GridModBase model = state.model as GridModBase;
 
-        if (stat == G.mainEnterPoint.playerColor)
+        if (stat == G.run.playerColor)
             yield return StartCoroutine(model.ActivationScillPlayer());
         else
             yield return StartCoroutine(model.ActivationScillEnemy());
     }
+
     private void EndAnimActivScill()
     {
         animationController.SetAnimation(IsActivGridAnimDataSO);

@@ -17,7 +17,7 @@ public class GridModDamageEnemy : GridModBase
         G.AudioManager.PlaySound(R.Audio.vriiis, 0);
 
         G.enemyHp.Damage(damage);
-        G.gameLogic.DestroyMyCoroutineSkillGridBox();
+        G.mainEnterPoint.gameLogic.DestroyMyCoroutineSkillGridBox();
     }
 
     public override IEnumerator ActivationScillEnemy()
@@ -26,7 +26,7 @@ public class GridModDamageEnemy : GridModBase
 
         yield return G.enemyHp.StartCoroutine(G.enemyHp.DamagePlayer(1));
 
-        G.gameLogic.DestroyMyCoroutineSkillGridBox();
+        G.mainEnterPoint.gameLogic.DestroyMyCoroutineSkillGridBox();
     }
 
 }

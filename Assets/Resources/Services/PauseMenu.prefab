@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7836003290419063319}
   - component: {fileID: 159580234990253279}
-  - component: {fileID: 463956890364744397}
   - component: {fileID: 5148899725928768302}
   m_Layer: 0
   m_Name: Text (TMP) (1)
@@ -46,21 +45,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4751709610133769935}
   m_CullTransparentMesh: 1
---- !u!114 &463956890364744397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4751709610133769935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b768e54155da0d14aa06e65cae1863ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text:
-    en: Music
-    ru: "\u041C\u0443\u0437\u044B\u043A\u0430"
 --- !u!114 &5148899725928768302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -255,6 +240,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -450,7 +436,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1094813465544105236}
   - component: {fileID: 8545602558062798239}
-  - component: {fileID: 8127115226097876838}
   - component: {fileID: 165009634082258051}
   m_Layer: 0
   m_Name: Text (TMP) (1)
@@ -486,21 +471,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8609645836431368396}
   m_CullTransparentMesh: 1
---- !u!114 &8127115226097876838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8609645836431368396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b768e54155da0d14aa06e65cae1863ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text:
-    en: Sounds
-    ru: "\u0417\u0432\u0443\u043A\u0438"
 --- !u!114 &165009634082258051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +529,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -954,8 +925,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: ec17eb0d27735844599b3c4f706c605e, type: 2}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdatePanelFAQ
+      value: UpdateFAQPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIHelper, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7278013221215799266, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
@@ -1227,7 +1206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7896153870723316285, guid: decd242c52ace1a4da267bbe1178be15, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 46.190002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7896153870723316285, guid: decd242c52ace1a4da267bbe1178be15, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1241,7 +1220,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -44.66
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4156840106617032706, guid: decd242c52ace1a4da267bbe1178be15, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8963518572935431908, guid: decd242c52ace1a4da267bbe1178be15, type: 3}

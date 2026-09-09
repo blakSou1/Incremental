@@ -28,9 +28,9 @@ public class PieceSheildModifier : PieceModifierBase
         if (sheild)
         {
             sheild = false;
-            IHelper.customEventAnim.AddListener(EndAnimSheild);
 
             interactiveO.modefireAnimationController.SetAnimation(AnimationDestroyShield);
+            interactiveO.modefireAnimationController.endAnimation.AddListener(EndAnimSheild);
         }
     }
     private void EndAnimSheild()

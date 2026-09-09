@@ -86,17 +86,17 @@ public class EnemyHp : MonoBehaviour
 
 	private IEnumerator ChangeVolumeWeight(float target = 1)
 	{
-		float startWeight = G.louse.volume.weight;
+		float startWeight = G.loss.volume.weight;
 		float elapsedTime = 0f;
 
 		while (elapsedTime < .1f)
 		{
-			G.louse.volume.weight = Mathf.Lerp(startWeight, target, elapsedTime / .3f);
+			G.loss.volume.weight = Mathf.Lerp(startWeight, target, elapsedTime / .3f);
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}
 
-		G.louse.volume.weight = target;
+		G.loss.volume.weight = target;
 	}
 
 	private void Dead()

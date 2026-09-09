@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class FAQ : MonoBehaviour, IService
 {
     public UIPanelScaler panel;
+
     public bool inFAQ = false;
 
     public void Init()
@@ -28,21 +29,25 @@ public class FAQ : MonoBehaviour, IService
         GameObject g = Instantiate(temp, can.transform);
         panel = g.GetComponent<UIPanelScaler>();
     }
+
     public void UpdatePanelFAQ()
     {
         if (!panel.inAnim)
             UpdatePanels();
     }
+
     private void UpdatePanels()
     {
         if (panel.gameObject.activeSelf)
         {
             panel.Close();
+            G.IsPaused = false;
             inFAQ = false;
         }
         else
         {
             panel.Open();
+            G.IsPaused = true;
             inFAQ = true;
         }
     }

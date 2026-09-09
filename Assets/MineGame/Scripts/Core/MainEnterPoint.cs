@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MainEnterPoint : MonoBehaviour
+public class MainEnterPoint : ManagedBehaviour
 {
-    public Status playerColor = Status.Black;
-
-    [HideInInspector] public bool disableInputForPass = false;
-    [HideInInspector] public bool isGameEnd = false;
-    [HideInInspector] public bool disableInputForSelect = false;
+    public PieceController pieceController;
+    public GridController gridController;
+    public ModifirePieces modifierPieces;
+    public ConditionsOfVictoryAndDefeat conditionsOfVictoryAndDefeat;
+    public GameLogic gameLogic;
 
     BaseBrain brain;
 
@@ -18,45 +18,42 @@ public class MainEnterPoint : MonoBehaviour
         brain.StartLvl();
     }
 
-    private void FixedUpdate()
+    protected override void PausableFixedUpdate()
     {
         brain.Tick();
     }
 
     private void InitComponents()
     {
-        G.pieceController = new();
-        G.gridController = new();
-        G.modifirePieces = new();
-        G.conditionsOfVictoryAndDefeat = new();
-        G.gameLogic.Init();
+        pieceController = new();
+        gridController = new();
+        modifierPieces = new();
+        conditionsOfVictoryAndDefeat = new();
+        gameLogic = new();
 
-        G.pieceController.Init();
-        G.gridController.Init();
-        G.modifirePieces.Init();
-        G.conditionsOfVictoryAndDefeat.Init();
+        pieceController.Init();
+        gridController.Init();
+        modifierPieces.Init();
+        conditionsOfVictoryAndDefeat.Init();
+        gameLogic.Init();
 
         brain = G.configGame.GetConfigLevel().brain;
-
-        G.PlayerController.playerColor = (Status)((int)playerColor * -1);
     }
-    
 
-    //SoProgram
-    public void PlayerInputUpdate()
+    public void PlayerInputUpdate(bool isEnablePlayerInput = true)
     {
-        if (disableInputForPass || isGameEnd || disableInputForSelect)
-            G.inputs.Player.Disable();
-        else
+        if (isEnablePlayerInput)
             G.inputs.Player.Enable();
+        else
+            G.inputs.Player.Disable();
     }
 
     public IEnumerator RestartGame()
     {
-        G.gridController.ClearAllPieces();
+        gridController.ClearAllPieces();
 
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(G.gameLogic.InitStaticPieces());
+        StartCoroutine(gameLogic.InitStaticPieces());
     }
 
 }

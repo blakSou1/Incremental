@@ -14,14 +14,14 @@ public class SlotModPiece : MonoBehaviour
     {
         if (piece == null) return;
 
-        G.modifirePieces.Restart();
+        G.mainEnterPoint.modifierPieces.Restart();
         activ.SetActive(true);
-        G.gameLogic.pieceObj = piece;
+        G.mainEnterPoint.gameLogic.pieceObj = piece;
 
-        if(G.gameLogic.actualPiece != null)
+        if(G.mainEnterPoint.gameLogic.actualPiece != null)
         {
-            G.gameLogic.ActualPiece();
-            G.gridController.CreateIndisObject(G.PlayerController.playerColor, G.gameLogic.pieceObj);
+            G.mainEnterPoint.gameLogic.ActualPiece();
+            G.mainEnterPoint.gridController.CreateIndisObject(G.PlayerController.playerColor, G.mainEnterPoint.gameLogic.pieceObj);
         }
 
     }

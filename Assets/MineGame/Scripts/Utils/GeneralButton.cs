@@ -12,7 +12,6 @@ public class GeneralButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //R.Audio.MouseInButton.PlayAsSoundRandomPitch(0.17f);
         Sequence mySequence = DOTween.Sequence();
         mySequence
             .Append(GetComponent<Transform>().GetChild(0).DOScale(Vector3.one * 0.7f, 0.1f).SetEase(Ease.OutBack))
@@ -29,7 +28,6 @@ public class GeneralButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //R.Audio.part.PlayAsSoundRandomPitch(0.15f);
         Sequence mySequence = DOTween.Sequence();
         mySequence.Append(GetComponent<Transform>().GetChild(0).DOScale(Vector3.one * 0.55f, 0.1f))
             .Append(GetComponent<Transform>().GetChild(0).DOScale(Vector3.one * 0.8f, 0.1f));

@@ -22,13 +22,9 @@ public class AnimationControllerUI : AnimationController
                 _targetRenderer.sprite = _currentAnimation.frames[frame];
 
             Frame frameS = ContainsFrame(frame);
-            if (frameS != null)
-            {
-                frameS.Event?.Invoke();
-                yield return new WaitForSeconds((frameS.pause != 0) ? frameS.pause : 1f / _currentAnimation.framerate);
-            }
-            else
-                yield return new WaitForSeconds(1f / _currentAnimation.framerate);
+            frameS?.Event?.Invoke();
+
+            yield return new WaitForSeconds(1f / _currentAnimation.framerate);
 
             frame++;
 
@@ -38,10 +34,11 @@ public class AnimationControllerUI : AnimationController
         StopAnimation();
     }
 
-    public override void SetFlip(bool flip) 
+    public override void SetFlip(bool flipX = false, bool flipY = false) 
     {
         Vector3 scale = _targetRenderer.rectTransform.localScale;
-        scale.x = flip ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+        scale.x = flipX ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+        scale.y = flipY ? -Mathf.Abs(scale.y) : Mathf.Abs(scale.y);
         _targetRenderer.rectTransform.localScale = scale;
     }
 

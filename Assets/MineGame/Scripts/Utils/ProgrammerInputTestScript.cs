@@ -8,27 +8,25 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     private const float slowMotionFactor = 0.25f;
     private bool isSlowed = false;
 
+    private Inputs inp;
+
     public void Init()
     {
-        G.inputs.Debug._1.started += i => isDebug();
+        inp = new();
+        inp.Enable();
 
         originalTimeScale = Time.timeScale;
         originalFixedDeltaTime = Time.fixedDeltaTime;
 
-        // Замедление игры (slow motion)
-        G.inputs.Debug._2.started += i => StartSlowMotion();
-        G.inputs.Debug._2.canceled += i => StopSlowMotion();
-
-        // Пауза
-        G.inputs.Debug._3.started += i => TogglePause();
-
-        G.inputs.Debug._4.started += i => RestartCurrentScene();
-
-        G.inputs.Debug._5.started += i => Win();
-        G.inputs.Debug._6.started += i => Louse();
-        G.inputs.Debug._7.started += i => Damage();
-        G.inputs.Debug._8.started += i => Scen();
-        G.inputs.Debug._9.started += i => AddPiece();
+        inp.Debug._1.started += i => isDebug();
+        inp.Debug._2.started += i => StartSlowMotion();
+        inp.Debug._2.canceled += i => StopSlowMotion();
+        inp.Debug._3.started += i => TogglePause();
+        inp.Debug._4.started += i => RestartCurrentScene();
+        inp.Debug._5.started += i => Win();
+        inp.Debug._6.started += i => Louse();
+        inp.Debug._7.started += i => Damage();
+        inp.Debug._8.started += i => Scen();
 
         Debug.Log("Controls initialized:");
         Debug.Log("1 - Debug method");
@@ -55,12 +53,7 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     {
         StartCoroutine(G.enemyHp.DamagePlayer(1));
     }
-    private void AddPiece()
-    {
-        G.run.pieceBag.Add(PieceFullMove.idS);
-    }
 
-    // ЗАМЕДЛЕНИЕ ИГРЫ (Slow motion)
     private void StartSlowMotion()
     {
         if (!isSlowed)
@@ -86,16 +79,13 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         }
     }
 
-    // ПАУЗА (полная остановка)
     private void TogglePause()
     {
 #if UNITY_EDITOR
         EditorApplication.isPaused = true;
 #endif
-        Debug.Log("Game PAUSED");
     }
 
-    // Перезагружаем сцену
     public static void RestartCurrentScene()
     {
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
@@ -120,7 +110,6 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         Time.timeScale = 1f;
         Time.fixedDeltaTime = originalFixedDeltaTime;
         AudioListener.pause = false;
-        Debug.Log("Game state fully restored to normal");
     }
 
     private void OnDestroy()

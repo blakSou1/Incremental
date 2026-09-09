@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour, IService
 
     public float musicVolume { get; private set; } = 0.3f;
     public float soundVolume { get; private set; } = 0.3f;
+
     private Dictionary<int, ActiveSoundLoop> _activeLoops = new();
     private int _nextLoopId = 0;
 

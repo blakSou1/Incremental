@@ -15,9 +15,8 @@ public class TextThrower : MonoBehaviour
         _textAnimator = GetComponent<TextAnimatorPlayer>();
     }
 
-    public void ThrowText(LocString text, VoiceSO voice)
+    public void ThrowText(string text, VoiceSO voice)
     {
-        // Если корутина уже запущена, останавливаем ее
         if (_typingSoundCoroutine != null)
         {
             StopCoroutine(_typingSoundCoroutine);
@@ -31,9 +30,8 @@ public class TextThrower : MonoBehaviour
         tMP_Text.material = voice.textMaterial;
 
         _textAnimator.ShowText("");
-        _textAnimator.ShowText(text.ToString());
+        _textAnimator.ShowText(text);
 
-        // Запускаем корутину для воспроизведения звука
         _typingSoundCoroutine = StartCoroutine(PlayTypingSoundRepeatedly(voice.deltaSound, voice.voice));
     }
 
@@ -43,7 +41,6 @@ public class TextThrower : MonoBehaviour
         {
             sample.PlayAsSoundRandomPitch(0.15f);
 
-            // Ждем указанный интервал
             yield return new WaitForSeconds((float)intervalMs / 1000);
         }
     }

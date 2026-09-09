@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecdfd6e14d2e1a346950b1b4a7e8f85a, type: 3}
+  m_Name: BoardVisualConfig
+  m_EditorClassIdentifier: Assembly-CSharp::BoardVisualConfig
+  cellPrefab: {fileID: 8838107636461451687, guid: 139817bc1d262b34882519d12788d39d, type: 3}
+  cellSpacing: {x: 0.5, y: 0.5}
+  highlightIndicator: {fileID: 8718409057373670328, guid: 1631794d8c4d13e42b2aa2a9194bb54d, type: 3}

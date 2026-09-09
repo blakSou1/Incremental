@@ -19,5 +19,4 @@ public class Frame
 {
     [field: SerializeField] public int indexFrame { get; private set; }
     [field: SerializeField] public UnityEvent Event { get; private set; }
-    [field: SerializeField] public float pause { get; private set; } = 0;
 }

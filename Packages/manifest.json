@@ -1,14 +1,15 @@
 {
   "dependencies": {
-    "com.smkplus.custom-toolbar": "https://github.com/smkplus/CustomToolbar.git#master",
+    "com.opalstudio.customtoolbar": "https://github.com/Alaxxxx/CustomToolbar.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.visualstudio": "2.0.27",
-    "com.unity.inputsystem": "1.14.2",
-    "com.unity.render-pipelines.universal": "17.0.4",
+    "com.unity.inputsystem": "1.19.0",
+    "com.unity.render-pipelines.universal": "17.3.0",
     "com.unity.services.analytics": "6.3.0",
     "com.unity.test-framework": "1.6.0",
     "com.unity.ugui": "2.0.0",
     "com.unity.modules.accessibility": "1.0.0",
+    "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
     "com.unity.modules.director": "1.0.0",
     "com.unity.modules.imgui": "1.0.0",
@@ -21,6 +22,7 @@
     "com.unity.modules.unityanalytics": "1.0.0",
     "com.unity.modules.unitywebrequest": "1.0.0",
     "com.unity.modules.unitywebrequesttexture": "1.0.0",
+    "com.unity.modules.vectorgraphics": "1.0.0",
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0"
   }

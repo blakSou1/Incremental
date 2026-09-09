@@ -12,16 +12,16 @@ public class FightLvlBrain : BaseBrain
 
         G.mainEnterPoint.StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 0f, 0f));
 
-        G.gridController.NewMatrix();
-        G.mainEnterPoint.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, G.gridController.matrix.GetData(), G.gridController.matrix.GetParent()));
+        G.mainEnterPoint.gridController.NewMatrix();
+        G.mainEnterPoint.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
     }
 
     private IEnumerator StartAnimationSpawnGrid(int index, GridBox[,] data, Transform parent)
     {
         yield return G.mainEnterPoint.StartCoroutine(VisibalTextActualLvl());
 
-        float offsetX = (index - 1) * G.configGridFunction.indentGrid.x / 2;
-        float offsetY = (index - 1) * G.configGridFunction.indentGrid.y / 2;
+        float offsetX = (index - 1) * G.boardVisualConfig.cellSpacing.x / 2;
+        float offsetY = (index - 1) * G.boardVisualConfig.cellSpacing.y / 2;
 
         System.Random random = new();
         bool isAudi = false;
@@ -32,8 +32,8 @@ public class FightLvlBrain : BaseBrain
             {
                 int randomIndex = random.Next(1, 4);
 
-                data[i, j] = GameObject.Instantiate(G.configGridFunction.prefabGridBox, parent);
-                data[i, j].transform.position = new(G.configGridFunction.indentGrid.x * i - offsetX, G.configGridFunction.indentGrid.y * j - offsetY);
+                data[i, j] = GameObject.Instantiate(G.boardVisualConfig.cellPrefab, parent);
+                data[i, j].transform.position = new(G.boardVisualConfig.cellSpacing.x * i - offsetX, G.boardVisualConfig.cellSpacing.y * j - offsetY);
 
                 data[i, j].SetIndex(i, j);
 
@@ -79,15 +79,15 @@ public class FightLvlBrain : BaseBrain
         yield return G.mainEnterPoint.StartCoroutine(SpawnEnemy());
 
 
-        yield return G.mainEnterPoint.StartCoroutine(G.gameLogic.InitStaticPieces());
+        yield return G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
 
         yield return new WaitForSeconds(.3f);
 
-        G.pieceController.StartInitModPiece();
+        G.mainEnterPoint.pieceController.StartInitModPiece();
 
         yield return new WaitForSeconds(.3f);
 
-        G.gridController.StartInitModGrid();
+        G.mainEnterPoint.gridController.StartInitModGrid();
 
         startIsEnd = true;
     }
@@ -102,28 +102,28 @@ public class FightLvlBrain : BaseBrain
             G.PlayerController.playerColor = (Status)((int)G.PlayerController.playerColor * -1);
 
             int indicCount = 0;
-            if (G.gameLogic.actualPieceInsanting != null)
-                indicCount = G.gridController.CreateIndisObject(G.PlayerController.playerColor, G.gameLogic.actualPieceInsanting);
+            if (G.mainEnterPoint.gameLogic.actualPieceInstance != null)
+                indicCount = G.mainEnterPoint.gridController.CreateIndisObject(G.PlayerController.playerColor, G.mainEnterPoint.gameLogic.actualPieceInstance);
 
-            if (G.PlayerController.playerColor == G.mainEnterPoint.playerColor)
+            if (G.PlayerController.playerColor == G.run.playerColor)
             {
-                if (!G.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount))
+                if (!G.mainEnterPoint.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount))
                 {
-                    G.conditionsOfVictoryAndDefeat.Pass();
+                    G.mainEnterPoint.conditionsOfVictoryAndDefeat.Pass();
                     return;
                 }
 
-                G.conditionsOfVictoryAndDefeat.PlayerMove();
+                G.mainEnterPoint.conditionsOfVictoryAndDefeat.PlayerMove();
             }
             else
             {
-                if (!G.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount))
+                if (!G.mainEnterPoint.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount))
                 {
-                    G.conditionsOfVictoryAndDefeat.Pass();
+                    G.mainEnterPoint.conditionsOfVictoryAndDefeat.Pass();
                     return;
                 }
 
-                G.conditionsOfVictoryAndDefeat.EnemyMove();
+                G.mainEnterPoint.conditionsOfVictoryAndDefeat.EnemyMove();
             }
 
             G.UIController.ActualSelect();
@@ -131,13 +131,11 @@ public class FightLvlBrain : BaseBrain
             isMove = true;
         }
 
-        if (G.gameLogic.isPlace)
+        if (G.mainEnterPoint.gameLogic.isPlace)
         {
             isMove = false;
-            G.gameLogic.isPlace = false;
+            G.mainEnterPoint.gameLogic.isPlace = false;
         }
-
-
     }
 
 }

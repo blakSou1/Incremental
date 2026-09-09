@@ -96,7 +96,7 @@ public class InteractiveObject : MonoBehaviour
         else
             return;
 
-        animationController.endAnimation.AddListener(G.mainEnterPoint.PlayerInputUpdate);
+        animationController.endAnimation.AddListener(() => G.mainEnterPoint.PlayerInputUpdate((color == Status.Black)? false : true));
         animationController.endAnimation.AddListener(EndAnimFlipToFabe);
     }
 

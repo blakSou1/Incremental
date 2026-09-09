@@ -6,10 +6,10 @@ using UnityEngine;
 public class GameLogic
 {
     [NonSerialized] public InteractiveObject pieceObj;
-    [NonSerialized] public string EnemyPieceObject = ConfigGame.standertPiece;
+    [NonSerialized] public string EnemyPieceObject = ConfigGame.standardPiece;
 
     [HideInInspector] public string actualPiece;
-    [HideInInspector] public InteractiveObject actualPieceInsanting;
+    [HideInInspector] public InteractiveObject actualPieceInstance;
 
     private Transform parentPiece;
 
@@ -34,17 +34,17 @@ public class GameLogic
                 if (stat == Status.None)
                     continue;
 
-                CreatePieceProcedure(G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idPiece, G.gridController.matrix.GetGrid(new (i, s)), G.configGame.MatrixModel.matrixField.data.GetValue(i, s).stat);
+                CreatePieceProcedure(G.configGame.MatrixModel.matrixField.data.GetValue(i, s).idPiece, G.mainEnterPoint.gridController.matrix.GetGrid(new (i, s)), G.configGame.MatrixModel.matrixField.data.GetValue(i, s).stat);
 
                 yield return new WaitForSeconds(.15f);
             }
         }
 
-        pieceObj = G.chooice.AddPiece(ConfigGame.standertPiece);
+        pieceObj = G.choice.AddPiece(ConfigGame.standardPiece);
 
         stat = Status.White;
 
-        actualPiece = ConfigGame.standertPiece;
+        actualPiece = ConfigGame.standardPiece;
 
         G.UIController.ActualSelect();
     }
@@ -54,18 +54,18 @@ public class GameLogic
     {
         if (grid == null || grid.indic == null) yield break;
 
-        if (G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
+        if (G.run.playerColor == G.PlayerController.playerColor)
         {
-            foreach (SlotModPiece i in G.modifirePieces.modSlots)
+            foreach (SlotModPiece i in G.mainEnterPoint.modifierPieces.modSlots)
             {
-                if (i.piece == null || i.piece.state.model.id == ConfigGame.standertPiece) continue;
+                if (i.piece == null || i.piece.state.model.id == ConfigGame.standardPiece) continue;
 
                 if (i.activ.activeInHierarchy)
                 {
                     InteractiveObject inter = i.GetComponentInChildren<InteractiveObject>();
                     actualPiece = inter.state.model.id;
 
-                    G.run.pieceStorage.Remove(inter.GetBaseModel().id);
+                    G.run.hand.Remove(inter.GetBaseModel().id);
                     GameObject.Destroy(inter.gameObject);
 
                     i.piece = null;
@@ -73,37 +73,37 @@ public class GameLogic
             }
         }
 
-        G.gameLogic.ActualPiece();
-        actualPieceInsanting = G.chooice.AddPiece(actualPiece);
+        G.mainEnterPoint.gameLogic.ActualPiece();
+        actualPieceInstance = G.choice.AddPiece(actualPiece);
 
-        GameObject obj = actualPieceInsanting.gameObject;
-        actualPieceInsanting.moveable.targetPosition = grid.transform.position;
-        actualPieceInsanting.transform.position = grid.transform.position;
+        GameObject obj = actualPieceInstance.gameObject;
+        actualPieceInstance.moveable.targetPosition = grid.transform.position;
+        actualPieceInstance.transform.position = grid.transform.position;
 
         obj.transform.parent = parentPiece;
 
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
 
         grid.SetStat(color);
-        myCoroutineSkillGridBox = G.mainEnterPoint.StartCoroutine(grid.SetPiece(actualPieceInsanting));
-        actualPieceInsanting.state.gridBox = grid;
+        myCoroutineSkillGridBox = G.mainEnterPoint.StartCoroutine(grid.SetPiece(actualPieceInstance));
+        actualPieceInstance.state.gridBox = grid;
 
-        actualPieceInsanting.SetColor(color);
+        actualPieceInstance.SetColor(color);
 
-        if(pieceObj.state.model.id != ConfigGame.standertPiece && G.mainEnterPoint.playerColor == G.PlayerController.playerColor)
-            G.modifirePieces.standartSlot.Click();
+        if(pieceObj.state.model.id != ConfigGame.standardPiece && G.run.playerColor == G.PlayerController.playerColor)
+            G.mainEnterPoint.modifierPieces.standartSlot.Click();
 
         bool isNext = false;
-        actualPieceInsanting.animationController.endAnimation.AddListener(() => isNext = true);
+        actualPieceInstance.animationController.endAnimation.AddListener(() => isNext = true);
 
         while (!isNext)
             yield return new WaitForEndOfFrame();
 
-        actualPieceInsanting.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
+        actualPieceInstance.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
 
-        if (color == G.mainEnterPoint.playerColor)
-            G.gridController.blackPieces.Add(actualPieceInsanting);
-        else G.gridController.whitePieces.Add(actualPieceInsanting);
+        if (color == G.run.playerColor)
+            G.mainEnterPoint.gridController.blackPieces.Add(actualPieceInstance);
+        else G.mainEnterPoint.gridController.whitePieces.Add(actualPieceInstance);
 
         G.UIController.UpdateCountPlayers();
         G.UIController.motionText._textAnimator.ShowText("");
@@ -123,8 +123,8 @@ public class GameLogic
 
     private InteractiveObject CreatePieceProcedure(string id, GridBox grid, Status color)
     {
-        InteractiveObject piece = G.chooice.AddPiece(id);
-        actualPieceInsanting = piece;
+        InteractiveObject piece = G.choice.AddPiece(id);
+        actualPieceInstance = piece;
 
         GameObject obj = piece.gameObject;
         piece.moveable.targetPosition = grid.transform.position;
@@ -140,9 +140,9 @@ public class GameLogic
 
         piece.SetColor(color);
 
-        if (color == G.mainEnterPoint.playerColor)
-            G.gridController.blackPieces.Add(piece);
-        else G.gridController.whitePieces.Add(piece);
+        if (color == G.run.playerColor)
+            G.mainEnterPoint.gridController.blackPieces.Add(piece);
+        else G.mainEnterPoint.gridController.whitePieces.Add(piece);
 
         G.UIController.UpdateCountPlayers();
         G.UIController.motionText._textAnimator.ShowText("");
@@ -154,6 +154,6 @@ public class GameLogic
 
     public void ActualPiece()
     {
-        actualPiece = (G.PlayerController.playerColor == G.mainEnterPoint.playerColor) ? pieceObj.state.model.id : EnemyPieceObject;
+        actualPiece = (G.PlayerController.playerColor == G.run.playerColor) ? pieceObj.state.model.id : EnemyPieceObject;
     }
 }

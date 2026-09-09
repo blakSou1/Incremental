@@ -9,38 +9,32 @@ public static class G
     public static ConfigGame configGame;
 
     public static RunState run;
-    public static ConfigGridFunction configGridFunction;
+    public static BoardVisualConfig boardVisualConfig;
 
     //Объекты в игре
     public static MainEnterPoint mainEnterPoint;
     public static EnemySprite enemySprite;
     public static EnemyHp enemyHp;
-    public static GameLogic gameLogic;
     public static PlayerController PlayerController;
     public static AI ai;
-    public static Loss louse;
+    public static Loss loss;
     public static Volume volume;
-    public static ModifirePieces modifirePieces;
-    public static Chooice chooice;
+    public static PieceFactory choice;
     public static UIController UIController;
     public static DamageEnemyScenario DamageEnemyScenario;
     public static PiecePicker PiecePicker;
     public static CameraShake cameraShake;
 
     //обьекты не монобех контроллеры
-    public static Inpyts inputs;
+    public static Inputs inputs;
 
-    public static LocSystem LocSystem;
+    public static WinAndLoss winAndLouse;
+
+    //Services
     public static AudioManager AudioManager;
     public static SceneLoader SceneLoader;
     public static PausePanel pausePanel;
     public static FAQ faqPanel;
-
-    public static WinAndLouse winAndLouse;
-    public static PieceController pieceController;
-    public static GridController gridController;
-    public static ConditionsOfVictoryAndDefeat conditionsOfVictoryAndDefeat;
-
 }
 
 public class ManagedBehaviour : MonoBehaviour
@@ -68,17 +62,18 @@ public class ManagedBehaviour : MonoBehaviour
 
 public class RunState
 {
-    public float indexLvl = 0;
-    public List<string> pieceStorage = new(); //не сыгранные 
-    public List<string> pieceBag = new(); //в сумке игрока
+    public float currentLevel = 0;
+
+    public Status playerColor = Status.Black;
+
+    //игрок берет из deck в hand, играет из hand
+    public List<string> deck = new();
+    public List<string> hand = new();
+    public List<string> discardPile = new(); //использованные карты попадают сюда
+    public List<string> trash = new();//использованные без возможности вернутся сюда
+
+    //Health player
     public float Damage = 0;
     public float maxHealth = 10;
 
-    public bool HasPiece(string mID)
-    {
-        foreach (var db in pieceBag)
-            if (db == mID)
-                return true;
-        return false;
-    }
 }

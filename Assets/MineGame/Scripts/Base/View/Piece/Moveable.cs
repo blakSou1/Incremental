@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class MoveableBalatro : MoveableBase
 {
-    private Vector2 velocity; // Текущая скорость
-    private float maxVelocity; // Максимальная скорость
+    private Vector2 velocity;
+    private float maxVelocity;
 
     private void Update()
     {
         if (isStop) return;
 
-        // Предполагая, что realDt является дельтой времени между кадрами
         float realDt = Mathf.Clamp(Time.smoothDeltaTime, 1 / 50f, 1 / 100f);
         
-        // Вычисляем затухание и максимальную скорость
         float expTimeXY = Mathf.Exp(-50 * realDt);
         maxVelocity = 70 * realDt;
 
@@ -23,17 +21,14 @@ public class MoveableBalatro : MoveableBase
 
     private void MoveXY(float dt, float expTimeXY)
     {
-        Vector2 T = targetPosition; // Целевая позиция
-        Vector2 currentPos = new(transform.position.x, transform.position.y); // Текущая позиция
+        Vector2 T = targetPosition;
+        Vector2 currentPos = new(transform.position.x, transform.position.y);
         
-        // Применяем экспоненциальное затухание к скорости
         velocity = expTimeXY * velocity + (1 - expTimeXY) * 35 * dt * (T - currentPos);
         
-        // Ограничиваем скорость
         if (velocity.sqrMagnitude > maxVelocity * maxVelocity)
             velocity = velocity.normalized * maxVelocity;
 
-        // Обновляем позицию
         transform.position += 100f * dt * (Vector3)velocity;
 
         if(events.Count != 0 && Vector2.Distance(transform.position, targetPosition) < .2)

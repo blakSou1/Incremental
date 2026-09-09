@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject cursorPrefab;
     private GameObject cursor;
-    private GridBox curentBox;
+    private GridBox currentBox;
 
     public Transform position1;
     public Transform position2;
@@ -34,13 +34,13 @@ public class PlayerController : MonoBehaviour
         UpdatePos();
 
         if (G.inputs.Player.Attack.WasPressedThisFrame())
-            G.mainEnterPoint.StartCoroutine(G.gameLogic.PlacePiece(playerColor, curentBox));
+            G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.gameLogic.PlacePiece(playerColor, currentBox));
     }
 
     private void UpdatePos()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Plane plane = new(Vector3.forward, new Vector3(0, 0, G.gridController.parentIndc.transform.position.z));
+        Plane plane = new(Vector3.forward, new Vector3(0, 0, G.mainEnterPoint.gridController.parentIndc.transform.position.z));
 
         plane.Raycast(ray, out float distance);
         Vector3 worldPoint = ray.GetPoint(distance);
@@ -48,23 +48,23 @@ public class PlayerController : MonoBehaviour
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(origin, 0.06f);
 
-        curentBox = null;
+        currentBox = null;
 
         foreach (var collider in hitColliders)
         {
             if (collider.TryGetComponent(out GridBox gridBoxs))
             {
-                curentBox = gridBoxs;
+                currentBox = gridBoxs;
                 break;
             }
         }
 
-        if (curentBox == null || curentBox.GetStat() != Status.None)
+        if (currentBox == null || currentBox.GetStat() != Status.None)
             DisableCursor();
         else
         {
             EnableCursor();
-            cursor.transform.position = curentBox.transform.position;
+            cursor.transform.position = currentBox.transform.position;
         }
     }
 

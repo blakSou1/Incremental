@@ -32,7 +32,7 @@ public class PiecePicker : MonoBehaviour
         List<InteractiveObject> piece = new();
 
         foreach (var i in listid)
-            piece.Add(G.chooice.AddPiece(i));
+            piece.Add(G.choice.AddPiece(i));
         foreach (var i in piece)
             i.moveable.isStop = true;
 
@@ -83,7 +83,7 @@ public class PiecePicker : MonoBehaviour
         GameObject ob = Instantiate(isButtonPicker);
         ob.transform.SetParent(transform, false);
 
-        objectP.GetComponentInChildren<ReactToPointer>().TooltipMessage = (objectP.state.model as PieceBase).Description.GetText();
+        objectP.GetComponentInChildren<ReactToPointer>().TooltipMessage = (objectP.state.model as PieceBase).Description;
 
         ob.transform.localPosition = new(objectP.transform.localPosition.x, 0, 0);
 
@@ -101,7 +101,7 @@ public class PiecePicker : MonoBehaviour
 
         InteractiveObject objectP = b.transform.GetChild(0).GetChild(0).GetComponent<InteractiveObject>();
 
-        G.run.pieceBag.Add(objectP.state.model.id);
+        G.run.deck.Add(objectP.state.model.id);
 
         for (int i = 0; i < transform.childCount; i++)
             if(transform.GetChild(i).gameObject != objectP.gameObject)
