@@ -14,35 +14,76 @@ public class SceneHelper : ScriptableObject
         UnityEditor.EditorApplication.isPlaying = false;
 
 #elif UNITY_WEBGL
-    // Обработка для itch.io
-    string url = Application.absoluteURL;
-    
-    // Проверяем, запущена ли игра на itch.io
-    if (url.Contains("itch.io") || url.Contains("itch.zone"))
-    {
-        // Перенаправляем на страницу игры на itch.io
-        // Находим корневой URL (без параметров)
-        Uri uri = new Uri(url);
-        string baseUrl = $"{uri.Scheme}://{uri.Host}";
-        
-        // Если это поддомен itch.io
-        if (uri.Host.Contains("itch.io") || uri.Host.Contains("itch.zone"))
+        string url = Application.absoluteURL;
+
+        if (url.Contains("itch.io") || url.Contains("itch.zone"))
         {
-            // Нужно перезагрузить именно родительскую страницу
-            ReloadItchPage();
+            string baseUrl = ExtractBaseUrl(url);
+
+            if (baseUrl.Contains("itch.io") || baseUrl.Contains("itch.zone"))
+            {
+                ReloadItchPage();
+            }
+            else
+            {
+                Application.OpenURL(url);
+            }
         }
         else
         {
             Application.OpenURL(url);
         }
-    }
-    else
-    {
-        Application.OpenURL(url);
-    }
-    
+
 #else
-    Application.Quit();
+        Application.Quit();
 #endif
+    }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    /// <summary>
+    /// Перезагружает страницу/iframe через встроенный JS.
+    /// Работает без .jslib, используя Application.ExternalEval.
+    /// </summary>
+    private static void ReloadItchPage()
+    {
+        // Пытаемся перезагрузить родительскую страницу (top-level).
+        // Если это запрещено cross-origin — перезагружаем текущий iframe.
+        string js = @"
+            try {
+                if (window.top && window.top !== window.self) {
+                    window.top.location.reload();
+                } else {
+                    window.location.reload();
+                }
+            } catch (e) {
+                // Cross-origin — перезагружаем только свой iframe
+                window.location.reload();
+            }
+        ";
+        Application.ExternalEval(js);
+    }
+#endif
+
+    /// <summary>
+    /// Возвращает "{scheme}://{host}" без System.Uri (недоступен в части конфигураций WebGL).
+    /// </summary>
+    private static string ExtractBaseUrl(string url)
+    {
+        if (string.IsNullOrEmpty(url))
+            return string.Empty;
+
+        int schemeEnd = url.IndexOf("://", System.StringComparison.Ordinal);
+        if (schemeEnd < 0)
+            return url;
+
+        string scheme = url.Substring(0, schemeEnd);
+        int hostStart = schemeEnd + 3;
+
+        int hostEnd = url.IndexOf('/', hostStart);
+        if (hostEnd < 0)
+            hostEnd = url.Length;
+
+        string host = url.Substring(hostStart, hostEnd - hostStart);
+        return $"{scheme}://{host}";
     }
 }

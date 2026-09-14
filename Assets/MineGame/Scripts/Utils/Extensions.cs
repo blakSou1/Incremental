@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class Extensions
 {
-    public static void ShowUp(GameObject obj, float duration = 0.75f, float elasticity = 1.1f)
+    public static void ShowUp(this GameObject obj, float duration = 0.75f, float elasticity = 1.1f)
     {
         Vector3 targetScale = obj.transform.localScale;
         obj.transform.localScale = Vector3.zero;

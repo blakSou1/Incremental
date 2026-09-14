@@ -46,10 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MatrixList:
   - matrixModel: {fileID: 4272947890841375721, guid: 89c77d3455a8f59429530aa180130762, type: 3}
-    text:
-      en: How do you walk?
-      ru: "\u041A\u0430\u043A \u0445\u043E\u0434\u0438\u0442\u044C?"
+    text: 
   - matrixModel: {fileID: 4272947890841375721, guid: 46ea1dc227ee26944a183f5f8145eccf, type: 3}
-    text:
-      en: More
-      ru: "\u0411\u043E\u043B\u044C\u0448\u0435"
+    text: 

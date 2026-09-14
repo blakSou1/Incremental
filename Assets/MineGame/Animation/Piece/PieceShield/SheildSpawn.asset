@@ -35,6 +35,5 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    <pause>k__BackingField: 0
   <animationOffset>k__BackingField: {x: 0, y: 0}
   <isLoop>k__BackingField: 0

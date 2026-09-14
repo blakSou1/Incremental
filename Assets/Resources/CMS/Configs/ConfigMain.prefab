@@ -54,5 +54,3 @@ MonoBehaviour:
       type: {class: ConfigMain, ns: , asm: Assembly-CSharp}
       data:
         showFading: 1
-        showLocOnStart: 1
-        RewriteLocWithRus: 0

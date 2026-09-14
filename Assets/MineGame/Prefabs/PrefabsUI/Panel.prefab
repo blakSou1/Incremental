@@ -253,7 +253,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4550153944211216421}
   - component: {fileID: 6818594195888622998}
-  - component: {fileID: 4156840106617032706}
   - component: {fileID: 7344558461768023530}
   m_Layer: 0
   m_Name: Text (TMP) (1)
@@ -289,21 +288,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8918665585269535032}
   m_CullTransparentMesh: 1
---- !u!114 &4156840106617032706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8918665585269535032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b768e54155da0d14aa06e65cae1863ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text:
-    en: Set
-    ru: "\u041D\u0430\u0441"
 --- !u!114 &7344558461768023530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +346,7 @@ MonoBehaviour:
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -437,7 +422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4403719256182192459, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 46.19
       objectReference: {fileID: 0}
     - target: {fileID: 4403719256182192459, guid: 35dbf07782b60b84b93919d0f783f7c1, type: 3}
       propertyPath: m_AnchoredPosition.x

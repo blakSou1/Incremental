@@ -54,9 +54,7 @@ MonoBehaviour:
       type: {class: ConfigLevel, ns: , asm: Assembly-CSharp}
       data:
         indexLvl: 1
-        preview:
-          en: Lvl 1/15
-          ru: "\u0443\u0440\u043E\u0432\u0435\u043D\u044C 1/15"
+        preview: 
         matrixNode: {fileID: 4704001615951451078, guid: e9010b76b7f723844930a1f9f8f870ec, type: 3}
         enemyConfig: {fileID: 4336106110857942914, guid: 2b6ebfd38eaa537428416c07a4161d8b, type: 3}
         pickablePiecesId: []
