@@ -17,7 +17,8 @@ public class CameraShake : MonoBehaviour
     {
         _cameraTransform = Camera.main.transform;
         _originalPos = _cameraTransform.localPosition;
-        G.cameraShake = this;
+
+        G.eventManager.CameraShake.AddListener(Shake);
     }
 
     public void Shake(float force = 1)

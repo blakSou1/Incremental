@@ -32,13 +32,9 @@ public class GameLogic
 
                 SpawnOnGrid(actualPieceInstance, G.mainEnterPoint.gridController.matrix.GetGrid(new(i, s)), G.configGame.MatrixModel.matrixField.data.GetValue(i, s).stat);
 
-                yield return new WaitForSeconds(.15f);
+                yield return new WaitForSeconds(UnityEngine.Random.Range(.17f, .25f));
             }
         }
-
-        G.pieceFactory.AddPiece(ConfigGame.standardPiece);
-
-        stat = Status.White;
     }
 
     public IEnumerator PlacePiece(GridBox grid)
@@ -98,7 +94,7 @@ public class GameLogic
     private IEnumerator SpawnAndWaitAnimation(GridBox grid)
     {
         bool isAnimationEnd = false;
-        actualPieceInstance.animationController.endAnimation.AddListener(() => isAnimationEnd = true);
+        actualPieceInstance.animationController.onClipEnd.AddListener((AnimationClip) => isAnimationEnd = true);
 
         SpawnOnGrid(actualPieceInstance, grid, ActualColor);
 

@@ -1,6 +1,6 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -35,8 +35,10 @@ public static class GameBootstrapper
         G.pausePanel = CreateSimpleService<PausePanel>();
         G.faqPanel = CreateSimpleService<FAQ>();
 
-        G.winAndLouse = new();
+        WinAndLoss winAndLouse = new();
         G.run = new();
+        G.eventManager = new();
+        winAndLouse.Init();
         G.boardVisualConfig = Resources.Load<BoardVisualConfig>("BoardVisualConfig"); ;
 
         G.configGame = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigGame>())!.Get<ConfigGame>();
@@ -55,11 +57,10 @@ public static class GameBootstrapper
 
     private static void RefreshSceneReferences()
     {
-        G.mainEnterPoint = Object.FindFirstObjectByType<MainEnterPoint>();
         G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
         G.ai = Object.FindFirstObjectByType<AI>();
         G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
-        G.volume = Object.FindFirstObjectByType<Volume>();
+        G.mainEnterPoint = Object.FindFirstObjectByType<MainEnterPoint>();
     }
 
     private static T CreateSimpleService<T>() where T : Component, IService

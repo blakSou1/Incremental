@@ -22,7 +22,6 @@ public class GridController
 
     public void Init()
     {
-        G.mainEnterPoint.gridController = this;
         parentIndc = new GameObject("IndcPool").transform;
     }
 

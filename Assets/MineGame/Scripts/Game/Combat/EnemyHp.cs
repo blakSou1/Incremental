@@ -69,39 +69,38 @@ public class EnemyHp : MonoBehaviour
 		G.UIController.UpdatePlayerHp();
 
 		if (G.run.maxHealth - G.run.Damage <= 0)
-			G.winAndLouse.WinEnemy();
+			G.eventManager.PlayerLose.Invoke();
 
 		float target = 1 - Mathf.Min(Mathf.Max(0, (G.run.maxHealth - G.run.Damage) / G.run.maxHealth), 1);
 
-        G.cameraShake.Shake(target);
+        G.eventManager.CameraShake.Invoke(target);
 
-        yield return StartCoroutine(ChangeVolumeWeight(target));
+        yield return StartCoroutine(ChangeVolumeWeight(0, target));
 
 		yield return new WaitForSeconds(.3f);
 
-		StartCoroutine(ChangeVolumeWeight(0));
+		StartCoroutine(ChangeVolumeWeight(1, 0));
 
 		yield return null;
 	}
 
-	private IEnumerator ChangeVolumeWeight(float target = 1)
+	private IEnumerator ChangeVolumeWeight(float startWeight = 0, float target = 1)
 	{
-		float startWeight = G.loss.volume.weight;
 		float elapsedTime = 0f;
 
 		while (elapsedTime < .1f)
 		{
-			G.loss.volume.weight = Mathf.Lerp(startWeight, target, elapsedTime / .3f);
+			G.eventManager.VolumeWeugth.Invoke(Mathf.Lerp(startWeight, target, elapsedTime / .3f));
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}
 
-		G.loss.volume.weight = target;
+		G.eventManager.VolumeWeugth.Invoke(target);
 	}
 
 	private void Dead()
 	{
 		G.mainEnterPoint.StopAllCoroutines();
-		G.winAndLouse.WinPlayer();
+		G.eventManager.PlayerWin.Invoke() ;
 	}
 }

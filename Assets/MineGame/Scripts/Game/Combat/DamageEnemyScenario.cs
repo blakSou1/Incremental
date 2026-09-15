@@ -12,13 +12,13 @@ public class DamageEnemyScenario : MonoBehaviour
     
     public IEnumerator StartScenario()
     {
-        yield return StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionordinary, G.PlayerController.cameraPositionVisibalEnemy));
+        yield return StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionOrdinary, G.PlayerController.cameraPositionVisibalEnemy));
 
         while(G.enemyHp.GetHp() > 0 && G.enemyHp.GetBuffer() > 0)
         {
             G.AudioManager.PlaySound(R.Audio.damage, Random.Range(.2f, .6f));
 
-            G.enemyHp.ActivDamage(G.configGame.damagePlayer);
+            G.enemyHp.ActivDamage(G.run.damagePlayer);
             var vfxL = Instantiate(vfx.gameObject, G.enemySprite.transform).GetComponent<ParticleSystem>();
 
             StartCoroutine(StopVFX(vfxL));

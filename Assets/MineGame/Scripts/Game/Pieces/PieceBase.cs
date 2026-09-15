@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class BasicPiece : PieceBase
 {
@@ -29,7 +30,7 @@ public abstract class PieceBase : CMSEntity
 
     public virtual void FlipOfPiece(List<GridBox> sameColorPieces)
     {
-        foreach (var revColorPiece in sameColorPieces)
+        foreach (GridBox revColorPiece in sameColorPieces)
             revColorPiece.Flip();
     }
 }

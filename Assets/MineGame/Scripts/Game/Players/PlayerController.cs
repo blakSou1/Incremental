@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,14 +8,12 @@ public class PlayerController : MonoBehaviour
     private GameObject cursor;
     private GridBox currentBox;
 
-    public Transform cameraPositionordinary;
+    public Transform cameraPositionOrdinary;
     public Transform cameraPositionVisibalEnemy;
 
     public float speed = .5f;
 
     private bool needDisableCursor = false;
-
-    [NonSerialized] public bool isStopped = true;
 
     private Transform currentPosition;
 
@@ -24,12 +21,12 @@ public class PlayerController : MonoBehaviour
     {
         cursor = Instantiate(cursorPrefab, Vector3.zero, Quaternion.identity);
         cursor.SetActive(false);
+
+        G.eventManager.UpdatePlayerInput.AddListener(PlayerInputUpdate);
     }
 
     void Update()
     {
-        if (isStopped) return;
-
         UpdatePos();
 
         if (G.inputs.Player.Attack.WasPressedThisFrame())
@@ -106,4 +103,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PlayerInputUpdate(bool isEnablePlayerInput = true)
+    {
+        if (isEnablePlayerInput)
+            G.inputs.Player.Enable();
+        else
+            G.inputs.Player.Disable();
+    }
 }

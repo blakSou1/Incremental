@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class EnemyModel : MonoBehaviour
 {
-    public AnimationDataSO enemySpawnAnim;
-    public AnimationDataSO enemyWinAnim;
-    public AnimationDataSO enemyLouseAnim;
+    public AnimationClip enemySpawnAnim;
+    public AnimationClip enemyWinAnim;
+    public AnimationClip enemyLouseAnim;
 
     public Vector2 Scale = new(1, 1);
 

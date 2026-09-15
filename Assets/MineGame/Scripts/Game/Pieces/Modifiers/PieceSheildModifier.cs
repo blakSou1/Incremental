@@ -1,10 +1,11 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class PieceSheildModifier : PieceModifierBase
 {
-    public AnimationDataSO AnimationSpawnShield;
-    public AnimationDataSO AnimationDestroyShield;
+    public AnimationClip AnimationSpawnShield;
+    public AnimationClip AnimationDestroyShield;
 
     InteractiveObject interactiveO;
 
@@ -20,7 +21,7 @@ public class PieceSheildModifier : PieceModifierBase
 
     private void SpawnAnim()
     {
-        interactiveO.modefireAnimationController.SetAnimation(AnimationSpawnShield);
+        interactiveO.modefireAnimationController.Play(AnimationSpawnShield);
     }
 
     private void IsFlip()
@@ -29,11 +30,11 @@ public class PieceSheildModifier : PieceModifierBase
         {
             sheild = false;
 
-            interactiveO.modefireAnimationController.SetAnimation(AnimationDestroyShield);
-            interactiveO.modefireAnimationController.endAnimation.AddListener(EndAnimSheild);
+            interactiveO.modefireAnimationController.Play(AnimationDestroyShield);
+            interactiveO.modefireAnimationController.onClipEnd.AddListener(EndAnimSheild);
         }
     }
-    private void EndAnimSheild()
+    private void EndAnimSheild(AnimationClip clip)
     {
         interactiveO.state.gridBox.Flip();
         G.UIController.UpdateCountPlayers();

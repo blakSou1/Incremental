@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public static class G
 {
     public static bool IsPaused = false;
 
     public static ConfigGame configGame;
-
     public static RunState run;
     public static BoardVisualConfig boardVisualConfig;
 
@@ -17,18 +15,13 @@ public static class G
     public static EnemyHp enemyHp;
     public static PlayerController PlayerController;
     public static AI ai;
-    public static Loss loss;
-    public static Volume volume;
     public static PieceFactory pieceFactory;
     public static UIController UIController;
     public static DamageEnemyScenario DamageEnemyScenario;
-    public static PiecePicker PiecePicker;
-    public static CameraShake cameraShake;
 
     //обьекты не монобех контроллеры
     public static Inputs inputs;
-
-    public static WinAndLoss winAndLouse;
+    public static EventManager eventManager;
 
     //Services
     public static AudioManager AudioManager;
@@ -75,5 +68,8 @@ public class RunState
     //Health player
     public float Damage = 0;
     public float maxHealth = 10;
+
+    public int damagePlayer = 1;
+
 
 }

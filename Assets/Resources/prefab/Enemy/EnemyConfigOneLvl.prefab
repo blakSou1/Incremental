@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36cda31cd3fc7084eb9ac5042dac9e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnAnim: {fileID: 11400000, guid: fce9d0e45973a03478ed7f50df332bc0, type: 2}
-  enemyWinAnim: {fileID: 11400000, guid: a082ab250d4b53a4e9a7f08f5248e272, type: 2}
-  enemyLouseAnim: {fileID: 11400000, guid: 732792433cd5c92489ae8a083e58aeff, type: 2}
+  enemySpawnAnim: {fileID: 7400000, guid: e8580b66f69226b49b19321972815c70, type: 2}
+  enemyWinAnim: {fileID: 7400000, guid: c130635cadd8aec439584a31420c73fe, type: 2}
+  enemyLouseAnim: {fileID: 7400000, guid: deea91a10fd6a0f48b89d5b9d07580b9, type: 2}
   Scale: {x: 0.5, y: 0.5}
   hp: 1

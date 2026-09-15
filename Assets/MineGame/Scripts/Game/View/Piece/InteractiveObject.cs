@@ -15,18 +15,18 @@ public class InteractiveObject : MonoBehaviour
     public SpriteRenderer iconPiece;
 
     [Space]
-    public AnimationDataSO SpawnBlackAnimDataSO;
-    public AnimationDataSO SpawnWhiteAnimDataSO;
+    public AnimationClip SpawnBlackAnimDataSO;
+    public AnimationClip SpawnWhiteAnimDataSO;
 
     [Space]
-    public AnimationDataSO MoveBlackAnimDataSO;
-    public AnimationDataSO MoveWhiteAnimDataSO;
+    public AnimationClip MoveBlackAnimDataSO;
+    public AnimationClip MoveWhiteAnimDataSO;
 
     [Space]
     [SerializeReference, SubclassSelector] public PieceModifierBase modifier;
 
-    [HideInInspector] public AnimationController animationController;
-    public AnimationController modefireAnimationController;
+    [HideInInspector] public ClipPlayer animationController;
+    public ClipPlayer modefireAnimationController;
 
     [HideInInspector] public MoveableBase moveable;
     
@@ -38,9 +38,7 @@ public class InteractiveObject : MonoBehaviour
     public void Init()
     {
         moveable = GetComponent<MoveableBase>();
-        animationController = GetComponent<AnimationController>();
-        animationController.Init();
-        modefireAnimationController?.Init();
+        animationController = GetComponent<ClipPlayer>();
 
         modifier?.Init(this);
 
@@ -61,9 +59,9 @@ public class InteractiveObject : MonoBehaviour
     public void SetColor(Status color)
     {
         if (color == Status.Black)
-            animationController.SetAnimation(SpawnBlackAnimDataSO);
+            animationController.Play(SpawnBlackAnimDataSO);
         else if (color == Status.White)
-            animationController.SetAnimation(SpawnWhiteAnimDataSO);
+            animationController.Play(SpawnWhiteAnimDataSO);
         else
             Destroy(this.gameObject);
 
@@ -88,17 +86,16 @@ public class InteractiveObject : MonoBehaviour
         SetColorIcon(color);
 
         if (color == Status.Black)
-            animationController.SetAnimation(MoveBlackAnimDataSO);
+            animationController.Play(MoveBlackAnimDataSO);
         else if (color == Status.White)
-            animationController.SetAnimation(MoveWhiteAnimDataSO);
+            animationController.Play(MoveWhiteAnimDataSO);
         else
             return;
 
-        animationController.endAnimation.AddListener(() => G.mainEnterPoint.PlayerInputUpdate((color == Status.Black)? false : true));
-        animationController.endAnimation.AddListener(EndAnimFlipToFabe);
+        animationController.onClipEnd.AddListener(EndAnimFlipToFabe);
     }
 
-    private void EndAnimFlipToFabe()
+    private void EndAnimFlipToFabe(AnimationClip clip)
     {
         if (gameObject.activeInHierarchy)
             animationController.SetFadeCoroutine(true, .3f, iconPiece);

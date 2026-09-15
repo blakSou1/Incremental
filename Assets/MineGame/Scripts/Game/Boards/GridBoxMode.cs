@@ -10,31 +10,30 @@ public class modeState
 
 public class GridBoxMode : MonoBehaviour
 {
-    [SerializeField] private AnimationController animSkillController;
+    public SpriteRenderer targetRenderer;
+
+    [SerializeField] private ClipPlayer animSkillController;
 
     [HideInInspector] public modeState state;
 
-    [HideInInspector] public AnimationController animationController;
+    [HideInInspector] public ClipPlayer animationController;
 
-    public AnimationDataSO SpawnModifireGridAnimDataSO;
-    public AnimationDataSO ActivationGridAnimDataSO;
-    public AnimationDataSO IsActivGridAnimDataSO;
+    public AnimationClip SpawnModifireGridAnimDataSO;
+    public AnimationClip ActivationGridAnimDataSO;
+    public AnimationClip IsActivGridAnimDataSO;
 
     public void Start()
     {
-        animationController = GetComponent<AnimationController>();
-        animationController.Init();
-        animSkillController.Init();
+        animationController = GetComponent<ClipPlayer>();
 
-        animationController.SetFadeCoroutine(true, .3f, animationController._targetRenderer);
+        animationController.SetFadeCoroutine(true, .3f, targetRenderer);
     }
 
     public IEnumerator ActivationScill(Status stat)
     {
-        animSkillController.SetAnimation(ActivationGridAnimDataSO);
+        animSkillController.Play(ActivationGridAnimDataSO);
 
-        animationController.endAnimation.AddListener(() => G.mainEnterPoint.PlayerInputUpdate((stat == G.run.playerColor)? true : false));
-        animationController.endAnimation.AddListener(EndAnimActivScill);
+        animationController.onClipEnd.AddListener(EndAnimActivScill);
 
         GridModBase model = state.model as GridModBase;
 
@@ -44,16 +43,16 @@ public class GridBoxMode : MonoBehaviour
             yield return StartCoroutine(model.ActivationScillEnemy());
     }
 
-    private void EndAnimActivScill()
+    private void EndAnimActivScill(AnimationClip clip)
     {
-        animationController.SetAnimation(IsActivGridAnimDataSO);
+        animationController.Play(IsActivGridAnimDataSO);
     }
 
     public void SetState(modeState stat)
     {
         Start();
 
-        animationController.SetAnimation(SpawnModifireGridAnimDataSO);
+        animationController.Play(SpawnModifireGridAnimDataSO);
 
         state = stat;
         state.view = this;

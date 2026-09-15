@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class PieceController
 {
-    public void Init()
-    {
-        G.mainEnterPoint.pieceController = this;
-    }
-
     public void StartInitModPiece()
     {
         G.run.hand = new(G.run.deck);

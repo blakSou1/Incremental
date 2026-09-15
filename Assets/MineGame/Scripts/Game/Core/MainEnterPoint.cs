@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
+﻿
 public class MainEnterPoint : ManagedBehaviour
 {
     public PieceController pieceController;
@@ -11,16 +9,11 @@ public class MainEnterPoint : ManagedBehaviour
 
     BaseBrain brain;
 
-    private void Start()
+    public void Start()
     {
         InitComponents();
 
         brain.StartLvl();
-    }
-
-    protected override void PausableFixedUpdate()
-    {
-        brain.Tick();
     }
 
     private void InitComponents()
@@ -31,29 +24,18 @@ public class MainEnterPoint : ManagedBehaviour
         conditionsOfVictoryAndDefeat = new();
         gameLogic = new();
 
-        pieceController.Init();
         gridController.Init();
         modifierPieces.Init();
-        conditionsOfVictoryAndDefeat.Init();
         gameLogic.Init();
 
+        G.configGame.GetConfigLevel().matrixNode.AddListenerUp();
         brain = G.configGame.GetConfigLevel().brain;
+        brain.Resets();
     }
 
-    public void PlayerInputUpdate(bool isEnablePlayerInput = true)
+    protected override void PausableFixedUpdate()
     {
-        if (isEnablePlayerInput)
-            G.inputs.Player.Enable();
-        else
-            G.inputs.Player.Disable();
-    }
-
-    public IEnumerator RestartGame()
-    {
-        gridController.ClearAllPieces();
-
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(gameLogic.InitStaticPieces());
+        brain.Tick();
     }
 
 }

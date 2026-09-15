@@ -45,7 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MatrixList:
-  - matrixModel: {fileID: 4272947890841375721, guid: 89c77d3455a8f59429530aa180130762, type: 3}
-    text: 
-  - matrixModel: {fileID: 4272947890841375721, guid: 46ea1dc227ee26944a183f5f8145eccf, type: 3}
-    text: 
+    matrixModel: {fileID: 4272947890841375721, guid: 89c77d3455a8f59429530aa180130762, type: 3}

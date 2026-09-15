@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 4133512104139128473}
   - component: {fileID: 3752922828939973959}
   - component: {fileID: 1864941991784193866}
+  - component: {fileID: 5735506984638359523}
   m_Layer: 0
   m_Name: SkillAnimator
   m_TagString: Untagged
@@ -207,12 +208,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1584154635384483446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231f70b4d65a734419fa4a440a8cfcf5, type: 3}
+  m_Script: {fileID: 11500000, guid: db15f77f1e9bed84cbdb556093b21bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endAnimation:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!95 &5735506984638359523
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584154635384483446}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4230832495782908140
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +427,7 @@ GameObject:
   - component: {fileID: 7189097630842178444}
   - component: {fileID: 1706842483072076362}
   - component: {fileID: 267386154091333171}
+  - component: {fileID: 5885780579954044461}
   m_Layer: 0
   m_Name: GridModTutorial
   m_TagString: Untagged
@@ -501,12 +522,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5387442518348716772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231f70b4d65a734419fa4a440a8cfcf5, type: 3}
+  m_Script: {fileID: 11500000, guid: db15f77f1e9bed84cbdb556093b21bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endAnimation:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &267386154091333171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,8 +537,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0305f7c6d672494da6b21921957c114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
   animSkillController: {fileID: 1864941991784193866}
   animationController: {fileID: 0}
-  SpawnModifireGridAnimDataSO: {fileID: 11400000, guid: 0cfb8be1eb91d94428f24fdb5333b21d, type: 2}
-  ActivationGridAnimDataSO: {fileID: 11400000, guid: d9abce52dc762724a90ee45c1206a49a, type: 2}
-  IsActivGridAnimDataSO: {fileID: 11400000, guid: 4f12247e1f1100c489b97edc5c3babca, type: 2}
+  SpawnModifireGridAnimDataSO: {fileID: 7400000, guid: dbd60043f7c32384f84a0b097504df42, type: 2}
+  ActivationGridAnimDataSO: {fileID: 7400000, guid: 898aa973ba7d4b44c93f5d91e49bcaa5, type: 2}
+  IsActivGridAnimDataSO: {fileID: 7400000, guid: c6df1560d3afe274f9231d8d6376b364, type: 2}
+--- !u!95 &5885780579954044461
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387442518348716772}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

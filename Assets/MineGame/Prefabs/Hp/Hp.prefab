@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 557858456402871582}
   - component: {fileID: 3195432064812186803}
   - component: {fileID: 1124376592767245781}
-  - component: {fileID: 2390882688451330552}
-  - component: {fileID: 2549150810454249141}
   m_Layer: 5
   m_Name: Hp
   m_TagString: Untagged
@@ -77,31 +75,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 880
---- !u!114 &2390882688451330552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8445425682477732795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4b2988f07748a4388fc471a52c651f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endAnimation:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2549150810454249141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8445425682477732795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3af5ef298fbcda479e9544333cb5301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationStart: {fileID: 11400000, guid: 169a629e57403ad44b8ec428345ae85e, type: 2}

@@ -101,9 +101,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7655773385590912272}
   - component: {fileID: 7918906466241739528}
-  - component: {fileID: -9027304788492072133}
   - component: {fileID: -3051923050989007080}
   - component: {fileID: -8721325134548823517}
+  - component: {fileID: 8469666727189721473}
+  - component: {fileID: 896286326142260098}
   m_Layer: 0
   m_Name: PieceStandart
   m_TagString: Untagged
@@ -187,21 +188,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &-9027304788492072133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9111731403297543512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231f70b4d65a734419fa4a440a8cfcf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endAnimation:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &-3051923050989007080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,10 +201,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconPiece: {fileID: 0}
-  SpawnBlackAnimDataSO: {fileID: 11400000, guid: f3c551b4005ce604bbb3514323870994, type: 2}
-  SpawnWhiteAnimDataSO: {fileID: 11400000, guid: 3c0d26e606f88eb42b45b7f21040466b, type: 2}
-  MoveBlackAnimDataSO: {fileID: 11400000, guid: 30ad50aaf6055944dba7ad8d7f8bb0d3, type: 2}
-  MoveWhiteAnimDataSO: {fileID: 11400000, guid: 0a79d0f3845f5e246bf57eb438926a84, type: 2}
+  SpawnBlackAnimDataSO: {fileID: 7400000, guid: b4fc79ad0d0dfa544a21fada44239ba1, type: 2}
+  SpawnWhiteAnimDataSO: {fileID: 7400000, guid: 1cf276942253c6e4fa89376c29151edb, type: 2}
+  MoveBlackAnimDataSO: {fileID: 7400000, guid: 2fc4313cbb5633a46954415ce87da98d, type: 2}
+  MoveWhiteAnimDataSO: {fileID: 7400000, guid: 7eabe14fa7838fd4089be2049d6e1825, type: 2}
   modifier:
     rid: -2
   animationController: {fileID: 0}
@@ -248,6 +234,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0, z: 0}
+--- !u!95 &8469666727189721473
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111731403297543512}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &896286326142260098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111731403297543512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db15f77f1e9bed84cbdb556093b21bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClipPlayer
 --- !u!1001 &5466557830098344931
 PrefabInstance:
   m_ObjectHideFlags: 0

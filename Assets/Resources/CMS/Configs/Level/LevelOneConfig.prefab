@@ -53,7 +53,7 @@ MonoBehaviour:
     - rid: 5303922306268004410
       type: {class: ConfigLevel, ns: , asm: Assembly-CSharp}
       data:
-        indexLvl: 1
+        indexLvl: 2
         preview: 
         matrixNode: {fileID: 4704001615951451078, guid: e9010b76b7f723844930a1f9f8f870ec, type: 3}
         enemyConfig: {fileID: 4336106110857942914, guid: 2b6ebfd38eaa537428416c07a4161d8b, type: 3}

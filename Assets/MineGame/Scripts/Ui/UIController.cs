@@ -12,9 +12,6 @@ public class UIController : MonoBehaviour
     public GameObject playerSelect;
     public GameObject EnemySelect;
 
-    public GameObject ButtonIsPassActiv;
-    public GameObject ButtonIsPassDiactive;
-
     public TextThrower motionText;
 
     [NonSerialized] public Text indicatorText = null;
@@ -27,10 +24,6 @@ public class UIController : MonoBehaviour
     public Image dropEffect;
     public float dropSpeed = 0.5f;
     private float dropEffectPercentage = 1;
-
-    [Space]
-    public TextMeshProUGUI textActualLvl;
-    public CanvasGroup GroupTextActualLvl;
 
     public void Awake()
     {
@@ -64,16 +57,12 @@ public class UIController : MonoBehaviour
     public void SelectPlayer()
     {
         playerSelect.SetActive(true);
-        ButtonIsPassActiv.SetActive(true);
-        ButtonIsPassDiactive.SetActive(false);
         EnemySelect.SetActive(false);
     }
 
     public void SelectEnemy()
     {
         playerSelect.SetActive(false);
-        ButtonIsPassActiv.SetActive(false);
-        ButtonIsPassDiactive.SetActive(true);
         EnemySelect.SetActive(true);
     }
 

@@ -4,17 +4,10 @@ using System.Collections.Generic;
 [Serializable]
 public class ConfigGame : EntityComponentDefinition
 {
-    public bool isTutorial = false;
-
     [NonSerialized] private ConfigLevel configLevel = null;
     [NonSerialized] public MatrixModel MatrixModel = null;
 
     public static string standardPiece = "PieceStandart";
-    public static string damageModBox = "DamageModifireBox";
-
-    public int indexWinLvl = 2;
-
-    public int damagePlayer = 1;
 
     [NonSerialized] private List<(CMSEntity e, ConfigLevel tag)> list;
 

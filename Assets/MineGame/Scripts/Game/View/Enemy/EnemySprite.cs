@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemySprite : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    [HideInInspector] public AnimationController animationController;
+    [HideInInspector] public ClipPlayer animationController;
     public float speed = .4f;
 
     private Material material;
@@ -12,8 +12,7 @@ public class EnemySprite : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animationController = GetComponent<AnimationController>();
-        animationController.Init();
+        animationController = GetComponent<ClipPlayer>();
 
         material = spriteRenderer.material;
         material.SetFloat("_FadeAmount", 1);
@@ -21,7 +20,7 @@ public class EnemySprite : MonoBehaviour
 
     public void UpdateSprite()
     {
-        animationController.SetAnimation(G.configGame.GetConfigLevel().enemyConfig.enemySpawnAnim);
+        animationController.Play(G.configGame.GetConfigLevel().enemyConfig.enemySpawnAnim);
         transform.localScale = G.configGame.GetConfigLevel().enemyConfig.Scale;
 
         StartCoroutine(EnableSprite());

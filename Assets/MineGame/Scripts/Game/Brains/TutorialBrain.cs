@@ -7,18 +7,13 @@ public class TutorialBrain : BoardBrain
     {
         G.AudioManager.PlayMusic(R.Audio.tutorial);
 
-        G.mainEnterPoint.StartCoroutine(G.UIController.FadeCanvasGroup(G.UIController.GroupTextActualLvl, 0f, 0f));
-
         G.mainEnterPoint.gridController.NewMatrix();
-        G.mainEnterPoint.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
+        G.mainEnterPoint.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
+            G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
     }
 
     public override IEnumerator EndStartAnimation()
     {
-        G.PlayerController.isStopped = false;
-
-        //yield return G.mainEnterPoint.StartCoroutine(SpawnEnemy());
-
         yield return G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
 
         yield return new WaitForSeconds(.3f);
@@ -29,19 +24,52 @@ public class TutorialBrain : BoardBrain
 
         G.mainEnterPoint.gridController.StartInitModGrid();
 
-        isMove = false;
-        startIsEnd = true;
+        PlaybleStartAnimationSpawnBoard = false;
     }
 
     protected override void EndTick()
     {
         if (!TotorialGridIsNull())
         {
-            (G.configGame.GetConfigLevel().matrixNode as TutorialNode).NextIndex();
+            PlaybleStartAnimationSpawnBoard = true;
+        }
+    }
 
-            G.mainEnterPoint.StartCoroutine(RestartCurrentScene());
+    protected override void StartMove()
+    {
+        int indicCount = 0;
+        if (G.mainEnterPoint.gameLogic.actualPieceInstance != null)
+            indicCount = G.mainEnterPoint.gridController.CreateIndisObject(
+                G.mainEnterPoint.gameLogic.ActualColor,
+                G.mainEnterPoint.gameLogic.actualPieceInstance);
 
-            startIsEnd = false;
+        int whatIsMove = G.mainEnterPoint.conditionsOfVictoryAndDefeat.ShowPossibleLocation(indicCount);
+
+        if (whatIsMove == 1)
+        {
+            PlaybleStartAnimationSpawnBoard = false;
+            return;
+        }
+        else if (whatIsMove == 2)
+        {
+            G.mainEnterPoint.conditionsOfVictoryAndDefeat.Pass();
+            return;
+        }
+
+
+        switch (G.mainEnterPoint.gameLogic.ActualColor)
+        {
+            case Status.Black:
+                PlayerMove();
+                break;
+
+            case Status.White:
+                EnemyMove();
+                break;
+
+            default:
+                Debug.LogWarning("Unknown game state!");
+                break;
         }
     }
 

@@ -11,38 +11,6 @@ public class ConditionsOfVictoryAndDefeat
         get { return G.configGame.MatrixModel.matrixField.size; }
     }
 
-    public void Init()
-    {
-        G.mainEnterPoint.conditionsOfVictoryAndDefeat = this;
-    }
-
-    //public void PlayerMove()
-    //{
-    //    G.inputs.Player.Enable();
-
-    //    G.mainEnterPoint.gridController.EnableAndDisableIndc(true);
-
-    //    G.UIController.motionText.ThrowText("Your move!", R.normalVoice);
-
-    //}
-
-    //public void EnemyMove()
-    //{
-    //    G.inputs.Player.Disable();
-
-    //    G.mainEnterPoint.gridController.EnableAndDisableIndc(false);
-
-    //    G.UIController.motionText.ThrowText("The opponent's move!", R.normalVoice);
-
-    //    G.mainEnterPoint.StartCoroutine(Next());
-    //    static IEnumerator Next()
-    //    {
-    //        yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.4f));
-    //        G.ai.Execute(G.PlayerController.playerColor);
-    //    }
-
-    //}
-
     /// <summary>
     /// Show possible moves
     /// Finds all the squares where a player of the specified color can move.
@@ -81,9 +49,9 @@ public class ConditionsOfVictoryAndDefeat
         if (!G.enemyHp.WhatDead())
         {
             if (G.mainEnterPoint.gridController.blackPieces.Count < G.mainEnterPoint.gridController.whitePieces.Count)
-                G.winAndLouse.WinEnemy();
+                G.eventManager.PlayerLose.Invoke();
             else if (G.mainEnterPoint.gridController.blackPieces.Count > G.mainEnterPoint.gridController.whitePieces.Count)
-                G.winAndLouse.WinPlayer();
+                G.eventManager.PlayerWin.Invoke();
             else if (G.mainEnterPoint.gridController.blackPieces.Count == G.mainEnterPoint.gridController.whitePieces.Count)
                 Draw();
         }
@@ -94,7 +62,7 @@ public class ConditionsOfVictoryAndDefeat
         G.UIController.IndicatorText("Draw");
         G.UIController.motionText.ThrowText("Draw!", R.normalVoice);
 
-        G.mainEnterPoint.PlayerInputUpdate(true);
+        G.eventManager.UpdatePlayerInput.Invoke(true);
     }//TODO
 
     public IEnumerator Pass()
@@ -105,12 +73,12 @@ public class ConditionsOfVictoryAndDefeat
 
         yield return new WaitForSeconds(1.3f);
 
-        G.mainEnterPoint.PlayerInputUpdate(false);
+        G.eventManager.UpdatePlayerInput.Invoke(false);
 
         yield return new WaitForSeconds(1.3f);
 
         G.UIController.IndicatorText("");
-        G.mainEnterPoint.PlayerInputUpdate(true);////////////////////
+        G.eventManager.UpdatePlayerInput.Invoke(true);////////////////////
     }
 
     /// <summary>

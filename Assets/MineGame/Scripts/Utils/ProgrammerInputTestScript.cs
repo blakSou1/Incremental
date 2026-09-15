@@ -96,12 +96,12 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     private void Win()
     {
         if(G.mainEnterPoint != null)
-            G.winAndLouse.WinPlayer();
+            G.eventManager.PlayerWin.Invoke();
     }
     private void Louse()
     {
         if (G.mainEnterPoint != null)
-            G.winAndLouse.WinEnemy();
+            G.eventManager.PlayerLose.Invoke();
     }
 
     public void RestoreToNormal()
@@ -116,11 +116,16 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
     {
         RestoreToNormal();
 
-        if (G.inputs != null)
+        if (inp != null)
         {
-            G.inputs.Debug._2.started -= i => StartSlowMotion();
-            G.inputs.Debug._2.canceled -= i => StopSlowMotion();
-            G.inputs.Debug._3.started -= i => TogglePause();
+            inp.Debug._2.started -= i => StartSlowMotion();
+            inp.Debug._2.canceled -= i => StopSlowMotion();
+            inp.Debug._3.started -= i => TogglePause();
+            inp.Debug._4.started -= i => RestartCurrentScene();
+            inp.Debug._5.started -= i => Win();
+            inp.Debug._6.started -= i => Louse();
+            inp.Debug._7.started -= i => Damage();
+            inp.Debug._8.started -= i => Scen();
         }
     }
 }

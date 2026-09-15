@@ -7,10 +7,4 @@ public class GameHelper : ScriptableObject
     {
         G.configGame.GetConfigLevel().brain.StartLvl();
     }
-
-    public void RestartGame()
-    {
-        if (G.mainEnterPoint != null)
-            G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.RestartGame());
-    }
 }
