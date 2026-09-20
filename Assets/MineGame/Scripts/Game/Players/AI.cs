@@ -134,6 +134,6 @@ public class AI : MonoBehaviour
             }
         }
 
-        G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.gameLogic.PlacePiece(selectedLoc));
+        G.eventManager.host.StartCoroutine(G.mainEnterPoint.gameLogic.PlacePiece(selectedLoc));
     }
 }

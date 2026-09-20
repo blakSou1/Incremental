@@ -26,7 +26,6 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         inp.Debug._5.started += i => Win();
         inp.Debug._6.started += i => Louse();
         inp.Debug._7.started += i => Damage();
-        inp.Debug._8.started += i => Scen();
 
         Debug.Log("Controls initialized:");
         Debug.Log("1 - Debug method");
@@ -43,15 +42,10 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
         if (G.ai != null)
             G.ai.DebugMethod();
     }
-    private void Scen()
-    {
-        if (G.DamageEnemyScenario != null)
-            G.DamageEnemyScenario.StartCoroutine(G.DamageEnemyScenario.StartScenario());
-    }
 
     private void Damage()
     {
-        StartCoroutine(G.enemyHp.DamagePlayer(1));
+        G.eventManager.DamagedPlayer.Invoke(1);
     }
 
     private void StartSlowMotion()
@@ -125,7 +119,6 @@ public class ProgrammerInputTestScript : MonoBehaviour, IService
             inp.Debug._5.started -= i => Win();
             inp.Debug._6.started -= i => Louse();
             inp.Debug._7.started -= i => Damage();
-            inp.Debug._8.started -= i => Scen();
         }
     }
 }

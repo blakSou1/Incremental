@@ -12,12 +12,10 @@ public static class G
     //Объекты в игре
     public static MainEnterPoint mainEnterPoint;
     public static EnemySprite enemySprite;
-    public static EnemyHp enemyHp;
     public static PlayerController PlayerController;
     public static AI ai;
     public static PieceFactory pieceFactory;
     public static UIController UIController;
-    public static DamageEnemyScenario DamageEnemyScenario;
 
     //обьекты не монобех контроллеры
     public static Inputs inputs;

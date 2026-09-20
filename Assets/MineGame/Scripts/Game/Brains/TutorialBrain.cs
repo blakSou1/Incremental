@@ -8,13 +8,13 @@ public class TutorialBrain : BoardBrain
         G.AudioManager.PlayMusic(R.Audio.tutorial);
 
         G.mainEnterPoint.gridController.NewMatrix();
-        G.mainEnterPoint.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
+        G.eventManager.host.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
             G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
     }
 
     public override IEnumerator EndStartAnimation()
     {
-        yield return G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
+        yield return G.eventManager.host.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
 
         yield return new WaitForSeconds(.3f);
 

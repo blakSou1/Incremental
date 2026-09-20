@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -36,9 +35,11 @@ public static class GameBootstrapper
         G.faqPanel = CreateSimpleService<FAQ>();
 
         WinAndLoss winAndLouse = new();
+        HpManager managerHp = new();
         G.run = new();
         G.eventManager = new();
         winAndLouse.Init();
+        managerHp.Init();
         G.boardVisualConfig = Resources.Load<BoardVisualConfig>("BoardVisualConfig"); ;
 
         G.configGame = CMS.GetAll<CMSEntity>().FirstOrDefault(x => x.Is<ConfigGame>())!.Get<ConfigGame>();
@@ -61,6 +62,10 @@ public static class GameBootstrapper
         G.ai = Object.FindFirstObjectByType<AI>();
         G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
         G.mainEnterPoint = Object.FindFirstObjectByType<MainEnterPoint>();
+
+        GameObject.Destroy(G.eventManager.host);
+        G.eventManager.host = CreateSimpleService<CoroutineHost>();
+
     }
 
     private static T CreateSimpleService<T>() where T : Component, IService
@@ -77,4 +82,11 @@ public static class GameBootstrapper
 public interface IService
 {
     public void Init();
+}
+
+public class CoroutineHost : MonoBehaviour, IService
+{
+    public void Init()
+    {
+    }
 }

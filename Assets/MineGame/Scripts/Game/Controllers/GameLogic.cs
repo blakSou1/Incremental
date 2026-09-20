@@ -66,7 +66,7 @@ public class GameLogic
         if (pieceId != ConfigGame.standardPiece)
             G.mainEnterPoint.modifierPieces.standartSlot.Click();
 
-        G.mainEnterPoint.StartCoroutine(SpawnAndWaitAnimation(grid));
+        G.eventManager.host.StartCoroutine(SpawnAndWaitAnimation(grid));
 
         actualPieceInstance.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
 
@@ -78,7 +78,7 @@ public class GameLogic
     {
         SpawnPiece(ConfigGame.standardPiece);
 
-        G.mainEnterPoint.StartCoroutine(SpawnAndWaitAnimation(grid));
+        G.eventManager.host.StartCoroutine(SpawnAndWaitAnimation(grid));
 
         actualPieceInstance.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
 
@@ -135,7 +135,7 @@ public class GameLogic
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
 
         grid.SetStat(color);
-        G.mainEnterPoint.StartCoroutine(grid.SetPiece(piece));
+        G.eventManager.host.StartCoroutine(grid.SetPiece(piece));
         piece.state.gridBox = grid;
 
         piece.SetColor(color);

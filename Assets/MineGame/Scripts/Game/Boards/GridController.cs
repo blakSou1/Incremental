@@ -43,7 +43,7 @@ public class GridController
 
     public void StartInitModGrid()
     {
-        G.mainEnterPoint.StartCoroutine(InitModifireGrid());
+        G.eventManager.host.StartCoroutine(InitModifireGrid());
     }
 
     public IEnumerator InitModifireGrid()

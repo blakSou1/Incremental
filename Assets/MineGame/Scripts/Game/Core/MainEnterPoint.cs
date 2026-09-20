@@ -31,6 +31,8 @@ public class MainEnterPoint : ManagedBehaviour
         G.configGame.GetConfigLevel().matrixNode.AddListenerUp();
         brain = G.configGame.GetConfigLevel().brain;
         brain.Resets();
+
+        G.eventManager.SetEnemyHp.Invoke(G.configGame.GetConfigLevel().enemyConfig.hp);
     }
 
     protected override void PausableFixedUpdate()

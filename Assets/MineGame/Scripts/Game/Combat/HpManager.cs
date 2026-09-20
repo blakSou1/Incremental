@@ -1,66 +1,33 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
-public class EnemyHp : MonoBehaviour
+public class HpManager
 {
-	[SerializeField] private TextMeshProUGUI damageIndicator;
-
-	[HideInInspector] public int damageBuffer;
-
 	private int hp = 0;
+	int damageBuf = 0;
 
-	public void Start()
+	public void Init()
 	{
-		G.enemyHp = this;
-		damageIndicator.text = "";
+        G.eventManager.SetEnemyHp.AddListener(SetHp);
+        G.eventManager.Attack.AddListener(Attack);
+        G.eventManager.DamagedPlayer.AddListener(i => G.eventManager.host.StartCoroutine(DamagePlayer(i)));
+    }
 
-		SetHp(G.configGame.GetConfigLevel().enemyConfig.hp);
-	}
-
-	public void SetHp(int hp)
+    private void SetHp(int hp)
 	{
 		this.hp = hp;
-	}
-	public int GetHp()
+		damageBuf = 0;
+    }
+
+	private void Attack(int damage)
 	{
-		return hp;
-	}
-	public int GetBuffer()
-	{
-		return damageBuffer;
-	}
+        damageBuf += damage;
 
-	public void Damage(int damage)
-	{
-		damageBuffer += damage;
+        if (hp - damageBuf <= 0)
+            Dead();
+    }
 
-		damageIndicator.text = $"{damageBuffer}";
-	}
-	public void ActivDamage(int damage)
-	{
-		hp -= damage;//TODO Remove 1 piece
-
-		damageBuffer -= damage;
-
-		damageIndicator.text = $"{damageBuffer}";
-
-		if (hp <= 0)
-			;//TODO Add Money
-	}
-
-	public bool WhatDead()
-	{
-		if (hp <= 0)
-		{
-			Dead();
-			return true;
-		}
-
-		return false;
-	}
-
-	public IEnumerator DamagePlayer(int damage)
+	private IEnumerator DamagePlayer(int damage)
 	{
 		G.run.Damage += damage;
 
@@ -75,11 +42,11 @@ public class EnemyHp : MonoBehaviour
 
         G.eventManager.CameraShake.Invoke(target);
 
-        yield return StartCoroutine(ChangeVolumeWeight(0, target));
+        yield return G.eventManager.host.StartCoroutine(ChangeVolumeWeight(0, target));
 
 		yield return new WaitForSeconds(.3f);
 
-		StartCoroutine(ChangeVolumeWeight(1, 0));
+		G.eventManager.host.StartCoroutine(ChangeVolumeWeight(1, 0));
 
 		yield return null;
 	}

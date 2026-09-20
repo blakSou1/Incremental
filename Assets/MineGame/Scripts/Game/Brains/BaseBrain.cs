@@ -20,13 +20,13 @@ public class BaseBrain : MonoBehaviour
 
     protected IEnumerator SpawnEnemy()
     {
-        yield return G.mainEnterPoint.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionOrdinary, G.PlayerController.cameraPositionVisibalEnemy));
+        yield return G.eventManager.host.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionOrdinary, G.PlayerController.cameraPositionVisibalEnemy));
 
         G.enemySprite.UpdateSprite();
 
         yield return new WaitForSeconds(1f);
 
-        yield return G.mainEnterPoint.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionVisibalEnemy, G.PlayerController.cameraPositionOrdinary));
+        yield return G.eventManager.host.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionVisibalEnemy, G.PlayerController.cameraPositionOrdinary));
     }
 }
 
@@ -41,7 +41,7 @@ public class BoardBrain : BaseBrain
     {
         PlaybleStartAnimationSpawnBoard = true;
         G.mainEnterPoint.gridController.NewMatrix();
-        G.mainEnterPoint.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
+        G.eventManager.host.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
             G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
     }
 
@@ -117,7 +117,7 @@ public class BoardBrain : BaseBrain
 
         G.UIController.motionText.ThrowText("The opponent's move!", R.normalVoice);
 
-        G.mainEnterPoint.StartCoroutine(Next());
+        G.eventManager.host.StartCoroutine(Next());
         static IEnumerator Next()
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(0.65f, 1.4f));
@@ -178,14 +178,14 @@ public class BoardBrain : BaseBrain
 
         G.ai.InitWeight();
 
-        G.mainEnterPoint.StartCoroutine(EndStartAnimation());
+        G.eventManager.host.StartCoroutine(EndStartAnimation());
     }
 
     public virtual IEnumerator EndStartAnimation()
     {
-        yield return G.mainEnterPoint.StartCoroutine(SpawnEnemy());
+        yield return G.eventManager.host.StartCoroutine(SpawnEnemy());
 
-        yield return G.mainEnterPoint.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
+        yield return G.eventManager.host.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
 
         yield return new WaitForSeconds(.3f);
 

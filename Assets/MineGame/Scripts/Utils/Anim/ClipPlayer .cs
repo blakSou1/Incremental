@@ -42,6 +42,9 @@ public class ClipPlayer : MonoBehaviour
         current.SetSpeed(speed);
         current.SetTime(startTime);
 
+        mixer.ConnectInput(0, current, 0);
+        mixer.SetInputWeight(0, 1f);
+
         if (!graph.IsPlaying())
             graph.Play();
 

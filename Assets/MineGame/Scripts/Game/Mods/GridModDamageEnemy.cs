@@ -16,14 +16,14 @@ public class GridModDamageEnemy : GridModBase
 
         G.AudioManager.PlaySound(R.Audio.vriiis, 0);
 
-        G.enemyHp.Damage(damage);
+        G.eventManager.DamagedPlayer.Invoke(damage);
     }
 
     public override IEnumerator ActivationScillEnemy()
     {
         yield return null;
 
-        yield return G.enemyHp.StartCoroutine(G.enemyHp.DamagePlayer(1));
+        G.eventManager.Attack.Invoke(1);
     }
 
 }

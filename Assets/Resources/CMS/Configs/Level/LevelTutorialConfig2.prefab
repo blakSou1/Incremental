@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1729a46f79086449a991b5512530e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idCMS: CMS/Configs/Level/LevelTutorialConfig
+  idCMS: CMS/Configs/Level/LevelTutorialConfig2
   Components:
   - rid: 5303922306268004410
   references:

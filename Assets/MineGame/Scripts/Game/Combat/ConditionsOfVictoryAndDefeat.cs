@@ -27,12 +27,12 @@ public class ConditionsOfVictoryAndDefeat
         {
             if (G.mainEnterPoint.gridController.blackPieces.Count + G.mainEnterPoint.gridController.whitePieces.Count == size * size)
             {
-                G.mainEnterPoint.StartCoroutine(WhatWin());
+                WhatWin();
                 return 1;
             }
             else if (G.mainEnterPoint.gridController.blackPieces.Count == 0 || G.mainEnterPoint.gridController.whitePieces.Count == 0)
             {
-                G.mainEnterPoint.StartCoroutine(WhatWin());
+                WhatWin();
                 return 1;
             }
 
@@ -42,19 +42,14 @@ public class ConditionsOfVictoryAndDefeat
         return 3;
     }//not move -> what win?
 
-    private IEnumerator WhatWin()
+    private void WhatWin()
     {
-        yield return G.DamageEnemyScenario.StartCoroutine(G.DamageEnemyScenario.StartScenario());
-
-        if (!G.enemyHp.WhatDead())
-        {
-            if (G.mainEnterPoint.gridController.blackPieces.Count < G.mainEnterPoint.gridController.whitePieces.Count)
-                G.eventManager.PlayerLose.Invoke();
-            else if (G.mainEnterPoint.gridController.blackPieces.Count > G.mainEnterPoint.gridController.whitePieces.Count)
-                G.eventManager.PlayerWin.Invoke();
-            else if (G.mainEnterPoint.gridController.blackPieces.Count == G.mainEnterPoint.gridController.whitePieces.Count)
-                Draw();
-        }
+        if (G.mainEnterPoint.gridController.blackPieces.Count < G.mainEnterPoint.gridController.whitePieces.Count)
+            G.eventManager.PlayerLose.Invoke();
+        else if (G.mainEnterPoint.gridController.blackPieces.Count > G.mainEnterPoint.gridController.whitePieces.Count)
+            G.eventManager.PlayerWin.Invoke();
+        else if (G.mainEnterPoint.gridController.blackPieces.Count == G.mainEnterPoint.gridController.whitePieces.Count)
+            Draw();
     }
 
     private void Draw()
