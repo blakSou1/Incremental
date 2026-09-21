@@ -11,6 +11,7 @@ public static class G
 
     //Объекты в игре
     public static MainEnterPoint mainEnterPoint;
+    public static RoomMovement roomMovement;
     public static EnemySprite enemySprite;
     public static PlayerController PlayerController;
     public static AI ai;

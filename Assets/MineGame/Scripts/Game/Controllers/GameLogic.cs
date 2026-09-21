@@ -63,9 +63,6 @@ public class GameLogic
 
         SpawnPiece(pieceId);
 
-        if (pieceId != ConfigGame.standardPiece)
-            G.mainEnterPoint.modifierPieces.standartSlot.Click();
-
         G.eventManager.host.StartCoroutine(SpawnAndWaitAnimation(grid));
 
         actualPieceInstance.GetBaseModel().FlipOfPiece(grid.indic.revColorPieces);
@@ -104,24 +101,24 @@ public class GameLogic
 
     private string IsModifierPieces()
     {
-        foreach (SlotModPiece slot in G.mainEnterPoint.modifierPieces.modSlots)
-        {
-            if (slot.piece == null || slot.piece.state.model.id == ConfigGame.standardPiece)
-                continue;
+        //foreach (SlotModPiece slot in G.mainEnterPoint.modifierPieces.modSlots)
+        //{
+        //    if (slot.piece == null || slot.piece.state.model.id == ConfigGame.standardPiece)
+        //        continue;
 
-            if (!slot.activ.activeInHierarchy)
-                continue;
+        //    if (!slot.activ.activeInHierarchy)
+        //        continue;
 
-            InteractiveObject inter = slot.GetComponentInChildren<InteractiveObject>();
-            string id = new(inter.state.model.id);
+        //    InteractiveObject inter = slot.GetComponentInChildren<InteractiveObject>();
+        //    string id = new(inter.state.model.id);
 
-            G.run.hand.Remove(inter.GetBaseModel().id);
-            GameObject.Destroy(inter.gameObject);
+        //    G.run.hand.Remove(inter.GetBaseModel().id);
+        //    GameObject.Destroy(inter.gameObject);
 
-            slot.piece = null;
+        //    slot.piece = null;
 
-            return id;
-        }
+        //    return id;
+        //}
 
         return ConfigGame.standardPiece;
     }
@@ -131,6 +128,7 @@ public class GameLogic
         GameObject obj = piece.gameObject;
         piece.moveable.targetPosition = grid.transform.position;
         piece.transform.position = grid.transform.position;
+        piece.transform.rotation = grid.transform.rotation;
 
         obj.name = grid.GetIndex().Item1 + " / " + grid.GetIndex().Item2;
 

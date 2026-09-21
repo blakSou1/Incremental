@@ -8,6 +8,7 @@ public class PieceFactory : MonoBehaviour
     {
         G.pieceFactory = this;
         parentPiece = new GameObject("PiecePool").transform;
+        parentPiece.localScale = new(0.05f, 1, 0.05f);
     }
 
     private InteractiveObject CreatePiece(string t)
@@ -25,7 +26,7 @@ public class PieceFactory : MonoBehaviour
         InteractiveObject instance = Instantiate(prefab);
         instance.Init();
 
-        instance.gameObject.transform.parent = parentPiece;
+        instance.gameObject.transform.SetParent(parentPiece, false);
         instance.moveable.targetPosition = new(10, 10, instance.transform.position.z);
         instance.transform.position = new(10, 10, instance.transform.position.z);
         instance.SetState(state);

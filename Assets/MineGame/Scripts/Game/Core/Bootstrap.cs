@@ -59,13 +59,13 @@ public static class GameBootstrapper
     private static void RefreshSceneReferences()
     {
         G.enemySprite = Object.FindFirstObjectByType<EnemySprite>();
+        G.roomMovement = Object.FindFirstObjectByType<RoomMovement>();
         G.ai = Object.FindFirstObjectByType<AI>();
         G.PlayerController = Object.FindFirstObjectByType<PlayerController>();
         G.mainEnterPoint = Object.FindFirstObjectByType<MainEnterPoint>();
 
         GameObject.Destroy(G.eventManager.host);
         G.eventManager.host = CreateSimpleService<CoroutineHost>();
-
     }
 
     private static T CreateSimpleService<T>() where T : Component, IService

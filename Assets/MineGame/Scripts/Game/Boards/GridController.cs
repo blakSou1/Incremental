@@ -78,7 +78,7 @@ public class GridController
         matrix = new Matrix(G.configGame.MatrixModel);
     }
 
-    public Vector2 IndexToVector2(Index index)
+    public Vector3 IndexToVector2(Index index)
     {
         return matrix.GetGrid(index).transform.position;
     }
@@ -110,14 +110,14 @@ public class GridController
         {
             for (var j = 0; j < size; j++)
             {
-                if (piecePrefabValid.GetBaseModel().Get<TagPieceRule>().valid.IsMoveValid(color, matrix.GetGrid(new Index(i, j)), out List<GridBox> revColorPieces))
+                GridBox box = matrix.GetGrid(new Index(i, j));
+
+                if (piecePrefabValid.GetBaseModel().Get<TagPieceRule>().valid.IsMoveValid(color, box, out List<GridBox> revColorPieces))
                 {
-                    Vector2 v = IndexToVector2(new Index(i, j));
-                    Indic indicators = GameObject.Instantiate(G.boardVisualConfig.highlightIndicator, new Vector3(v.x, v.y, parentIndc.transform.position.z), Quaternion.identity);
+                    Vector3 v = IndexToVector2(new Index(i, j));
+                    Indic indicators = GameObject.Instantiate(G.boardVisualConfig.highlightIndicator, v, box.transform.rotation);
                     indicators.revColorPieces = revColorPieces;
                     indicators.transform.parent = parentIndc;
-
-                    GridBox box = matrix.GetGrid(new Index(i, j));
 
                     box.indic = indicators;
                     indicPositionGrid.Add(box);

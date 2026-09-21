@@ -7,14 +7,14 @@ public class PieceController
     {
         G.run.hand = new(G.run.deck);
 
-        List<string> piece = GetRandomElementsUnique(G.mainEnterPoint.modifierPieces.modSlots.Count, G.run.hand);
+        //List<string> piece = GetRandomElementsUnique(G.mainEnterPoint.modifierPieces.modSlots.Count, G.run.hand);
 
-        foreach(string i in piece)
-        {
-            G.mainEnterPoint.modifierPieces.AddModPieceInSlot(i);
-        }
+        //foreach(string i in piece)
+        //{
+        //    G.mainEnterPoint.modifierPieces.AddModPieceInSlot(i);
+        //}
 
-        G.mainEnterPoint.modifierPieces.AddStandertPieceInSlot(ConfigGame.standardPiece);
+        //G.mainEnterPoint.modifierPieces.AddStandertPieceInSlot(ConfigGame.standardPiece);
     }
 
     //TODO

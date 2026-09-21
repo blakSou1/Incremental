@@ -74,10 +74,19 @@ public class InteractiveObject : MonoBehaviour
     {
         if (!iconPiece) return;
 
+        Color targetColor;
+
         if (color == Status.Black)
-            iconPiece.color = Color.white;
+            targetColor = Color.white;
         else if (color == Status.White)
-            iconPiece.color = Color.black;
+            targetColor = Color.black;
+        else
+            return;
+
+        var renderers = iconPiece.GetComponentsInChildren<SpriteRenderer>(true);
+
+        foreach (var sr in renderers)
+            sr.color = targetColor;
     }
 
     public void FlipAnim(Status color)

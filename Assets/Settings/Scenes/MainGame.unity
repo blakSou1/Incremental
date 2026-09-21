@@ -7691,8 +7691,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorPrefab: {fileID: 3090891363861265771, guid: 0ec93d363c3c80049815ca809d09c541, type: 3}
-  cameraPositionOrdinary: {fileID: 1201996313}
-  cameraPositionVisibalEnemy: {fileID: 51433899}
   speed: 0.5
 --- !u!4 &1295317049
 Transform:

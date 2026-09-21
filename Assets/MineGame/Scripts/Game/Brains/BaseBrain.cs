@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.SceneView;
 
 public class BaseBrain : MonoBehaviour
 {
@@ -20,13 +21,9 @@ public class BaseBrain : MonoBehaviour
 
     protected IEnumerator SpawnEnemy()
     {
-        yield return G.eventManager.host.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionOrdinary, G.PlayerController.cameraPositionVisibalEnemy));
-
         G.enemySprite.UpdateSprite();
 
         yield return new WaitForSeconds(1f);
-
-        yield return G.eventManager.host.StartCoroutine(G.PlayerController.MoveAndRotate(G.PlayerController.cameraPositionVisibalEnemy, G.PlayerController.cameraPositionOrdinary));
     }
 }
 
@@ -39,10 +36,18 @@ public class BoardBrain : BaseBrain
 
     public override void StartLvl()
     {
+        G.AudioManager.PlayMusic(R.Audio.tutorial);
+
+        G.roomMovement.SpawnAndMove(G.configGame.GetConfigLevel().prefabRoom);
+        G.roomMovement.OnReachedEnd.AddListener(EndMove);
+    }
+
+    private void EndMove()
+    {
         PlaybleStartAnimationSpawnBoard = true;
         G.mainEnterPoint.gridController.NewMatrix();
-        G.eventManager.host.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
-            G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
+        G.eventManager.host.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size,
+            G.mainEnterPoint.gridController.matrix.GetData(), G.roomMovement.parentGrid));
     }
 
     public override void Tick()
@@ -129,6 +134,11 @@ public class BoardBrain : BaseBrain
 
     protected virtual IEnumerator StartAnimationSpawnGrid(int index, GridBox[,] data, Transform parent)
     {
+        yield return G.eventManager.host.StartCoroutine(SpawnEnemy());
+        yield return new WaitForSeconds(.4f);
+
+        yield return G.PlayerController.MoveTo(G.roomMovement.GridCameraPosition, 1.5f);
+
         float offsetX = (index - 1) * G.boardVisualConfig.cellSpacing.x / 2;
         float offsetY = (index - 1) * G.boardVisualConfig.cellSpacing.y / 2;
 
@@ -142,7 +152,7 @@ public class BoardBrain : BaseBrain
                 int randomIndex = random.Next(1, 4);
 
                 data[i, j] = GameObject.Instantiate(G.boardVisualConfig.cellPrefab, parent);
-                data[i, j].transform.position = new(G.boardVisualConfig.cellSpacing.x * i - offsetX, G.boardVisualConfig.cellSpacing.y * j - offsetY);
+                data[i, j].transform.localPosition = new(G.boardVisualConfig.cellSpacing.x * i - offsetX, 0, G.boardVisualConfig.cellSpacing.y * j - offsetY);
 
                 data[i, j].SetIndex(i, j);
 
@@ -183,8 +193,6 @@ public class BoardBrain : BaseBrain
 
     public virtual IEnumerator EndStartAnimation()
     {
-        yield return G.eventManager.host.StartCoroutine(SpawnEnemy());
-
         yield return G.eventManager.host.StartCoroutine(G.mainEnterPoint.gameLogic.InitStaticPieces());
 
         yield return new WaitForSeconds(.3f);
@@ -196,6 +204,8 @@ public class BoardBrain : BaseBrain
         G.mainEnterPoint.gridController.StartInitModGrid();
 
         PlaybleStartAnimationSpawnBoard = false;
+
+        G.mainEnterPoint.gridController.CreateIndisObject(G.mainEnterPoint.gameLogic.ActualColor, G.mainEnterPoint.gameLogic.actualPieceInstance);
     }
 
     protected virtual void EndTick()

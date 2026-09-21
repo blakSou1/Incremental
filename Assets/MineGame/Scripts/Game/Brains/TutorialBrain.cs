@@ -9,7 +9,7 @@ public class TutorialBrain : BoardBrain
 
         G.mainEnterPoint.gridController.NewMatrix();
         G.eventManager.host.StartCoroutine(StartAnimationSpawnGrid(G.configGame.MatrixModel.matrixField.size, 
-            G.mainEnterPoint.gridController.matrix.GetData(), G.mainEnterPoint.gridController.matrix.GetParent()));
+            G.mainEnterPoint.gridController.matrix.GetData(), G.roomMovement.parentGrid));
     }
 
     public override IEnumerator EndStartAnimation()

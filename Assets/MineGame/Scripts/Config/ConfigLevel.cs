@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class ConfigLevel : EntityComponentDefinition
@@ -15,6 +16,8 @@ public class ConfigLevel : EntityComponentDefinition
     public List<string> pickablePiecesId;
 
     public BaseBrain brain;
+
+    public GameObject prefabRoom;
 
     public List<string> GetPickablePiece()
     {

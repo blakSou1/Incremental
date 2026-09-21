@@ -1,4 +1,5 @@
 
+
 public class WinAndLoss
 {
     public void Init()
@@ -9,6 +10,8 @@ public class WinAndLoss
 
     private void Win()
     {
+        G.PlayerController.ReturnToPrevious(1f);
+
         G.UIController.IndicatorText("WIN");
         G.UIController.motionText.ThrowText("You Win!", R.normalVoice);
 
@@ -17,6 +20,8 @@ public class WinAndLoss
 
     private void Loss()
     {
+        G.PlayerController.ReturnToPrevious(1f);
+
         G.UIController.IndicatorText("LOSS");
         G.UIController.motionText.ThrowText("Loss!", R.normalVoice);
 

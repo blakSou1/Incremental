@@ -3,7 +3,6 @@ public class MainEnterPoint : ManagedBehaviour
 {
     public PieceController pieceController;
     public GridController gridController;
-    public ModifirePieces modifierPieces;
     public ConditionsOfVictoryAndDefeat conditionsOfVictoryAndDefeat;
     public GameLogic gameLogic;
 
@@ -20,12 +19,10 @@ public class MainEnterPoint : ManagedBehaviour
     {
         pieceController = new();
         gridController = new();
-        modifierPieces = new();
         conditionsOfVictoryAndDefeat = new();
         gameLogic = new();
 
         gridController.Init();
-        modifierPieces.Init();
         gameLogic.Init();
 
         G.configGame.GetConfigLevel().matrixNode.AddListenerUp();

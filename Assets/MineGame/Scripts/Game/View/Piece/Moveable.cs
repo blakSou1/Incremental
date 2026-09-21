@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveableBalatro : MoveableBase
 {
-    private Vector2 velocity;
+    private Vector3 velocity;
     private float maxVelocity;
 
     private void Update()
@@ -16,24 +16,24 @@ public class MoveableBalatro : MoveableBase
         float expTimeXY = Mathf.Exp(-50 * realDt);
         maxVelocity = 70 * realDt;
 
-        MoveXY(realDt, expTimeXY);
+        MoveXYZ(realDt, expTimeXY);
     }
 
-    private void MoveXY(float dt, float expTimeXY)
+    private void MoveXYZ(float dt, float expTimeXY)
     {
-        Vector2 T = targetPosition;
-        Vector2 currentPos = new(transform.position.x, transform.position.y);
-        
+        Vector3 T = targetPosition;
+        Vector3 currentPos = transform.position;
+
         velocity = expTimeXY * velocity + (1 - expTimeXY) * 35 * dt * (T - currentPos);
-        
+
         if (velocity.sqrMagnitude > maxVelocity * maxVelocity)
             velocity = velocity.normalized * maxVelocity;
 
-        transform.position += 100f * dt * (Vector3)velocity;
+        transform.position += 100f * dt * velocity;
 
-        if(events.Count != 0 && Vector2.Distance(transform.position, targetPosition) < .2)
+        if (events.Count != 0 && Vector3.Distance(transform.position, targetPosition) < .2)
         {
-            foreach(var i in events)
+            foreach (var i in events)
                 i?.Invoke();
             events.Clear();
         }
